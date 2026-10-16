@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Зал — 10 видов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@600;800;900&family=Space+Grotesk:wght@400;500;700&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+<style>
+/* r41: 10 визуальных языков по донорам research/r41-visual/ДОНОРЫ.md. Данные одни (const D) — тестовые, веса новичка.
+   ?v=N — один вариант на весь экран (для телефона), ?s=1|2 — какой экран. */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--sys:-apple-system,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;--rnd:ui-rounded,"SF Pro Rounded",-apple-system,system-ui,sans-serif}
+body{background:#202127;font:15px/1.3 var(--sys);color:#fff;-webkit-font-smoothing:antialiased}
+.top{max-width:1200px;margin:0 auto;padding:28px 20px 6px;color:#c9ccd6}
+.top h1{font-size:26px;color:#fff;margin-bottom:6px}.top p{font-size:14px;line-height:1.5}
+.var{max-width:1240px;margin:26px auto 0;padding:0 16px}
+.cap{display:flex;align-items:baseline;gap:12px;margin:0 6px 12px;flex-wrap:wrap}
+.cap b{font-size:22px;color:#fff}.cap span{color:#9ea3b0;font-size:14px}.cap a{color:#8ab4ff;font-size:14px}
+.row{display:flex;gap:22px;align-items:flex-start;overflow-x:auto;padding-bottom:10px}
+.don{flex:0 0 auto;width:260px}.don img{width:260px;border-radius:14px;display:block}.don div{font-size:12px;color:#9ea3b0;margin-top:6px;line-height:1.4}
+.phone{flex:0 0 auto;width:390px;height:844px;position:relative;overflow:hidden;border-radius:44px;box-shadow:0 0 0 10px #000,0 0 0 11px #3a3b42,0 24px 60px rgba(0,0,0,.5);margin:11px;font-variant-numeric:tabular-nums}
+.sb{position:absolute;top:0;left:0;right:0;height:50px;padding:17px 32px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;z-index:5}
+.sb i{width:25px;height:12px;border-radius:4px;border:1.5px solid currentColor;margin-top:4px;position:relative}.sb i::after{content:"";position:absolute;inset:1.5px;right:6px;background:currentColor;border-radius:1px}
+.scr{position:absolute;top:50px;left:0;right:0;bottom:84px;overflow:hidden;padding:6px 18px 0}
+.tab{position:absolute;left:0;right:0;bottom:0;height:84px;display:flex;justify-content:space-around;padding-top:9px;font-size:10px;font-weight:500;z-index:5}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:3px;width:62px}.tab svg{width:25px;height:25px}
+.solo body,.solo{background:#000}
+.solo .top,.solo .cap,.solo .don{display:none}.solo .var{margin:0;padding:0;max-width:none}.solo .row{display:block;padding:0;overflow:visible}
+.solo .phone{margin:0 auto;box-shadow:none;border-radius:0;width:100vw;max-width:430px;height:100vh;min-height:700px}
+svg text{font-family:inherit}
+
+/* 1 Gentler Streak — светлый, пастель, скругления, зоны нагрузки */
+.v1{background:#FDFCFD;color:#2b2731;font-family:var(--rnd)}
+.v1 .sb{color:#2b2731}.v1 .tab{background:rgba(253,252,253,.94);border-top:1px solid #efe9f1;color:#a49dab}.v1 .tab .on{color:#F67E49}
+.v1 h6{font-size:13px;color:#9b93a3;font-weight:600}.v1 h2{font-size:30px;font-weight:800;letter-spacing:-.5px;margin:2px 0 12px}
+.v1 .ball{height:164px;border-radius:26px;background:linear-gradient(135deg,#FDB00D,#F67E49);display:flex;align-items:center;gap:16px;padding:0 20px;color:#fff;margin-bottom:12px}
+.v1 .ball .n{font-size:58px;font-weight:800;line-height:1}.v1 .ball small{display:block;font-size:15px;font-weight:600;opacity:.95}
+.v1 .card{background:#F5F1F7;border-radius:22px;padding:14px 16px;margin-bottom:10px}
+.v1 .zone{position:relative;height:12px;border-radius:6px;background:linear-gradient(90deg,#c9e8f7 0 40%,#bdeed5 40% 80%,#fdd3c0 80%);margin:10px 0 6px}
+.v1 .zone b{position:absolute;top:-5px;width:22px;height:22px;border-radius:50%;background:#29CB88;border:4px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.v1 .zl{display:flex;justify-content:space-between;font-size:11px;color:#9b93a3;font-weight:600}
+.v1 .ex{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:20px;margin-bottom:7px;background:#F5F1F7}
+.v1 .ex.d{background:#FFF1CF}.v1 .ex.now{background:#D5F4E5}
+.v1 .ex i{width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;color:#F67E49;flex:0 0 auto}
+.v1 .ex.d i{background:#FDB00D;color:#fff}.v1 .ex.now i{background:#29CB88;color:#fff}
+.v1 .ex b{font-size:15px;font-weight:700;display:block}.v1 .ex span{font-size:12.5px;color:#7d7585;font-weight:600}.v1 .ex em{margin-left:auto;font-style:normal;font-weight:800;font-size:15px}
+.v1 .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.v1 .tri div{border-radius:20px;padding:12px;font-size:12px;font-weight:700;color:#5d5565}.v1 .tri b{display:block;font-size:24px;color:#2b2731;margin:3px 0}
+.v1 .mz{margin:9px 0 2px}.v1 .mz .t{display:flex;justify-content:space-between;font-size:14px;font-weight:700}.v1 .mz .t span{color:#9b93a3;font-size:12.5px}
+.v1 .mz .zone{height:9px;margin:6px 0 0}.v1 .mz .zone b{width:17px;height:17px;top:-4px;border-width:3px}
+
+/* 2 Hevy — белый утилитарный лог */
+.v2{background:#fff;color:#111;font-family:var(--sys)}
+.v2 .sb{color:#111}.v2 .tab{background:#fff;border-top:1px solid #e9e9e9;color:#9a9a9a}.v2 .tab .on{color:#1D82EA}
+.v2 .hd{display:flex;justify-content:space-between;align-items:center;padding:4px 0 10px;border-bottom:1px solid #eee;margin:0 -18px;padding-left:18px;padding-right:18px}
+.v2 .hd b{font-size:17px}.v2 .btn{background:#1D82EA;color:#fff;border-radius:8px;padding:7px 14px;font-weight:600;font-size:14px}
+.v2 .stats{display:flex;gap:26px;padding:10px 0;font-size:12px;color:#8a8a8a;border-bottom:1px solid #eee;margin:0 -18px;padding-left:18px}.v2 .stats b{display:block;color:#111;font-size:15px;margin-top:1px}
+.v2 .exh{display:flex;align-items:center;gap:10px;margin:14px 0 4px}.v2 .exh img{width:40px;height:40px;border-radius:50%;border:1px solid #eee;object-fit:cover;background:#fff}
+.v2 .exh b{color:#1D82EA;font-size:16px}.v2 .note{font-size:13px;color:#8a8a8a;margin:2px 0 6px}
+.v2 table{width:100%;border-collapse:collapse;font-size:15px;text-align:center}.v2 th{font-size:11.5px;color:#8a8a8a;font-weight:600;padding:6px 0}
+.v2 td{padding:8px 0;font-weight:600}.v2 td.p{color:#9a9a9a;font-weight:500;font-size:14px}.v2 tr.ok td{background:#C7FEA1}
+.v2 .ck{width:28px;height:28px;border-radius:7px;background:#ececec;display:inline-grid;place-items:center;color:#fff}.v2 tr.ok .ck{background:#4BC74B}
+.v2 .add{background:#f2f2f2;border-radius:8px;text-align:center;padding:9px;font-weight:600;font-size:14px;margin:8px 0 6px}
+.v2 .chips{display:flex;gap:6px;margin:10px 0}.v2 .chips span{border:1px solid #ddd;border-radius:16px;padding:6px 11px;font-size:13px;font-weight:600}.v2 .chips .on{background:#1D82EA;border-color:#1D82EA;color:#fff}
+.v2 .pr{display:flex;align-items:center;gap:10px;background:#FFF7D1;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:14px}.v2 .pr i{font-style:normal;font-size:22px}
+.v2 .li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:15px}.v2 .li span{color:#8a8a8a}
+
+/* 3 Whoop — графит, неоновые кольца */
+.v3{background:#13181C;color:#fff;font-family:"Inter",var(--sys)}
+.v3 .sb{color:#fff}.v3 .tab{background:#0d1114;color:#6b747b}.v3 .tab .on{color:#fff}
+.v3 .ttl{text-align:center;font-size:12px;letter-spacing:2px;font-weight:600;color:#a0a8ae;margin:4px 0 12px}
+.v3 .rings{display:flex;justify-content:space-between;margin-bottom:12px}.v3 .rings div{text-align:center;font-size:10.5px;letter-spacing:1.4px;font-weight:600;color:#a0a8ae}
+.v3 .card{background:#23272B;border-radius:16px;padding:14px;margin-bottom:9px}
+.v3 .cap2{font-size:10.5px;letter-spacing:1.6px;font-weight:600;color:#a0a8ae}
+.v3 .big{font-size:40px;font-weight:600;letter-spacing:-1px}
+.v3 .ex{display:flex;align-items:center;padding:9px 0;border-bottom:1px solid #2f3439;font-size:14px}.v3 .ex:last-child{border:0}
+.v3 .ex b{font-weight:500;flex:1}.v3 .ex span{color:#a0a8ae;font-size:13px;margin-right:12px}.v3 .ex em{font-style:normal;font-weight:600;width:52px;text-align:right}
+.v3 .dot{width:8px;height:8px;border-radius:50%;margin-right:10px;background:#3a4046}
+.v3 .bars{display:flex;align-items:flex-end;justify-content:space-between;height:150px;position:relative;margin-top:10px}
+.v3 .bars div{width:30px;border-radius:4px 4px 0 0;background:#0294E9;position:relative}.v3 .bars div span{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:#a0a8ae;white-space:nowrap}
+.v3 .bars .band{width:auto;border-radius:0;position:absolute;left:0;right:0;background:rgba(26,238,8,.09);border-top:1px dashed rgba(26,238,8,.5);border-bottom:1px dashed rgba(26,238,8,.5)}
+
+/* 4 Oura — спокойный, туман, тонкие цифры */
+.v4{background:#19181D;color:#e9e7ef;font-family:"Inter",var(--sys)}
+.v4 .sb{color:#fff}.v4 .tab{background:rgba(25,24,29,.82);backdrop-filter:blur(14px);color:#7b7884;border-top:1px solid #2a292f}.v4 .tab .on{color:#e9e7ef}
+.v4 .fog{position:absolute;top:0;left:0;right:0;height:420px;background:radial-gradient(120% 70% at 30% 75%,#2C7393 0,rgba(44,115,147,.35) 38%,transparent 70%),radial-gradient(90% 50% at 85% 60%,#50B5EA55 0,transparent 60%),linear-gradient(#141318,#19181D);z-index:0}
+.v4 .fog::after{content:"";position:absolute;left:0;right:0;bottom:60px;height:120px;background:linear-gradient(180deg,transparent,#19181D);}
+.v4 .hills{position:absolute;left:0;right:0;top:250px;z-index:0;opacity:.55}
+.v4 .scr{z-index:1}
+.v4 .lb{font-size:13px;color:#a8a4b2;font-weight:400;letter-spacing:.3px}
+.v4 .hero{font-size:92px;font-weight:200;letter-spacing:-4px;line-height:1;margin:8px 0 2px}
+.v4 .card{background:#25262A;border-radius:20px;padding:15px 16px;margin-bottom:9px}
+.v4 .ex{display:flex;justify-content:space-between;padding:9px 0;font-size:14.5px;font-weight:300;border-bottom:1px solid #303136}.v4 .ex:last-child{border:0}
+.v4 .ex span{color:#a8a4b2}.v4 .gold{color:#AF9054}
+
+/* 5 Ladder — чёрный, лайм, жирный капс */
+.v5{background:#050505;color:#fff;font-family:"Inter",var(--sys)}
+.v5 .sb{color:#fff}.v5 .tab{background:#050505;color:#666;border-top:1px solid #1d1d1d}.v5 .tab .on{color:#E4FC0C}
+.v5 .A{font-family:"Anton",Impact,sans-serif;text-transform:uppercase;letter-spacing:.3px}
+.v5 .hi{font-size:13px;color:#9a9a9a;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.v5 .ph{height:300px;border-radius:16px;position:relative;overflow:hidden;margin:10px 0 12px;background:#E4FC0C}
+.v5 .ph img{position:absolute;right:-30px;bottom:0;height:290px;filter:grayscale(1) contrast(1.35);mix-blend-mode:multiply;opacity:.9}
+.v5 .ph .t{position:absolute;left:16px;top:16px;color:#050505}.v5 .ph .t div:first-child{font-size:14px;font-weight:800;letter-spacing:1px}
+.v5 .ph .t .A{font-size:52px;line-height:.95;margin-top:6px}
+.v5 .ph .go{position:absolute;left:16px;bottom:16px;background:#050505;color:#E4FC0C;border-radius:30px;padding:12px 22px;font-weight:800;letter-spacing:1px;font-size:14px}
+.v5 .wk{display:flex;justify-content:space-between;margin-bottom:12px}.v5 .wk div{text-align:center;font-size:11px;color:#8a8a8a;font-weight:700}
+.v5 .wk i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1.5px solid #2a2a2a;margin-top:5px;font-style:normal;color:#fff;font-size:13px}
+.v5 .wk i.d{background:#E4FC0C;border-color:#E4FC0C;color:#050505}.v5 .wk i.t{border-color:#E4FC0C;color:#E4FC0C}
+.v5 .ex{display:flex;align-items:center;gap:12px;background:#171718;border-radius:14px;padding:10px 12px;margin-bottom:7px}
+.v5 .ex .n{font-family:"Anton";font-size:22px;color:#E4FC0C;width:26px}.v5 .ex b{font-size:14.5px;display:block}.v5 .ex span{font-size:12.5px;color:#8a8a8a}
+.v5 .lv{font-size:150px;line-height:.85;color:#E4FC0C}
+.v5 .sbx{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.v5 .sbx div{background:#171718;border-radius:14px;padding:12px}.v5 .sbx b{font-family:"Anton";font-size:34px;display:block;line-height:1.1}
+.v5 .sbx span{font-size:11px;color:#8a8a8a;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.v5 .ml{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px;font-weight:600}.v5 .ml .bar{flex:1;height:8px;background:#222;border-radius:4px;overflow:hidden}.v5 .ml .bar i{display:block;height:100%;background:#E4FC0C}
+.v5 .ml em{font-style:normal;font-family:"Anton";font-size:18px;width:48px;text-align:right}
+
+/* 6 Finch — нарисованный мир, питомец */
+.v6{background:linear-gradient(#9CDCFC,#C9EEFF 55%,#E9F8FF);color:#2d3a2f;font-family:"Nunito",var(--rnd)}
+.v6 .sb{color:#1d3a4a}.v6 .tab{background:#fff;border-radius:26px 26px 0 0;color:#9bb0bd;box-shadow:0 -4px 18px rgba(30,90,130,.12)}.v6 .tab .on{color:#E56AA9}
+.v6 .world{height:250px;position:relative;margin:0 -18px}
+.v6 .bub{background:#FDFDFD;border-radius:24px;padding:13px 15px;margin-bottom:9px;box-shadow:0 4px 14px rgba(40,100,140,.12)}
+.v6 .bub h3{font-weight:900;font-size:17px}.v6 .pill{display:inline-block;background:#ffe3f1;color:#c2468a;border-radius:20px;padding:3px 10px;font-weight:800;font-size:12px}
+.v6 .chk{display:flex;align-items:center;gap:11px;padding:7px 0;font-weight:800;font-size:15px}.v6 .chk i{width:26px;height:26px;border-radius:50%;border:3px solid #cfe3cc;flex:0 0 auto}
+.v6 .chk.d i{background:#79B458;border-color:#79B458;box-shadow:inset 0 0 0 3px #fff}.v6 .chk.d{color:#8a9a8c;text-decoration:line-through}.v6 .chk span{margin-left:auto;font-size:13px;color:#7a8d7d}
+.v6 .chk.n i{border-color:#E56AA9}
+.v6 .en{height:16px;border-radius:9px;background:#e8f4e4;overflow:hidden;margin:7px 0 3px}.v6 .en i{display:block;height:100%;background:linear-gradient(90deg,#79B458,#30843B);border-radius:9px}
+.v6 .stick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.v6 .stick div{background:#fff;border-radius:18px;text-align:center;padding:8px 2px;font-weight:800;font-size:11px;border:2.5px solid #ffd3ea}
+.v6 .stick b{display:block;font-size:20px;color:#E56AA9}
+
+/* 7 (Not Boring) Habits — тактильный скевоморф, золото */
+.v7{background:#1E1E1E;color:#f2f2f2;font-family:"Space Grotesk",var(--sys)}
+.v7 .sb{color:#fff}.v7 .tab{background:#161616;color:#6b6b6b}.v7 .tab .on{color:#FEB933}
+.v7 h2{font-size:30px;font-weight:700;letter-spacing:-.5px}.v7 .sub{color:#8f8f8f;font-size:14px;margin:2px 0 14px}
+.v7 .k{display:flex;align-items:center;gap:14px;border-radius:20px;padding:13px 15px;margin-bottom:11px;background:linear-gradient(#2e2e2e,#262626);box-shadow:0 6px 0 #0e0e0e,inset 0 1px 0 rgba(255,255,255,.08)}
+.v7 .k .c{width:40px;height:40px;border-radius:50%;flex:0 0 auto;background:radial-gradient(circle at 35% 30%,#3c3c3c,#151515);box-shadow:inset 0 2px 5px #000,0 1px 0 rgba(255,255,255,.1)}
+.v7 .k.d{background:linear-gradient(#FFC94D,#F0A61C);color:#2a1a00;box-shadow:0 6px 0 #9a6200,inset 0 1px 0 rgba(255,255,255,.6)}
+.v7 .k.d .c{background:radial-gradient(circle at 35% 30%,#fff7e0,#f3cd73);box-shadow:inset 0 -2px 3px rgba(150,90,0,.45),0 2px 3px rgba(0,0,0,.25);display:grid;place-items:center;font-weight:700}
+.v7 .k b{font-size:16px;display:block}.v7 .k span{font-size:12.5px;opacity:.7}
+.v7 .k.now{outline:2px solid #FEB933;outline-offset:2px}
+.v7 .yr{display:flex;gap:3px;align-items:flex-end;height:64px;margin:10px 0 4px}.v7 .yr i{flex:1;border-radius:2px;background:#2d2d2d;height:100%}.v7 .yr i.f{background:#FEB933}.v7 .yr i.h{background:#8a6420}
+.v7 .mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8f8f8f;display:flex;justify-content:space-between}
+
+/* 8 Zero — красный экран, белые карточки, огромное кольцо */
+.v8{background:#FB3927;color:#fff;font-family:var(--rnd)}
+.v8 .sb{color:#fff}.v8 .tab{background:#fff;color:#a7a7a7}.v8 .tab .on{color:#FB3927}
+.v8 .hd{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:19px;margin:4px 0 6px}.v8 .hd span{background:rgba(255,255,255,.22);border-radius:16px;padding:5px 11px;font-size:13px}
+.v8 .ring{display:grid;place-items:center;margin:2px 0 8px;position:relative}
+.v8 .ring .in{position:absolute;text-align:center}.v8 .ring .t{font-size:58px;font-weight:800;letter-spacing:-1px;font-family:ui-monospace,"SF Mono",Menlo,monospace}
+.v8 .wc{background:#fff;color:#1d1d1d;border-radius:20px;padding:14px 16px;margin-bottom:9px;box-shadow:0 4px 14px rgba(120,0,0,.18)}
+.v8 .wc .l{font-size:12.5px;color:#8a8a8a;font-weight:700}.v8 .wc b{font-size:19px;font-weight:800}
+.v8 .sets{display:flex;gap:7px;margin-top:10px}.v8 .sets i{flex:1;height:38px;border-radius:12px;background:#f2f2f2;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;color:#9a9a9a}
+.v8 .sets i.d{background:#0D892C;color:#fff}.v8 .sets i.n{background:#fff;border:2.5px solid #FB3927;color:#FB3927}
+.v8 .st{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #f0f0f0;font-weight:700;font-size:14.5px}.v8 .st:last-child{border:0}
+.v8 .st i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:13px;background:#f2f2f2;color:#9a9a9a}.v8 .st.d i{background:#0D892C;color:#fff}.v8 .st.n i{background:#FB3927;color:#fff}
+.v8 .st span{margin-left:auto;color:#8a8a8a;font-size:13px}
+
+/* 9 Structured — светлая лента дня */
+.v9{background:#F9F9FB;color:#1e2633;font-family:var(--rnd)}
+.v9 .sb{color:#1e2633}.v9 .tab{background:#fff;border-top:1px solid #ececf0;color:#a3a7b1}.v9 .tab .on{color:#A54A6E}
+.v9 .days{display:flex;justify-content:space-between;margin:2px 0 14px}.v9 .days div{text-align:center;font-size:11px;color:#8b909b;font-weight:600;width:44px}
+.v9 .days b{display:grid;place-items:center;height:36px;border-radius:12px;font-size:16px;color:#1e2633;margin-top:4px}.v9 .days .on b{background:#1e2633;color:#fff}
+.v9 h2{font-size:27px;font-weight:800;margin-bottom:12px}.v9 h2 span{color:#A54A6E}
+.v9 .tl{position:relative;padding-left:0}
+.v9 .it{display:flex;align-items:center;gap:12px;margin-bottom:9px;position:relative}
+.v9 .tm{width:40px;font-size:12px;color:#8b909b;font-weight:600;text-align:right}
+.v9 .ic{width:46px;height:58px;border-radius:23px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;flex:0 0 auto;position:relative;z-index:1}
+.v9 .ic.sm{height:46px}
+.v9 .tx b{display:block;font-size:15px}.v9 .tx span{font-size:12.5px;color:#8b909b;font-weight:600}
+.v9 .cb{margin-left:auto;width:26px;height:26px;border-radius:50%;border:2.5px solid #d3d6dd}.v9 .cb.d{background:#1e2633;border-color:#1e2633}
+.v9 .line{position:absolute;left:75px;top:0;bottom:0;width:3px;background:repeating-linear-gradient(#d9dce3 0 6px,transparent 6px 10px)}
+.v9 .now{position:relative;height:2px;background:#E5484D;margin:0 0 9px 52px}.v9 .now::before{content:"сейчас";position:absolute;left:-52px;top:-8px;font-size:11px;color:#E5484D;font-weight:700}
+.v9 .card{background:#fff;border-radius:16px;padding:13px 14px;margin-bottom:9px;box-shadow:0 1px 0 #ececf0}
+.v9 .hb{display:flex;align-items:center;gap:10px;margin:7px 0}.v9 .hb .ic{width:32px;height:32px;border-radius:10px;font-size:11px}
+.v9 .hb b{flex:1;font-size:14.5px}.v9 .dots{display:flex;gap:4px}.v9 .dots i{width:14px;height:14px;border-radius:50%;background:#e6e8ed}
+
+/* 10 Streaks — коралловый градиент, круги */
+.v10{background:linear-gradient(170deg,#F07A55,#E66545 45%,#C94E7D);color:#fff;font-family:var(--rnd)}
+.v10 .sb{color:#fff}.v10 .tab{background:rgba(255,255,255,.14);backdrop-filter:blur(10px);color:rgba(255,255,255,.65)}.v10 .tab .on{color:#fff}
+.v10 h2{font-size:28px;font-weight:800;text-align:center;margin:6px 0 2px}.v10 .s{text-align:center;opacity:.85;font-size:14px;font-weight:600;margin-bottom:16px}
+.v10 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 6px;text-align:center}
+.v10 .grid div{font-size:12px;font-weight:700;line-height:1.2}.v10 .grid svg{display:block;margin:0 auto 6px}
+.v10 .panel{background:#FFFBFC;color:#2b2b2b;border-radius:22px 22px 0 0;margin:0 -18px;padding:16px 18px;position:absolute;left:18px;right:18px;bottom:0;top:250px}
+.v10 .three{display:flex;justify-content:space-between;text-align:center;margin-bottom:14px}.v10 .three b{display:block;font-size:26px;color:#E66545}.v10 .three span{font-size:10.5px;font-weight:700;color:#999;letter-spacing:.6px}
+.v10 .cols{display:flex;align-items:flex-end;gap:6px;height:120px;border-bottom:1px solid #eee}.v10 .cols i{flex:1;border-radius:5px 5px 0 0;background:#E66545}.v10 .cols i.o{background:#f6c9b9}
+.v10 .ax{display:flex;gap:6px;font-size:10px;color:#999;margin-top:4px}.v10 .ax span{flex:1;text-align:center}
+.v10 .ln{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f0eaea;font-weight:700;font-size:14.5px}.v10 .ln span{color:#E66545}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>10 видов приложения — выбери номер</h1>
+  <p>Данные тестовые (веса новичка), экраны «Сегодня» и «Прогресс» со шкалой. Слева у каждого — настоящие скрины приложения-донора из App Store, справа — наше в его стиле.
+  Открыть один вариант на весь экран (удобно на телефоне): нажми «на весь экран».</p>
+</div>
+<div id="root"></div>
+<script>
+const D = {
+  date: 'Чт, 16 октября', day: 'A', title: 'Грудь и руки', sub: 'спина, ноги, плечи', week: 'Неделя 3 из 5',
+  ex: [
+    ['Жим в тренажёре от груди', '4 × 6–8', 42.5, 'd', '+2,5 кг', 'chestpress'],
+    ['Тяга верхнего блока', '4 × 6–8', 45, 'n', '', 'latpull'],
+    ['Жим ногами', '3 × 8–10', 85, '', '', 'legpress'],
+    ['Сгибания ног сидя', '3 × 10–12', 35, '', '', 'seatcurl'],
+    ['Махи в стороны на блоке', '3 × 12–15', 5, '', '', 'cablelat'],
+    ['Сгибания на бицепс', '5 × 10–12', 8, '', '', 'dbcurl'],
+    ['Разгибания на трицепс', '4 × 10–12', 14, '', '', 'dbtri'],
+    ['Сгибания запястий', '3 × 12–20', 6, '', '', 'wristcurl'],
+    ['Скручивания на полу', '3 × 15–20', 0, '', '', 'floorcrunch'],
+  ],
+  sets: [[45, '45 × 8', 8, 1], [45, '45 × 7', 7, 1], [45, '42,5 × 8', '', 0], [45, '42,5 × 7', '', 0]],
+  lvl: 3, str: 46, vol: [31, 97], con: [1, 3],
+  mus: [['Грудь', 12, 3, 76], ['Спина', 12, 1, 63], ['Ноги спереди', 12, 1, 62], ['Задняя бедра', 7, 5, 50], ['Плечи', 13, 3, 97], ['Бицепс', 14, 1, 10], ['Трицепс', 12, 10, 58], ['Предплечья', 10, 2, 30], ['Пресс', 6, 1, 20]],
+  orm: [112, 113, 115, 114, 117, 119], ormW: ['25.09', '29.09', '02.10', '06.10', '09.10', '13.10'],
+  weeks: [2, 3, 3, 2, 3, 1], // тренировок по неделям
+};
+const kg = (v) => (v === 0 ? 'вес тела' : String(v).replace('.', ',') + ' кг');
+const SH = { chestpress: 'Жим от груди', latpull: 'Тяга блока', legpress: 'Жим ногами', seatcurl: 'Сгибания ног', cablelat: 'Махи в стороны', dbcurl: 'Бицепс', dbtri: 'Трицепс', wristcurl: 'Запястья', floorcrunch: 'Пресс' };
+const doneN = D.ex.filter((e) => e[3] === 'd').length;
+
+function ring(p, size, w, col, track, inner = '') {
+  const r = (size - w) / 2, c = 2 * Math.PI * r;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="${track}" stroke-width="${w}"/>
+  <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${c * p / 100} ${c}" transform="rotate(-90 ${size / 2} ${size / 2})"/>${inner}</svg>`;
+}
+function line(vals, w, h, col, fill, dots = true, labels) {
+  const mn = Math.min(...vals) - 2, mx = Math.max(...vals) + 1, X = (i) => 8 + i * (w - 16) / (vals.length - 1), Y = (v) => h - 18 - (v - mn) / (mx - mn) * (h - 34);
+  const d = vals.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
+  const area = fill ? `<path d="${d} L${X(vals.length - 1)} ${h - 18} L8 ${h - 18} Z" fill="${fill}"/>` : '';
+  const pts = dots ? vals.map((v, i) => `<circle cx="${X(i)}" cy="${Y(v)}" r="${i === vals.length - 1 ? 4.5 : 3}" fill="${col}"/>`).join('') : '';
+  const lb = labels ? labels.map((l, i) => (i % 2 === 0 || i === labels.length - 1) ? `<text x="${X(i)}" y="${h - 3}" font-size="10" text-anchor="middle" fill="${labels.c || '#999'}">${l}</text>` : '').join('') : '';
+  return `<svg width="${w}" height="${h}">${area}<path d="${d}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>${pts}${lb}</svg>`;
+}
+const IC = {
+  today: '<path d="M3 10h3v4H3zM18 10h3v4h-3zM6 8h2v8H6zM16 8h2v8h-2zM8 11h8v2H8z" fill="currentColor"/>',
+  hist: '<circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  prog: '<path d="M5 19V11M10 19V6M15 19v-9M20 19V4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>',
+  food: '<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M16 3c-2 2-2 7 0 9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  me: '<circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c1-5 15-5 16 0z" fill="currentColor"/>',
+};
+const tabs = (on) => `<div class="tab">${[['today', 'Сегодня'], ['hist', 'История'], ['prog', 'Прогресс'], ['food', 'Питание'], ['me', 'Я']].map(([k, t]) => `<div class="${k === on ? 'on' : ''}"><svg viewBox="0 0 24 24">${IC[k]}</svg>${t}</div>`).join('')}</div>`;
+const sb = '<div class="sb"><span>9:41</span><i></i></div>';
+const img = (id) => `../../tech/${id}-0.${/^(wristcurl|seatcurl|leverpull)$/.test(id) ? 'jpg' : 'png'}`;
+const zoneX = (n) => Math.min(96, Math.max(2, n / 25 * 100)); // шкала 0–25 подходов, норма 10–20 = 40–80 %
+
+/* ---------- 1 Gentler ---------- */
+const V1 = [
+  () => `<h6>${D.date} · ${D.week}</h6><h2>День ${D.day} — ${D.title}</h2>
+  <div class="ball">${ring(doneN / D.ex.length * 100, 96, 12, '#fff', 'rgba(255,255,255,.3)', `<text x="48" y="58" font-size="30" font-weight="800" fill="#fff" text-anchor="middle">${doneN}/9</text>`)}<div><div class="n">~55</div><small>минут сегодня<br>9 упражнений, 33 подхода</small></div></div>
+  <div class="card"><div style="font-weight:800;font-size:15px">Нагрузка недели</div><div class="zone"><b style="left:calc(${zoneX(12)}% - 11px)"></b></div><div class="zl"><span>мало</span><span>в самый раз · 10–20</span><span>много</span></div></div>
+  ${D.ex.slice(0, 5).map((e, i) => `<div class="ex ${e[3]}"><i>${e[3] === 'd' ? '✓' : i + 1}</i><div><b>${e[0]}</b><span>${e[1]}${e[4] ? ' · ' + e[4] : ''}</span></div><em>${kg(e[2])}</em></div>`).join('')}`,
+  () => `<h6>Прогресс</h6><h2>Уровень ${D.lvl}</h2>
+  <div class="ball" style="background:linear-gradient(135deg,#29CB88,#7ad9b0)">${ring(D.str, 96, 12, '#fff', 'rgba(255,255,255,.3)', `<text x="48" y="57" font-size="24" font-weight="800" fill="#fff" text-anchor="middle">${D.str}%</text>`)}<div><div class="n" style="font-size:40px">до ур. 4</div><small>Сила +5 % к старту —<br>ещё один уровень</small></div></div>
+  <div class="tri"><div style="background:#FFF1CF">Сила<b>ур. 3</b>46 %</div><div style="background:#D5F4E5">Объём<b>31</b>из 97</div><div style="background:#FDE3D6">Неделя<b>1/3</b>трен.</div></div>
+  <div class="card" style="padding-bottom:12px"><div style="font-weight:800;font-size:15px;margin-bottom:2px">Подходов на мышцу за неделю</div>
+  ${D.mus.slice(0, 6).map((m) => `<div class="mz"><div class="t">${m[0]}<span>${m[1]} · ур. ${m[2]}</span></div><div class="zone"><b style="left:calc(${zoneX(m[1])}% - 8px);background:${m[1] < 10 ? '#5bb6e6' : '#29CB88'}"></b></div></div>`).join('')}</div>`,
+];
+/* ---------- 2 Hevy ---------- */
+const V2 = [
+  () => `<div class="hd"><span style="color:#1D82EA;font-size:15px">⌄</span><b>Тренировка A</b><span class="btn">Готово</span></div>
+  <div class="stats"><div>Время<b style="color:#1D82EA">24:13</b></div><div>Объём<b>2 670 кг</b></div><div>Подходы<b>6</b></div></div>
+  <div class="exh"><img src="${img('latpull')}"><b>Тяга верхнего блока</b></div><div class="note">Отдых: 2 мин 30 с · цель 6–8 повторов</div>
+  <table><tr><th>ПОДХОД</th><th>ПРОШЛЫЙ</th><th>КГ</th><th>ПОВТ</th><th>✓</th></tr>
+  ${D.sets.map((s, i) => `<tr class="${s[3] ? 'ok' : ''}"><td>${i + 1}</td><td class="p">${s[1]}</td><td>${s[0]}</td><td>${s[2] || '<span style="color:#bbb">6–8</span>'}</td><td><span class="ck">✓</span></td></tr>`).join('')}</table>
+  <div class="add">+ Добавить подход</div>
+  <div class="exh"><img src="${img('legpress')}"><b>Жим ногами</b></div><div class="note">3 × 8–10 · в прошлый раз 85 × 9</div>
+  <table><tr><th>ПОДХОД</th><th>ПРОШЛЫЙ</th><th>КГ</th><th>ПОВТ</th><th>✓</th></tr><tr><td>1</td><td class="p">85 × 9</td><td>85</td><td style="color:#bbb">8–10</td><td><span class="ck">✓</span></td></tr></table>`,
+  () => `<div class="hd"><span></span><b>Жим ногами</b><span style="color:#1D82EA;font-weight:600">Править</span></div>
+  <div style="margin-top:14px;font-size:13px;color:#8a8a8a">Расчётный 1ПМ</div><div style="font-size:30px;font-weight:700">119 кг <span style="font-size:14px;color:#4BC74B;font-weight:600">+7 кг с 25.09</span></div>
+  ${line(D.orm, 354, 190, '#1D82EA', 'rgba(29,130,234,.10)', true, D.ormW)}
+  <div class="chips"><span class="on">Расчётный 1ПМ</span><span>Тяжёлый вес</span><span>Объём</span></div>
+  <div class="pr"><i>🏆</i><div><b>Новый рекорд!</b><br><span style="color:#8a6d00">85 кг × 12 — лучший подход</span></div></div>
+  <div class="li">Тяжёлый вес<b>85 кг</b></div><div class="li">Лучший подход<b>85 × 12</b></div><div class="li">До уровня 3<span>85 × 14</span></div><div class="li">Объём за тренировку<b>3 570 кг</b></div>`,
+];
+/* ---------- 3 Whoop ---------- */
+const V3 = [
+  () => `<div class="ttl">ЧЕТВЕРГ, 16 ОКТ</div>
+  <div class="rings">${[['СИЛА', D.str, '#1AEE08'], ['ОБЪЁМ', 32, '#0294E9'], ['НЕДЕЛЯ', 33, '#F5C400']].map(([t, p, c]) => `<div>${ring(p, 104, 9, c, '#2a3036', `<text x="52" y="60" font-size="25" font-weight="600" fill="#fff" text-anchor="middle">${p}%</text>`)}<div style="margin-top:6px">${t}</div></div>`).join('')}</div>
+  <div class="card"><div class="cap2">СЕГОДНЯ · ДЕНЬ ${D.day}</div><div style="display:flex;align-items:baseline;gap:10px;margin-top:4px"><span class="big">${doneN}/9</span><span style="color:#a0a8ae">упражнений · ~55 мин</span></div></div>
+  <div class="card" style="padding-top:6px;padding-bottom:6px">${D.ex.slice(0, 7).map((e) => `<div class="ex"><i class="dot" style="background:${e[3] === 'd' ? '#1AEE08' : e[3] === 'n' ? '#0294E9' : '#3a4046'}"></i><b>${e[0]}</b><span>${e[1]}</span><em>${e[2] ? String(e[2]).replace('.', ',') : '—'}</em></div>`).join('')}</div>`,
+  () => `<div class="ttl">ПРОГРЕСС</div>
+  <div style="display:grid;place-items:center;position:relative">${ring(D.str, 210, 14, '#1AEE08', '#2a3036')}<div style="position:absolute;text-align:center"><div class="cap2">УРОВЕНЬ</div><div style="font-size:64px;font-weight:600;line-height:1">${D.lvl}</div><div style="color:#1AEE08;font-weight:600;font-size:14px">46% до 4</div></div></div>
+  <div class="card" style="margin-top:12px"><div class="cap2">ПОДХОДОВ ЗА НЕДЕЛЮ · НОРМА 10–20</div>
+  <div class="bars"><div class="band" style="bottom:${10 / 25 * 150}px;height:${10 / 25 * 150}px"></div>${D.mus.slice(0, 7).map((m) => `<div style="height:${m[1] / 25 * 150}px;background:${m[1] < 10 ? '#F5C400' : '#0294E9'}"><span>${m[0].split(' ')[0].slice(0, 5)}</span></div>`).join('')}</div><div style="height:22px"></div></div>
+  <div class="card" style="display:flex;justify-content:space-between"><div><div class="cap2">ЖИМ НОГАМИ · 1ПМ</div><div class="big" style="font-size:30px">119</div></div>${line(D.orm, 170, 60, '#1AEE08', '', false)}</div>`,
+];
+/* ---------- 4 Oura ---------- */
+const hills = `<svg class="hills" width="390" height="140" viewBox="0 0 390 140"><path d="M0 90 C60 50 110 60 160 80 S270 40 390 70 V140 H0Z" fill="#1f3d4c"/><path d="M0 110 C80 80 150 100 220 95 S330 80 390 100 V140 H0Z" fill="#192a33"/></svg>`;
+const V4 = [
+  () => `<div class="lb" style="text-align:center;margin-top:4px">${D.date}</div>
+  <div style="text-align:center;margin-top:34px"><div class="lb">Тренировка ${D.day}</div><div class="hero">${doneN}<span style="font-size:40px;color:#a8a4b2">/9</span></div><div class="lb">${D.title} · ${D.sub}</div></div>
+  <div style="height:150px"></div>
+  <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="lb">Сейчас</div><div style="font-size:19px;font-weight:300;margin-top:3px">Тяга верхнего блока</div><div class="lb" style="margin-top:3px">подход 3 из 4 · 45 кг × 6–8</div></div>${ring(50, 58, 4, '#50B5EA', '#34353b', '<text x="29" y="34" font-size="14" font-weight="300" fill="#e9e7ef" text-anchor="middle">2/4</text>')}</div></div>
+  <div class="card">${D.ex.slice(2, 6).map((e) => `<div class="ex">${e[0]}<span>${kg(e[2])}</span></div>`).join('')}</div>`,
+  () => `<div class="lb" style="text-align:center;margin-top:4px">Прогресс</div>
+  <div style="display:grid;place-items:center;margin-top:20px;position:relative"><svg width="280" height="150"><path d="M20 140 A120 120 0 0 1 260 140" fill="none" stroke="#34353b" stroke-width="5" stroke-linecap="round"/><path d="M20 140 A120 120 0 0 1 260 140" fill="none" stroke="#50B5EA" stroke-width="5" stroke-linecap="round" stroke-dasharray="${377 * D.str / 100} 400"/></svg>
+  <div style="position:absolute;top:44px;text-align:center"><div class="hero" style="font-size:84px">${D.lvl}</div><div class="lb">уровень · 46 % до 4</div></div></div>
+  <div style="height:70px"></div>
+  <div class="card"><div class="lb">Сила</div><div style="display:flex;justify-content:space-between;align-items:end"><div style="font-size:34px;font-weight:200">+6 %<span class="lb"> к старту</span></div>${line(D.orm, 150, 56, '#50B5EA', '', false)}</div></div>
+  <div class="card">${D.mus.slice(0, 5).map((m) => `<div class="ex">${m[0]}<span>ур. ${m[2]} <span class="gold">· ${m[3]} %</span></span></div>`).join('')}</div>`,
+];
+/* ---------- 5 Ladder ---------- */
+const V5 = [
+  () => `<div class="hi">Доброе утро, Денис</div><div class="A" style="font-size:30px;margin-top:2px">Неделя 3 · Силовой план</div>
+  <div class="ph"><img src="${img('chestpress')}"><div class="t"><div>ДЕНЬ ${D.day} · ~55 МИН</div><div class="A">Грудь<br>и руки</div></div><div class="go">НАЧАТЬ →</div></div>
+  <div class="wk">${['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'].map((d, i) => `<div>${d}<i class="${i === 1 ? 'd' : i === 3 ? 't' : ''}">${13 + i}</i></div>`).join('')}</div>
+  ${D.ex.slice(0, 4).map((e, i) => `<div class="ex"><span class="n">${i + 1}</span><div><b>${e[0]}</b><span>${e[1]} · ${kg(e[2])}</span></div></div>`).join('')}`,
+  () => `<div class="hi">Твой прогресс</div><div style="display:flex;align-items:flex-end;gap:12px;margin-top:8px"><div class="A lv">${D.lvl}</div><div class="A" style="font-size:26px;line-height:1.05;padding-bottom:10px">Уровень<br><span style="color:#E4FC0C">46 % до 4</span></div></div>
+  <div class="sbx"><div><span>Тренировок</span><b>9</b></div><div><span>Сила к старту</span><b style="color:#E4FC0C">+6 %</b></div><div><span>Подходов неделя</span><b>31/97</b></div><div><span>Рекордов</span><b>7</b></div></div>
+  <div class="hi" style="margin:14px 0 4px">Мышцы · уровень</div>
+  ${D.mus.slice(0, 6).map((m) => `<div class="ml"><span style="width:110px">${m[0]}</span><div class="bar"><i style="width:${m[3]}%"></i></div><em>${m[2]}</em></div>`).join('')}`,
+];
+/* ---------- 6 Finch ---------- */
+const buddy = (s, lvl) => `<svg width="${s}" height="${s}" viewBox="0 0 120 120"><ellipse cx="60" cy="112" rx="34" ry="6" fill="rgba(48,132,59,.25)"/>
+<rect x="6" y="56" width="108" height="7" rx="3.5" fill="#6b7a86"/><rect x="2" y="44" width="11" height="31" rx="4" fill="#3d4a55"/><rect x="107" y="44" width="11" height="31" rx="4" fill="#3d4a55"/>
+<path d="M60 22c26 0 38 22 38 46s-14 40-38 40-38-16-38-40 12-46 38-46z" fill="#FFB86B"/><path d="M60 50c14 0 22 10 22 24s-9 26-22 26-22-12-22-26 8-24 22-24z" fill="#FFE2B8"/>
+<circle cx="47" cy="50" r="6" fill="#2d3a2f"/><circle cx="73" cy="50" r="6" fill="#2d3a2f"/><circle cx="49" cy="48" r="2" fill="#fff"/><circle cx="75" cy="48" r="2" fill="#fff"/>
+<path d="M54 61q6 6 12 0" stroke="#2d3a2f" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="38" cy="60" r="5" fill="#ff9aa8" opacity=".7"/><circle cx="82" cy="60" r="5" fill="#ff9aa8" opacity=".7"/>
+<path d="M28 66q-14-4-16-12M92 66q14-4 16-12" stroke="#FFB86B" stroke-width="9" stroke-linecap="round" fill="none"/>
+<path d="M50 22q4-12 10-6q6-6 10 6" fill="#E56AA9"/><text x="60" y="88" text-anchor="middle" font-size="16" font-weight="900" fill="#c2468a">${lvl}</text></svg>`;
+const world = (h, s) => `<div class="world" style="height:${h}px"><svg width="390" height="${h}" style="position:absolute;bottom:0"><circle cx="330" cy="40" r="22" fill="#FFF3A6"/><ellipse cx="80" cy="50" rx="34" ry="12" fill="#fff" opacity=".8"/><ellipse cx="110" cy="44" rx="22" ry="10" fill="#fff" opacity=".8"/><path d="M0 ${h - 50} Q100 ${h - 95} 200 ${h - 60} T390 ${h - 70} V${h} H0Z" fill="#A9DB7F"/><path d="M0 ${h - 25} Q140 ${h - 60} 260 ${h - 35} T390 ${h - 30} V${h} H0Z" fill="#79B458"/></svg><div style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%)">${buddy(s, D.lvl)}</div></div>`;
+const V6 = [
+  () => `${world(220, 150)}<div class="bub" style="margin-top:-6px"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Силач Пончик · ур. ${D.lvl}</h3><span class="pill">⚡ ${doneN}/9</span></div><div class="en"><i style="width:46%"></i></div><div style="font-size:12.5px;font-weight:700;color:#7a8d7d">Сделай тренировку — Пончик подрастёт</div></div>
+  <div class="bub">${D.ex.slice(0, 5).map((e) => `<div class="chk ${e[3]}"><i></i>${e[0]}<span>${kg(e[2])}</span></div>`).join('')}</div>`,
+  () => `${world(270, 190)}<div class="bub" style="margin-top:-6px"><h3>До уровня 4 — ещё чуть-чуть!</h3><div class="en" style="height:20px"><i style="width:46%"></i></div><div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:#7a8d7d"><span>сила 46 %</span><span>31 из 97 подходов</span></div></div>
+  <div class="bub"><h3>Значки мышц</h3><div class="stick">${D.mus.slice(0, 8).map((m) => `<div><b>${m[2]}</b>${m[0].split(' ')[0]}</div>`).join('')}</div></div>`,
+];
+/* ---------- 7 Not Boring ---------- */
+const yr = Array.from({ length: 30 }, (_, i) => (i < 27 ? '' : i === 29 ? 'h' : 'f')).map((c, i) => (i > 26 ? `<i class="${c}" style="height:${[70, 100, 40][i - 27]}%"></i>` : '<i style="height:18%"></i>')).join('');
+const V7 = [
+  () => `<div class="mono" style="margin-top:4px"><span>ЧТ 16.10</span><span>НЕДЕЛЯ 3/5</span></div><h2 style="margin-top:10px">День ${D.day}</h2><div class="sub">${D.title} · нажми, когда сделал</div>
+  ${D.ex.slice(0, 6).map((e, i) => `<div class="k ${e[3]}"><div class="c">${e[3] === 'd' ? '✓' : ''}</div><div><b>${e[0]}</b><span>${e[1]} · ${kg(e[2])}</span></div></div>`).join('')}`,
+  () => `<div class="mono" style="margin-top:4px"><span>ПРОГРЕСС</span><span>2026</span></div>
+  <svg width="354" height="230" viewBox="0 0 354 230" style="margin-top:8px"><defs><linearGradient id="mt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FEB933"/><stop offset="1" stop-color="#7a4f08"/></linearGradient></defs>
+  <path d="M0 230 L120 70 L160 110 L215 20 L354 230Z" fill="#2b2b2b"/><path d="M215 20 L250 75 L232 70 L215 90 L200 66 L187 66Z" fill="#e9e9e9"/><path d="M0 230 L120 70 L160 110 L180 85 L180 230Z" fill="url(#mt)" opacity=".9"/>
+  ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((l) => `<text x="300" y="${222 - l * 20}" font-size="10" fill="${l === 3 ? '#FEB933' : '#5a5a5a'}" font-family="Menlo">${l === 10 ? 'ВЕРШИНА 10' : 'ур. ' + l}</text>`).join('')}
+  <line x1="215" y1="20" x2="215" y2="0" stroke="#FEB933" stroke-width="2"/><path d="M215 0 L232 6 L215 12Z" fill="#FEB933"/><circle cx="174" cy="92" r="7" fill="#fff" stroke="#FEB933" stroke-width="3"/></svg>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:8px"><h2>Уровень ${D.lvl}</h2><span style="color:#FEB933;font-weight:700">46 % до 4</span></div>
+  <div class="sub" style="margin-bottom:6px">Тренировки по неделям</div><div class="yr">${yr}</div><div class="mono"><span>ЯНВ</span><span>АПР</span><span>ИЮЛ</span><span>ОКТ</span></div>
+  <div class="k" style="margin-top:14px"><div class="c"></div><div><b>Сила +6 % к старту</b><span>жим ногами 80 → 85 кг × 12</span></div></div>`,
+];
+/* ---------- 8 Zero ---------- */
+const V8 = [
+  () => `<div class="hd">Отдых<span>День ${D.day} · 2/9</span></div>
+  <div class="ring">${ring(70, 270, 22, '#fff', 'rgba(255,255,255,.28)')}<div class="in"><div style="font-weight:700;opacity:.9">осталось</div><div class="t">0:45</div><div style="font-weight:700;opacity:.9">из 2:30</div></div></div>
+  <div class="wc"><div class="l">СЛЕДУЮЩИЙ ПОДХОД</div><b>Тяга верхнего блока</b><div style="font-size:15px;font-weight:700;margin-top:2px">45 кг × 6–8 · подход 3 из 4</div><div class="sets">${D.sets.map((s, i) => `<i class="${s[3] ? 'd' : i === 2 ? 'n' : ''}">${s[3] ? s[2] : i + 1}</i>`).join('')}</div></div>
+  <div class="wc" style="display:flex;justify-content:space-between;align-items:center"><div><div class="l">ДАЛЬШЕ</div><b style="font-size:16px">Жим ногами · 85 кг</b></div><span style="font-size:26px;color:#FB3927">›</span></div>`,
+  () => `<div class="hd">Прогресс<span>с 25.09</span></div>
+  <div class="ring">${ring(D.str, 230, 20, '#fff', 'rgba(255,255,255,.28)')}<div class="in"><div style="font-weight:700;opacity:.9">уровень</div><div class="t" style="font-size:76px;font-family:inherit">${D.lvl}</div><div style="font-weight:700;opacity:.9">46 % до 4</div></div></div>
+  <div class="wc" style="padding-top:6px;padding-bottom:6px">${[['1', 'Старт', '25.09', 'd'], ['2', '+2 % к старту', 'пройден', 'd'], ['3', '+4 %', 'пройден', 'd'], ['4', '+6 %', 'сейчас +5,1', 'n'], ['5', '+8 %', '', '']].map(([n, t, s, c]) => `<div class="st ${c}"><i>${c === 'd' ? '✓' : n}</i>Уровень ${n} · ${t}<span>${s}</span></div>`).join('')}</div>`,
+];
+/* ---------- 9 Structured ---------- */
+const MC = ['#5384AB', '#174B72', '#A54A6E', '#7E9C5B', '#D88B3E', '#8A6BB8', '#4A9C9C', '#B85C5C', '#6b7280'];
+const V9 = [
+  () => `<div class="days">${['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((d, i) => `<div class="${i === 3 ? 'on' : ''}">${d}<b>${13 + i}</b></div>`).join('')}</div>
+  <h2>День ${D.day} <span>· ${D.title}</span></h2><div class="tl"><div class="line"></div>
+  ${D.ex.slice(0, 7).map((e, i) => `${i === 1 ? '<div class="now"></div>' : ''}<div class="it"><div class="tm">${['18:30', '18:42', '18:56', '19:06', '19:13', '19:20', '19:30'][i]}</div><div class="ic ${i > 1 ? 'sm' : ''}" style="background:${MC[i]};opacity:${e[3] === 'd' ? .55 : 1}">${e[2] ? String(e[2]).replace('.', ',') : '—'}</div><div class="tx"><b>${e[0]}</b><span>${e[1]}</span></div><div class="cb ${e[3] === 'd' ? 'd' : ''}"></div></div>`).join('')}</div>`,
+  () => `<h2 style="margin-top:6px">Прогресс <span>· ур. ${D.lvl}</span></h2>
+  <div class="card"><div style="display:flex;justify-content:space-between;font-weight:700"><span>Сила</span><span style="color:#A54A6E">46 % до ур. 4</span></div><div style="height:10px;border-radius:5px;background:#eef0f4;margin-top:8px;overflow:hidden"><div style="width:46%;height:100%;background:#A54A6E;border-radius:5px"></div></div></div>
+  <div class="card"><div style="font-weight:700;margin-bottom:2px">Подходы за неделю · норма 10–20</div>
+  ${D.mus.slice(0, 7).map((m, i) => `<div class="hb"><div class="ic" style="background:${MC[i]}">${m[2]}</div><b>${m[0]}</b><div class="dots">${Array.from({ length: 10 }, (_, k) => `<i style="background:${k < Math.round(m[1] / 2) ? MC[i] : '#e6e8ed'}"></i>`).join('')}</div></div>`).join('')}</div>
+  <div class="card" style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12.5px;color:#8b909b;font-weight:600">Жим ногами · 1ПМ</div><div style="font-size:24px;font-weight:800">119 кг</div></div>${line(D.orm, 160, 54, '#5384AB', 'rgba(83,132,171,.12)', false)}</div>`,
+];
+/* ---------- 10 Streaks ---------- */
+const V10 = [
+  () => `<h2>День ${D.day}</h2><div class="s">${D.title} · ${doneN} из 9</div>
+  <div class="grid">${D.ex.map((e) => `<div>${ring(e[3] === 'd' ? 100 : e[3] === 'n' ? 50 : 0, 86, 6, '#E5E664', 'rgba(255,255,255,.25)', `<circle cx="43" cy="43" r="33" fill="${e[3] === 'd' ? '#fff' : 'rgba(255,255,255,.92)'}"/><text x="43" y="49" font-size="${e[2] ? 15 : 11}" font-weight="800" fill="${e[3] === 'd' ? '#E66545' : '#C94E7D'}" text-anchor="middle">${e[3] === 'd' ? '✓' : e[2] ? String(e[2]).replace('.', ',') : 'тело'}</text>`)}${SH[e[5]]}</div>`).join('')}</div>`,
+  () => `<h2>Уровень ${D.lvl}</h2><div class="s">46 % до уровня 4</div>
+  <div style="display:grid;place-items:center">${ring(D.str, 150, 12, '#E5E664', 'rgba(255,255,255,.25)', `<circle cx="75" cy="75" r="56" fill="#fff"/><text x="75" y="84" font-size="30" font-weight="800" fill="#E66545" text-anchor="middle">${D.lvl}</text>`)}</div>
+  <div class="panel" style="top:300px"><div class="three"><div><b>9</b><span>ТРЕНИРОВОК</span></div><div><b>32%</b><span>ПОДХОДОВ</span></div><div><b>7</b><span>РЕКОРДОВ</span></div></div>
+  <div class="cols">${D.weeks.map((w, i) => `<i class="${i === D.weeks.length - 1 ? 'o' : ''}" style="height:${w / 3 * 100}%"></i>`).join('')}</div><div class="ax">${D.ormW.map((w) => `<span>${w}</span>`).join('')}</div>
+  <div class="ln" style="margin-top:8px">Жим ногами<span>80 → 85 кг</span></div><div class="ln">Жим от груди<span>40 → 42,5 кг</span></div></div>`,
+];
+
+const VARS = [
+  [V1, 'Мягкий', 'Gentler Streak', 'Apple Design Award 2024, победитель', 'today'],
+  [V2, 'Таблица подходов', 'Hevy', '4,92 ★ · 98 тыс. оценок', 'today'],
+  [V3, 'Пульт с кольцами', 'Whoop', 'тёмный пульт данных', 'today'],
+  [V4, 'Спокойный туман', 'Oura', 'тонкие цифры, атмосфера', 'today'],
+  [V5, 'Журнал, лайм и капс', 'Ladder', '4,95 ★ · 208 тыс. оценок', 'today'],
+  [V6, 'Питомец растёт', 'Finch', 'игра вместо графиков', 'today'],
+  [V7, 'Физические кнопки и гора', '(Not Boring) Habits', 'Apple Design Award 2022, победитель', 'today'],
+  [V8, 'Красный таймер', 'Zero', 'весь экран — отдых и подходы', 'today'],
+  [V9, 'Лента дня', 'Structured', 'финалист Apple Design Award 2026', 'today'],
+  [V10, 'Кружки на градиенте', 'Streaks', 'Apple Design Award, победитель', 'today'],
+];
+const q = new URLSearchParams(location.search), solo = +q.get('v'), scr = +q.get('s') || 0;
+if (solo) document.documentElement.classList.add('solo');
+document.getElementById('root').innerHTML = VARS.map(([V, name, don, proof], i) => {
+  const n = i + 1; if (solo && solo !== n) return '';
+  const phones = V.map((f, k) => (solo && scr && scr !== k + 1) ? '' : `<div class="phone v${n}" data-v="${n}" data-s="${k + 1}">${n === 4 ? '<div class="fog"></div>' + hills : ''}${sb}<div class="scr">${f()}</div>${tabs(k ? 'prog' : 'today')}</div>`).join('');
+  return `<section class="var" id="v${n}"><div class="cap"><b>${n}. ${name}</b><span>донор: ${don} — ${proof}</span><a href="?v=${n}&s=1">на весь экран →</a></div>
+  <div class="row"><div class="don"><img src="don/${n}.jpg" alt="${don}"><div>Донор: ${don}, скрины App Store</div></div>${phones}</div></section>`;
+}).join('');
+</script>
+</body>
+</html>

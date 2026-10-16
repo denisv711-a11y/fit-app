@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Зал — v9 цвет тела</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Barlow+Condensed:ital,wght@1,700;1,800&display=swap" rel="stylesheet">
+<style>
+/* r44: Денис 16.10 по v5: тело ТОЛЬКО красным как в 1 (мало — тускло, доделал норму — ярко горит), подходы — светящиеся полосы как «Цель недели» в 4,
+   плюс «старт → сейчас» как в 6, вверху Прогресса плитки как в 10, под ними тело, которое разгорается к концу уровня. Итог тренировки — красным. Данные тестовые. */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#202127;font:15px/1.3 "Inter",-apple-system,system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.top{max-width:1200px;margin:0 auto;padding:28px 20px 6px;color:#c9ccd6}
+.top h1{font-size:26px;color:#fff;margin-bottom:6px}.top p{font-size:14px;line-height:1.5;max-width:880px}
+.row{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;justify-content:center;max-width:1300px;margin:20px auto;padding:0 16px}
+.cell{display:flex;flex-direction:column;align-items:center}.cell>b{font-size:17px;margin-bottom:6px;color:#c9ccd6}
+.phone{flex:0 0 auto;width:390px;height:844px;position:relative;overflow:hidden;border-radius:44px;box-shadow:0 0 0 10px #000,0 0 0 11px #3a3b42,0 24px 60px rgba(0,0,0,.5);margin:11px;font-variant-numeric:tabular-nums;background:#090C13;color:#ECEEF4;--ac:#3FA9FF}
+.sb{position:absolute;top:0;left:0;right:0;height:50px;padding:17px 32px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;z-index:5;color:#fff}
+.sb i{width:25px;height:12px;border-radius:4px;border:1.5px solid currentColor;margin-top:4px;position:relative}.sb i::after{content:"";position:absolute;inset:1.5px;right:6px;background:currentColor;border-radius:1px}
+.scr{position:absolute;top:50px;left:0;right:0;bottom:84px;overflow:hidden;padding:6px 18px 0;z-index:1}
+.tab{position:absolute;left:0;right:0;bottom:0;height:84px;display:flex;justify-content:space-around;padding-top:9px;font-size:10px;font-weight:500;z-index:5;background:rgba(9,12,19,.86);backdrop-filter:blur(14px);border-top:1px solid #ffffff10;color:#6f6c78}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:3px;width:62px}.tab svg{width:25px;height:25px}.tab .on{color:var(--ac)}
+.solo,.solo body{background:#000}.solo .top,.solo .cell>b{display:none}.solo .row{display:block;margin:0;padding:0}
+.solo .phone{margin:0 auto;box-shadow:none;border-radius:0;width:100vw;max-width:430px;height:100vh;min-height:700px}
+svg text{font-family:inherit}
+.bg{position:absolute;inset:0;z-index:0;background:radial-gradient(75% 42% at 50% 40%,#0F3466 0,transparent 72%)}.bg.red{background:radial-gradient(70% 38% at 50% 62%,#5A1028 0,transparent 72%)}.bg.red2{background:radial-gradient(75% 40% at 50% 50%,#5A1028 0,transparent 72%)}
+.rglow{position:absolute;left:50%;top:50%;width:330px;height:300px;margin:-150px 0 0 -165px;border-radius:50%;background:radial-gradient(closest-side,#FF2D5566,#FF2D5522 55%,transparent);pointer-events:none}
+.lb{font-size:12.5px;color:#9AA3B5;letter-spacing:.2px}
+.card{background:#101624;border:1px solid #3FA9FF1f;border-radius:20px;padding:14px 16px;margin-bottom:10px}
+.h{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:2px 0 10px}
+.rowx{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px}.rowx>span:last-child{margin-left:auto;color:#a8a4b2;font-size:13px}
+.dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;display:inline-block}
+.seg3{display:flex;background:#ffffff0d;border-radius:12px;padding:3px;margin:2px 0 12px}.seg3 span{flex:1;text-align:center;padding:7px 0;border-radius:9px;font-size:13px;font-weight:600;color:#a99aa3}.seg3 .on{background:#fff;color:#111}
+.chips{display:flex;gap:6px;justify-content:center}.chips span{padding:6px 12px;border-radius:999px;background:#ffffff0d;font-size:12.5px;color:#a8a4b2;cursor:pointer}.chips .on{background:#ffffff26;color:#fff;font-weight:600}
+.two{display:flex;justify-content:space-around;text-align:center;margin:2px 0 4px}.two b{display:block;font-size:42px;font-weight:700;letter-spacing:-1.5px;line-height:1.05}.two div{font-size:12px;color:#a99aa3;font-weight:500}
+.bodies{display:flex;justify-content:center;gap:4px;position:relative}
+.call{position:absolute;inset:0;pointer-events:none;overflow:visible}.call text{font-size:11px;font-weight:600}
+.met{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #ffffff10;font-size:12px;letter-spacing:.8px;color:#9AA3B5;font-weight:600}.met b{margin-left:auto;color:#fff;font-size:17px;letter-spacing:0}.met i{font-style:normal;color:#7CC4FF;font-size:11px;width:34px;text-align:right}
+.gj{font:italic 800 26px "Barlow Condensed",sans-serif;color:#3FA9FF;text-align:center;letter-spacing:.5px}
+.ton{font:italic 800 76px/1 "Barlow Condensed",sans-serif;text-align:center;letter-spacing:-1px}
+.glass{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:24px;padding:14px}
+.btn{display:block;margin:10px auto 0;background:#3DDC84;color:#062615;border:0;border-radius:14px;padding:12px 0;width:100%;font:700 15px Inter,sans-serif;cursor:pointer}
+/* анимации */
+.grow{animation:gw 1.1s cubic-bezier(.3,.7,.2,1) both;transform-box:fill-box;transform-origin:left}@keyframes gw{from{transform:scaleX(0)}}
+.seg{animation:sg .3s ease-out both}@keyframes sg{from{opacity:0}}
+.need{animation:pulse 1.8s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+/* тело загорается после тренировки: мышца вспыхивает белым и остаётся гореть своим цветом, за телом — волна света */
+.ign{animation:ign 1.1s cubic-bezier(.2,.8,.3,1) both}@keyframes ign{0%{fill:#2A2B33}35%{fill:#ffffff}100%{fill:var(--c)}}
+.burst{position:absolute;left:50%;top:50%;width:350px;height:350px;margin:-175px 0 0 -175px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--mu) 55%,transparent) 0,color-mix(in srgb,var(--mu) 20%,transparent) 35%,transparent 65%);animation:burst 2.4s ease-out both;pointer-events:none}@keyframes burst{0%{transform:scale(.2);opacity:0}30%{opacity:1}100%{transform:scale(1);opacity:.55}}
+.need{animation:none}.card .grow[style]{filter:drop-shadow(0 0 6px var(--mu)) drop-shadow(0 0 14px var(--mu))!important}.hot{filter:drop-shadow(0 0 7px var(--mu)) drop-shadow(0 0 16px var(--mu))}.ignite .hot,.levelup .hot{filter:drop-shadow(0 0 6px var(--mu)) drop-shadow(0 0 14px var(--mu)) drop-shadow(0 0 26px var(--mu))}.ignite .warm{filter:drop-shadow(0 0 5px var(--mu))}
+.tall{height:auto;min-height:844px}.tall .scr{position:relative;top:auto;bottom:auto;padding-top:56px;padding-bottom:100px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 0}.tiles .glass{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-radius:20px}.tiles b{display:block;font-size:21px;font-weight:700;margin-top:2px}
+.lv{display:flex;gap:6px;justify-content:center;margin:2px 0 6px}.lv span{padding:5px 10px;border-radius:999px;background:#ffffff0d;font-size:11.5px;color:#a8a4b2;cursor:pointer}.lv .on{background:#3FA9FF33;color:#fff}
+.mrow{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px}.mrow b{width:24px;text-align:right}
+.mode{display:flex;gap:8px;margin:10px 0 0}.mode a{padding:8px 14px;border-radius:999px;background:#ffffff12;color:#c9ccd6;text-decoration:none;font-size:14px}.mode a.on{background:#3FA9FF;color:#04121f;font-weight:700}
+.ladder{display:flex;gap:3px;margin-top:8px}.ladder i{flex:1;height:5px;border-radius:3px;background:#1B2436}.ladder i.done{background:#3FA9FF}.ladder i.cur{background:linear-gradient(90deg,#3FA9FF var(--p),#1B2436 var(--p))}
+.sr{padding:8px 0;border-bottom:1px solid #ffffff0d}.sr:last-child{border:0}
+.pill{font-size:12px;font-weight:700;color:#7CC4FF;background:#3FA9FF1f;border-radius:999px;padding:3px 8px;white-space:nowrap}
+.dots{display:flex;gap:3px}.dots i{width:9px;height:9px;border-radius:50%;background:#1B2436}
+.body g[data-g] path{stroke:var(--edge);stroke-width:2.5}
+.rec{animation:rec .45s ease-in-out 6 alternate;filter:drop-shadow(0 0 6px var(--mu)) drop-shadow(0 0 14px var(--mu)) drop-shadow(0 0 26px var(--mu))}@keyframes rec{to{filter:brightness(2.3) drop-shadow(0 0 10px #fff) drop-shadow(0 0 22px #FFD36B)}}
+.soon{animation:soon 1.4s ease-in-out infinite}@keyframes soon{0%,100%{opacity:.35}50%{opacity:1;filter:drop-shadow(0 0 8px var(--mu))}}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>v9 — цвет тела, «сильнее X % людей», сегодня загорятся, рекорд, новый уровень</h1>
+  <p>Тело больше не сливается с фоном: у каждой мышцы свой градиент (сверху светлее — объём), тонкий край между мышцами, свет идёт от горящих мышц, а не от фона. Три схемы — переключи вверху.
+  Подходы — вариант 3, палитра 1, в каждой строке «сильнее X % людей» и сколько нужно до следующего уровня (таблицы Strength Level, мужчина 80 кг — пока тест).
+  4 — «Сегодня загорятся» перед тренировкой. 5 — итог: мышца с рекордом вспыхивает. 6 — новый уровень. Нажми на тело на 5 и 6 — зажжётся снова. Цифры тестовые.</p>
+  <div class="mode" id="mode"></div>
+</div>
+<svg width="0" height="0" style="position:absolute"><defs id="grads"></defs></svg>
+<div class="row" id="root"></div>
+<script src="../../body.js"></script>
+<script src="../v4/kit.js"></script>
+<script>
+RU.hams = 'Задняя часть бедра'; SHORT.hams = 'Зад. бедра';
+const q = new URLSearchParams(location.search), solo = +q.get('s') || 0, CI = Math.min(3, Math.max(1, +q.get('c') || 1));
+const W = 354, BLUE = '#3FA9FF', BLT = '#7CC4FF';
+const CB = ['#0B2244', '#12407A', '#1D6FC4', '#3FA9FF', '#A8DCFF'];
+const P = ['#1D4FD8', '#2F8CFF', '#38C6F4', '#5EEAD4'];          // палитра 1: синий → бирюза (строки подходов)
+/* схемы цвета тела: lo — мало подходов (верх, низ), hi — почти норма, full — норма (три стопа), bg — свет за телом */
+const SCH = {
+  1: { t: 'Глубокий красный', lo: ['#4A1A2A', '#2A0D17'], hi: ['#C8304F', '#7A1430'], full: ['#FF8098', '#FF2D55', '#B0103A'], off: '#262330', base: '#1A1922', edge: '#ffffff16', glow: '#FF2D55',
+       bg: 'radial-gradient(70% 40% at 50% 55%,#1C1430 0,transparent 72%)', halo: 'transparent' },
+  2: { t: 'Лава', lo: ['#4A1E1A', '#2A0E0D'], hi: ['#D8442E', '#82152A'], full: ['#FFC27A', '#FF5A3D', '#C0143A'], off: '#29232A', base: '#1C1A1F', edge: '#ffd0a016', glow: '#FF5A3D',
+       bg: 'radial-gradient(70% 40% at 50% 55%,#2A120E 0,transparent 72%)', halo: 'radial-gradient(closest-side,#FF5A3D1f,transparent)' },
+  3: { t: 'Красное на синем', lo: ['#4A1A2E', '#280C1A'], hi: ['#C8304F', '#7A1430'], full: ['#FF9AAE', '#FF2D55', '#B0103A'], off: '#222838', base: '#171D2B', edge: '#ffffff18', glow: '#FF2D55',
+       bg: 'radial-gradient(70% 40% at 50% 55%,#0F3466 0,transparent 72%)', halo: 'radial-gradient(closest-side,#2F7BFF33,transparent)' },
+};
+const C = SCH[CI];
+document.getElementById('mode').innerHTML = Object.entries(SCH).map(([k, s]) => `<a href="?c=${k}" class="${+k === CI ? 'on' : ''}">${k}. ${s.t}</a>`).join('');
+document.documentElement.style.setProperty('--mu', C.glow); document.documentElement.style.setProperty('--edge', C.edge);
+/* градиенты мышц: 9 ступеней от «мало» к «почти норма» + «норма» */
+const lin = (id, cols) => `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">${cols.map((c, i) => `<stop offset="${i / (cols.length - 1)}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+document.getElementById('grads').innerHTML = Array.from({ length: 9 }, (_, k) => { const t = Math.pow((k + 1) / 9, 1.2); return lin('h' + k, [mix(C.lo[0], C.hi[0], t), mix(C.lo[1], C.hi[1], t)]); }).join('') + lin('hfull', C.full);
+const heatG = (t) => (t <= 0 ? C.off : t >= 1 ? 'url(#hfull)' : `url(#h${Math.min(8, Math.floor(t * 9))})`);
+const bodyR = (side, h, t, opts = {}) => body(side, h, (g) => heatG(t(g)), { base: C.base, glow: false, need: true, ...opts });
+const hotify = (root, t) => root.querySelectorAll('g[data-g]').forEach((g) => g.classList.toggle('hot', t(g.dataset.g) >= 1));
+const needList = GROUPS.filter(need).sort((a, b) => D.sets[a] - D.sets[b]);
+const bySets = (g) => D.sets[g] / 10;
+const OFF = { chest: .12, back: .1, shoulders: .08, reardelt: -.2, biceps: .15, triceps: .05, abs: -.1, quads: .14, hams: -.12, glutes: -.05, calves: -.3, lowback: -.18 };
+const LV = .46, byLvl = (g) => Math.max(0, Math.min(.96, LV + OFF[g] * (1 - LV)));
+const LVL = ['Старт', 'Начинающий', 'Новичок', 'Средний', 'Продвинутый', 'Элита'], CUR = 1;
+const seg = (on) => `<div class="seg3">${['Обзор', 'Тело', 'Подходы'].map((t) => `<span class="${t === on ? 'on' : ''}">${t}</span>`).join('')}</div>`;
+const ring = (p, size, w, inner = '') => garc(p, size, w, CB, { from: -90, span: 360, n: Math.round(size / 1.6), gapDeg: 2.2, track: '#16203A', inner });
+const tile = (lbl, val, p) => `<div class="glass"><div><div class="lb">${lbl}</div><b>${val}</b></div>${ring(p, 44, 5)}</div>`;
+const halo = (w, h) => `<div class="rglow" style="width:${w}px;height:${h}px;margin:${-h / 2}px 0 0 ${-w / 2}px;background:${C.halo}"></div>`;
+
+/* сила: главное упражнение мышцы, рабочий вес старт → сейчас на 10 повторов (тест) */
+const LIFT = { quads: ['Жим ногами', 60, 85], chest: ['Жим от груди', 32.5, 42.5], back: ['Тяга верхнего блока', 35, 45], hams: ['Сгибания ног', 25, 32.5],
+  biceps: ['Бицепс гантели', 6, 8], triceps: ['Трицепс на блоке', 10, 14], shoulders: ['Махи гантелями', 5, 7], reardelt: ['Разведения назад', 15, 17.5] };
+/* Strength Level, мужчина 80 кг: 1ПМ ступеней Начинающий…Элита = сильнее 5/20/50/80/95 % людей (research/r44-levels/УРОВНИ.md) */
+const SL = { quads: [109, 162, 230, 309, 395], chest: [39, 61, 89, 123, 160], back: [47, 64, 85, 108, 133], hams: [39, 58, 83, 112, 144],
+  biceps: [8, 14, 22, 32, 42], triceps: [22, 36, 56, 80, 107], shoulders: [5, 10, 16, 25, 34] }, PCT = [5, 20, 50, 80, 95];
+const e1 = (w, r = 10) => w * (1 + r / 30);                       // Эпли
+const w10 = (m) => Math.round(m / (1 + 10 / 30) * 2) / 2;          // какой вес на 10 раз даёт этот 1ПМ
+function rank(g, w) {
+  const T = SL[g]; if (!T) return null; const m = e1(w), i = T.findIndex((x) => m < x);
+  if (i < 0) return { p: 95, lvl: 5 };
+  if (i === 0) return { p: 0, lvl: 0, need: w10(T[0]), to: LVL[1] };
+  return { p: Math.round(PCT[i - 1] + (m - T[i - 1]) / (T[i] - T[i - 1]) * (PCT[i] - PCT[i - 1])), lvl: i, need: w10(T[i]), to: LVL[i + 1] };
+}
+const pct = (a, b) => Math.round((b / a - 1) * 100);
+const order = () => GROUPS.slice().sort((a, b) => D.sets[b] - D.sets[a]);
+const dim = (c) => mix(c, '#101624', .55);
+const sbar = (g, w, h) => gbar(Math.min(1, D.sets[g] / 10), w, h, D.sets[g] >= 10 ? P : P.map(dim), '#16203A');
+const num = (g) => `<b style="font-size:15px;${need(g) ? 'color:#9AA3B5' : ''}">${D.sets[g]}<span style="color:#6f7688;font-weight:400;font-size:11px">/10</span></b>`;
+
+const overview = () => `${seg('Обзор')}
+  <div class="glass" style="display:flex;align-items:center;gap:16px;padding:14px 16px">${ring(LV, 104, 10, `<text x="52" y="58" font-size="23" font-weight="700" text-anchor="middle" fill="#fff">${Math.round(LV * 100)}%</text>`)}
+  <div style="flex:1"><div class="lb">Уровень ${CUR} · ${LVL[CUR]}</div><div style="font-size:19px;font-weight:700;margin:2px 0">до «${LVL[CUR + 1]}»</div><div class="lb" style="color:${BLT}">цель — сильнее 20 % людей</div>
+  <div class="ladder">${LVL.map((t, i) => `<i class="${i < CUR ? 'done' : i === CUR ? 'cur' : ''}" style="--p:${Math.round(LV * 100)}%" title="${t}"></i>`).join('')}</div></div></div>
+  <div class="tiles">${tile('Подходы', '26 / 32', 26 / 32)}${tile('Мышц в норме', okN + ' / 12', okN / 12)}${tile('Поднято', f1(D.ton.at(-1)) + ' т', .83)}${tile('Тренировок', '3 / 3', 1)}</div>
+  <div class="glass" style="padding:10px 12px 8px"><div class="lb" style="text-align:center;margin-bottom:6px">Тело разгорается к концу уровня · сейчас ${Math.round(LV * 100)} %</div>
+  <div class="bodies lvlbody">${halo(330, 300)}${['front', 'back'].map((s) => bodyR(s, 250, byLvl)).join('')}</div></div>`;
+
+/* история: подходов за неделю, все мышцы вместе */
+const hist = () => { const v = D.vol, n = v.length, w = 300, h = 50, bw = (w - (n - 1) * 6) / n, mx = Math.max(...v);
+  return `<div class="glass" style="padding:10px 14px 8px;margin-top:6px"><div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-size:13px;font-weight:600">Подходов за неделю</span><span class="lb">было ${v[0]} → сейчас <b style="color:${BLUE}">${v[n - 1]}</b></span></div>
+  <div class="lb" style="font-size:11px">все мышцы вместе · каждый столбик — неделя</div>
+  <svg width="${w}" height="${h + 26}" style="display:block;margin:4px auto 0">${v.map((x, i) => { const bh = Math.max(3, x / mx * h), X = i * (bw + 6); return `<rect x="${X}" y="${h + 12 - bh}" width="${bw}" height="${bh}" rx="4" fill="${i === n - 1 ? BLUE : '#1F3A66'}"/><text x="${X + bw / 2}" y="${h + 24}" font-size="9.5" text-anchor="middle" fill="#6f7688">${i === n - 1 ? 'сейчас' : D.weeks[i]}</text><text x="${X + bw / 2}" y="${h + 9 - bh}" font-size="10" font-weight="700" text-anchor="middle" fill="${i === n - 1 ? '#fff' : '#9AA3B5'}">${x}</text>`; }).join('')}</svg></div>`; };
+
+/* подходы + сила: две строчки и третья — сильнее X % людей, сколько до следующего уровня */
+const vA = () => `${seg('Подходы')}<div class="h" style="margin:0 0 2px">Подходы и сила</div><div class="lb" style="margin:0 0 10px">подходы за неделю (норма 10) · вес: старт → сейчас</div>
+  <div class="card" style="padding:4px 14px">${order().map((g) => { const L = LIFT[g], R = L && rank(g, L[2]); return `<div class="sr">
+  <div style="display:flex;align-items:center;gap:10px"><span style="width:112px;font-size:14px;${need(g) ? 'color:#9AA3B5' : ''}">${SHORT[g] || RU[g]}</span>${sbar(g, 150, 9)}<span style="margin-left:auto">${num(g)}</span></div>
+  ${L ? `<div style="display:flex;gap:6px;align-items:baseline;font-size:12px;color:#9AA3B5;margin-top:4px">${L[0]}<span style="margin-left:auto">${f1(L[1])} → <b style="color:#fff;font-size:13px">${f1(L[2])} кг</b></span><span style="color:${BLT};font-weight:700;width:44px;text-align:right">+${pct(L[1], L[2])} %</span></div>` : ''}
+  ${R ? `<div style="font-size:11.5px;color:#9AA3B5;margin-top:3px">${R.lvl ? `сильнее <b style="color:${BLT}">${R.p} %</b> людей · ` : ''}${R.need ? `до «${R.to}» — <b style="color:#dfe6f2">${f1(R.need)} кг × 10</b>` : ''}</div>` : ''}</div>`; }).join('')}</div>`;
+
+/* сегодня загорятся: план дня C (тест) — сколько подходов добавит тренировка */
+const TODAY = { hams: 3, glutes: 3, calves: 4, reardelt: 3 };
+const after = (g) => D.sets[g] + (TODAY[g] || 0);
+const todayScr = () => `<div style="font-size:13px;color:#9AA3B5;margin-top:4px">${D.date} · ${D.week}</div><div class="h" style="margin:0 0 8px">Сегодня — день C</div>
+  <div class="glass" style="padding:12px 14px"><div style="font:italic 800 18px 'Barlow Condensed';letter-spacing:.6px">СЕГОДНЯ ЗАГОРЯТСЯ</div><div class="lb" style="font-size:11.5px">мигают мышцы, которые после тренировки дойдут до нормы</div>
+  <div class="bodies today" style="margin:6px 0 4px">${halo(300, 260)}${['front', 'back'].map((s) => body(s, 210, (g) => heatG((TODAY[g] && after(g) >= 10) ? 1 : D.sets[g] / 10), { base: C.base, glow: false })).join('')}</div>
+  ${Object.keys(TODAY).sort((a, b) => after(b) - after(a)).map((g) => { const ok = after(g) >= 10; return `<div class="rowx" style="border-top:1px solid #ffffff0d"><span style="width:112px">${SHORT[g] || RU[g]}</span><span style="color:#9AA3B5">${D.sets[g]} → <b style="color:#fff">${after(g)}</b></span>
+  <span style="color:${ok ? BLT : '#9AA3B5'};font-weight:${ok ? 700 : 400}">${ok ? 'дойдёт до нормы ✓' : 'ещё ' + (10 - after(g)) + ' до нормы'}</span></div>`; }).join('')}</div>
+  <button class="btn" style="background:${BLUE};color:#04121f">Начать тренировку</button>`;
+
+const today1 = ['chest', 'back', 'quads'], today2 = ['shoulders', 'triceps', 'biceps', 'hams'], REC = ['quads', 'chest'];
+const lightCol = (g) => (today1.includes(g) ? 'url(#hfull)' : today2.includes(g) ? 'url(#h7)' : C.off);
+const doneScr = () => `<div class="glass" style="margin-top:4px"><div class="gj">ОТЛИЧНО!</div><div class="ton">2 845<span style="font-size:34px"> кг</span></div><div class="lb" style="text-align:center">поднято за тренировку</div>
+  <div style="display:flex;justify-content:space-around;margin:10px 0 2px;text-align:center"><div><div class="ton" style="font-size:44px">24</div><div class="lb">подхода</div></div><div><div class="ton" style="font-size:44px">186</div><div class="lb">повторов</div></div><div><div class="ton" style="font-size:44px;color:${BLT}">+2</div><div class="lb">рекорда</div></div></div></div>
+  <div class="glass ignite" data-relight style="cursor:pointer;margin-top:10px;position:relative;overflow:hidden"><div style="font:italic 800 18px 'Barlow Condensed';text-align:center;letter-spacing:.6px">МЫШЦЫ СЕГОДНЯ</div><div style="display:flex;gap:12px;justify-content:center;font-size:11.5px;color:#9AA3B5;margin:4px 0 6px"><span><i class="dot" style="background:${C.full[1]}"></i> основные</span><span><i class="dot" style="background:${C.hi[0]}"></i> вторые</span><span>🏆 вспыхнет — рекорд</span></div>
+  <div class="bodies"><div class="burst"></div>${['front', 'back'].map((s) => body(s, 250, lightCol, { base: C.base, glow: false })).join('')}</div></div>
+  <div class="glass" style="margin-top:10px;padding:4px 14px">${[['Жим ногами', '85 кг × 9', 'ноги'], ['Жим от груди', '42,5 × 7', 'грудь']].map((r) => `<div class="rowx" style="border-bottom:1px solid #ffffff10">🏆 ${r[0]} — рекорд<span style="color:#fff;font-weight:600">${r[1]}</span></div>`).join('')}</div>`;
+
+/* новый уровень: всё тело вспыхивает, ступень и «сильнее X % людей» */
+const levelScr = () => `<div class="glass levelup" data-relight style="margin-top:4px;text-align:center;position:relative;overflow:hidden;cursor:pointer;padding:18px 14px">
+  <div class="gj" style="font-size:22px">НОВЫЙ УРОВЕНЬ!</div><div class="ton" style="font-size:64px;margin:4px 0 0">2</div><div style="font-size:24px;font-weight:800;letter-spacing:-.3px">Новичок</div>
+  <div class="lb" style="margin-top:4px">в среднем ты сильнее <b style="color:${BLT}">20 %</b> людей</div>
+  <div class="ladder" style="margin:12px 10px 0">${LVL.map((t, i) => `<i class="${i <= 2 ? 'done' : ''}"></i>`).join('')}</div><div style="display:flex;justify-content:space-between;font-size:9.5px;color:#6f7688;margin:4px 6px 0">${LVL.map((t) => `<span>${t}</span>`).join('')}</div>
+  <div class="bodies" style="margin-top:10px"><div class="burst"></div>${['front', 'back'].map((s) => body(s, 270, () => 'url(#hfull)', { base: C.base, glow: false })).join('')}</div>
+  <div class="lb" style="margin-top:6px">дальше — «Средний»: сильнее половины людей · обычно 2 года регулярных тренировок</div></div>`;
+
+const S = [
+  ['Прогресс · Обзор', 'prog', overview],
+  ['Прогресс · Тело', 'prog', (side = 'back') => `${seg('Тело')}
+  <div class="two"><div><b style="color:${BLUE}">${okN}</b>мышц в норме</div><div><b style="color:#9AA3B5">${needList.length}</b>докачать</div></div>
+  <div class="chips" style="margin:6px 0 2px"><span data-side="front" class="${side === 'front' ? 'on' : ''}">Спереди</span><span data-side="back" class="${side === 'back' ? 'on' : ''}">Сзади</span></div>
+  <div class="bodies" data-call style="height:350px">${halo(300, 340)}${bodyR(side, 340, bySets)}</div>
+  ${hist()}`],
+  ['Подходы и сила — сильнее X % людей', 'prog', vA],
+  ['Сегодня — что загорится', 'today', todayScr],
+  ['Итог — мышца с рекордом вспыхивает', 'today', doneScr],
+  ['Итог — новый уровень', 'today', levelScr],
+];
+function callouts(box) {
+  box.querySelector('.call')?.remove();
+  const br = box.getBoundingClientRect(), z = box.closest('.phone').getBoundingClientRect().width / 390 || 1, bw = br.width / z, lx = bw - 74;
+  const seen = {}, items = [...box.querySelectorAll('g.need')].map((g) => { const r = g.getBoundingClientRect(); return { g: g.dataset.g, x: (r.left + r.width * .7 - br.left) / z, y: (r.top + r.height / 2 - br.top) / z }; })
+    .filter((i) => !seen[i.g] && (seen[i.g] = 1)).sort((a, b) => a.y - b.y);
+  let last = -99; items.forEach((i) => { i.ly = Math.max(i.y, last + 32); last = i.ly; });
+  box.insertAdjacentHTML('beforeend', `<svg class="call" width="${bw}" height="${br.height / z}">${items.map((i) => `<circle cx="${i.x}" cy="${i.y}" r="3" fill="${BLT}"/><path d="M${i.x} ${i.y} L${lx - 14} ${i.ly} L${lx - 4} ${i.ly}" fill="none" stroke="${BLT}99" stroke-dasharray="2 3"/><text x="${lx}" y="${i.ly - 3}" fill="${BLT}">${SHORT[i.g] || RU[i.g]}</text><text x="${lx}" y="${i.ly + 11}" fill="#fff">${D.sets[i.g]} из 10</text>`).join('')}</svg>`);
+}
+/* зажечь: мышцы по очереди; на итоге мышцы с рекордом потом трижды вспыхивают; на новом уровне — всё тело разом */
+function ignite(card) {
+  const burst = card.querySelector('.burst'); burst.style.animation = 'none'; void burst.offsetWidth; burst.style.animation = '';
+  const all = card.classList.contains('levelup'), ord = all ? GROUPS : [...today1, ...today2];
+  card.querySelectorAll('g[data-g]').forEach((g) => {
+    g.classList.remove('ign', 'hot', 'warm', 'rec'); const k = ord.indexOf(g.dataset.g); if (k < 0) return;
+    const d = all ? 100 + k * 40 : 150 + k * 170; g.style.setProperty('--c', g.getAttribute('fill')); g.style.animationDelay = d + 'ms'; void g.getBBox(); g.classList.add('ign');
+    setTimeout(() => { g.classList.add(all || k < 3 ? 'hot' : 'warm'); if (!all && REC.includes(g.dataset.g)) { g.classList.remove('ign'); g.style.animationDelay = '0ms'; g.classList.add('rec'); } }, d + 1100 + (REC.includes(g.dataset.g) ? 700 : 0));
+  });
+}
+
+if (solo) document.documentElement.classList.add('solo');
+const root = document.getElementById('root');
+root.innerHTML = S.map(([name, tab, f], k) => (solo && solo !== k + 1) ? '' : `<div class="cell"><b>${k + 1}. ${name}</b><div class="phone${k === 2 && !solo ? ' tall' : ''}" data-s="${k + 1}"><div class="bg" style="${k === 2 ? '' : 'background:' + C.bg}"></div>${sb}<div class="scr">${f()}</div>${tabs(tab)}</div></div>`).join('');
+root.querySelectorAll('[data-call]').forEach((b) => { hotify(b, bySets); callouts(b); });
+root.querySelectorAll('.today').forEach((b) => b.querySelectorAll('g[data-g]').forEach((g) => { const x = g.dataset.g; if (TODAY[x] && after(x) >= 10) g.classList.add('soon'); else if (D.sets[x] >= 10) g.classList.add('hot'); }));
+root.querySelectorAll('.ignite, .levelup').forEach(ignite);
+root.addEventListener('click', (e) => {
+  const sd = e.target.closest('[data-side]'); if (sd) { const scr = sd.closest('.scr'), b0 = (scr.innerHTML = S[1][2](sd.dataset.side), scr.querySelector('[data-call]')); hotify(b0, bySets); callouts(b0); }
+  const rl = e.target.closest('[data-relight]'); if (rl) ignite(rl);
+});
+</script>
+</body>
+</html>
