@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Зал — 10 смесей</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+<style>
+/* r41 v3: Денис выбрал из v2 виды 1 (Gentler Streak), 4 (Oura) и механику 10 (Streaks — кружок замыкается, когда сделал).
+   10 смесей этих трёх. Кружки живые: тап — плюс подход, кружок дорисовывается; полный — закрыт. ?v=N&s=1|2 — один на весь экран. */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--rnd:"Nunito",ui-rounded,"SF Pro Rounded",-apple-system,system-ui,sans-serif;--thin:"Inter",-apple-system,system-ui,sans-serif}
+body{background:#202127;font:15px/1.3 -apple-system,system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.top{max-width:1200px;margin:0 auto;padding:28px 20px 6px;color:#c9ccd6}
+.top h1{font-size:26px;color:#fff;margin-bottom:6px}.top p{font-size:14px;line-height:1.5;max-width:860px}
+.dons{display:flex;gap:14px;margin-top:14px;flex-wrap:wrap}.dons div{font-size:12px;color:#9ea3b0}.dons img{width:150px;border-radius:12px;display:block;margin-bottom:4px}
+.var{max-width:1240px;margin:26px auto 0;padding:0 16px}
+.cap{display:flex;align-items:baseline;gap:12px;margin:0 6px 12px;flex-wrap:wrap}
+.cap b{font-size:22px;color:#fff}.cap span{color:#9ea3b0;font-size:14px}.cap a{color:#8ab4ff;font-size:14px}
+.row{display:flex;gap:22px;align-items:flex-start;overflow-x:auto;padding-bottom:10px}
+.phone{flex:0 0 auto;width:390px;height:844px;position:relative;overflow:hidden;border-radius:44px;box-shadow:0 0 0 10px #000,0 0 0 11px #3a3b42,0 24px 60px rgba(0,0,0,.5);margin:11px;font-variant-numeric:tabular-nums}
+.sb{position:absolute;top:0;left:0;right:0;height:50px;padding:17px 32px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;z-index:5}
+.sb i{width:25px;height:12px;border-radius:4px;border:1.5px solid currentColor;margin-top:4px;position:relative}.sb i::after{content:"";position:absolute;inset:1.5px;right:6px;background:currentColor;border-radius:1px}
+.scr{position:absolute;top:50px;left:0;right:0;bottom:84px;overflow:hidden;padding:6px 18px 0;z-index:1}
+.tab{position:absolute;left:0;right:0;bottom:0;height:84px;display:flex;justify-content:space-around;padding-top:9px;font-size:10px;font-weight:600;z-index:5}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:3px;width:62px}.tab svg{width:25px;height:25px}
+.solo,.solo body{background:#000}
+.solo .top,.solo .cap{display:none}.solo .var{margin:0;padding:0;max-width:none}.solo .row{display:block;padding:0;overflow:visible}
+.solo .phone{margin:0 auto;box-shadow:none;border-radius:0;width:100vw;max-width:430px;height:100vh;min-height:700px}
+svg text{font-family:inherit}
+[data-k]{cursor:pointer}
+/* кружок: дорисовка и «щелчок» при закрытии */
+.arc{animation:dr .75s cubic-bezier(.3,.7,.2,1) both}
+@keyframes dr{from{stroke-dashoffset:var(--f)}}
+.pop{animation:pop .5s .55s cubic-bezier(.3,1.6,.5,1) both;transform-box:fill-box;transform-origin:center}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.13)}100%{transform:scale(1)}}
+.fi{animation:fi .35s .5s ease-out both}@keyframes fi{from{opacity:0}}
+
+/* общие куски */
+.lt{background:#FDFCFD;color:#2b2731;font-family:var(--rnd)}
+.lt .sb{color:#2b2731}.lt .tab{background:rgba(253,252,253,.94);border-top:1px solid #efe9f1;color:#a49dab}.lt .tab .on{color:#F67E49}
+.lt h6{font-size:13px;color:#9b93a3;font-weight:700}.lt h2{font-size:29px;font-weight:900;letter-spacing:-.5px;margin:2px 0 6px}
+.lt .sub{font-size:14px;color:#7d7585;font-weight:700;margin-bottom:14px}.lt .sub b{color:#F67E49}
+.lt .card{background:#F5F1F7;border-radius:22px;padding:14px 16px;margin-bottom:10px}
+.dk{background:#19181D;color:#e9e7ef;font-family:var(--thin)}
+.dk .sb{color:#fff}.dk .tab{background:rgba(25,24,29,.82);backdrop-filter:blur(14px);color:#7b7884;border-top:1px solid #2a292f}.dk .tab .on{color:#e9e7ef}
+.dk .lb{font-size:13px;color:#a8a4b2;font-weight:400;letter-spacing:.3px}
+.dk .hero{font-size:88px;font-weight:200;letter-spacing:-4px;line-height:1;margin:6px 0 2px}.dk .hero span{font-size:38px;color:#a8a4b2;letter-spacing:-1px}
+.dk .card{background:#25262A;border-radius:20px;padding:14px 16px;margin-bottom:9px}
+.fog{position:absolute;top:0;left:0;right:0;height:440px;background:radial-gradient(120% 70% at 30% 75%,#2C7393 0,rgba(44,115,147,.35) 38%,transparent 70%),radial-gradient(90% 50% at 85% 60%,#50B5EA55 0,transparent 60%),linear-gradient(#141318,#19181D);z-index:0}
+.fog::after{content:"";position:absolute;left:0;right:0;bottom:40px;height:140px;background:linear-gradient(180deg,transparent,#19181D)}
+.hills{position:absolute;left:0;top:250px;z-index:0;opacity:.55}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 4px;text-align:center}
+.grid>div{font-size:12px;font-weight:700;line-height:1.2}.grid svg{display:block;margin:0 auto 5px;flex:0 0 auto}
+.grid small{display:block;font-weight:600;opacity:.6;font-size:11px;margin-top:1px}
+.zone{position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,#c9e8f7 0 40%,#bdeed5 40% 80%,#fdd3c0 80%);margin:9px 0 5px}
+.zone b{position:absolute;top:-5px;width:20px;height:20px;border-radius:50%;background:#29CB88;border:4px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.zl{display:flex;justify-content:space-between;font-size:11px;color:#9b93a3;font-weight:700}
+
+/* 3 Рассвет — светлый туман */
+.v2 .hills,.v6 .hills{display:none}.v2 .fog,.v6 .fog{height:330px}.v2 .fog::after,.v6 .fog::after{bottom:0;height:200px}
+.v3 .dawn{position:absolute;top:0;left:0;right:0;height:430px;background:radial-gradient(110% 70% at 25% 70%,#FDD5C2 0,rgba(253,213,194,.4) 40%,transparent 72%),radial-gradient(80% 55% at 85% 55%,#E3D6F5 0,transparent 65%),linear-gradient(#FFF8F3,#FDFCFD);z-index:0}
+.v3 .hills{top:236px;opacity:1}
+.v3 .hero{font-family:var(--thin);font-size:84px;font-weight:200;letter-spacing:-4px;line-height:1;color:#3a3340}.v3 .hero span{font-size:36px;color:#a49dab;letter-spacing:-1px}
+.v3 .lbl{font-family:var(--thin);font-size:13px;color:#8d8496;letter-spacing:.3px}
+.strip{display:flex;justify-content:space-between;margin:0 -4px 14px}
+.strip>div{text-align:center;font-size:10px;font-weight:700;color:#8d8496;width:38px}.strip svg{display:block;margin:0 auto 3px}
+
+/* 4 Ночь сверху, день снизу */
+.v4 .fog{height:330px}.v4 .fog::after{bottom:0}
+.v4 .sheet,.v10 .sheet{position:absolute;left:0;right:0;bottom:0;top:262px;background:#FDFCFD;border-radius:28px 28px 0 0;padding:18px 18px 0;color:#2b2731;font-family:var(--rnd)}
+.v4 .tab{background:rgba(253,252,253,.96);border-top:1px solid #efe9f1;color:#a49dab}.v4 .tab .on{color:#F67E49}
+
+/* 6 и 8 — тёмные с золотом закрытых */
+.dk .gold{color:#C9A96A}
+.dk .exl{display:flex;align-items:center;gap:13px;padding:8px 0;border-bottom:1px solid #303136;font-weight:300;font-size:14.5px}.dk .exl:last-child{border:0}
+.dk .exl span{margin-left:auto;color:#a8a4b2}
+/* 7 пастельный список */
+.lt .exr{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:20px;margin-bottom:7px;background:#F5F1F7;transition:background .3s}
+.lt .exr.ok{background:#FFF1CF}.lt .exr b{font-size:15px;font-weight:800;display:block}.lt .exr span{font-size:12.5px;color:#7d7585;font-weight:700}.lt .exr em{margin-left:auto;font-style:normal;font-weight:900;font-size:15px}
+.ball{height:150px;border-radius:26px;background:linear-gradient(135deg,#FDB00D,#F67E49);display:flex;align-items:center;gap:16px;padding:0 20px;color:#fff;margin-bottom:12px}
+.ball .n{font-size:50px;font-weight:900;line-height:1}.ball small{display:block;font-size:14.5px;font-weight:700;opacity:.95}
+/* 9 тропинка */
+.v9{background:#FFF6EC}
+.v9 .land{position:absolute;inset:0;z-index:0}
+.v9 .st{position:absolute;text-align:center;font-size:11px;font-weight:800;color:#4b4352;width:84px;margin-left:-42px}
+.v9 .st svg{display:block;margin:0 auto 2px;filter:drop-shadow(0 3px 6px rgba(80,50,30,.18))}
+/* 10 сумерки */
+.v10{background:linear-gradient(180deg,#FBC3A6 0,#E9A7B9 26%,#9C86C4 52%,#3E4A78 78%,#1E2133 100%);color:#fff;font-family:var(--rnd)}
+.v10 .sb{color:#3b2a3a}.v10 .tab{background:rgba(20,22,36,.55);backdrop-filter:blur(12px);color:rgba(255,255,255,.6)}.v10 .tab .on{color:#fff}
+.v10 h2{font-size:28px;font-weight:900;text-align:center;margin:4px 0 0;color:#3b2a3a}.v10 .s{text-align:center;font-size:14px;font-weight:700;margin-bottom:16px;color:#5a4458}
+.v10 .grid>div{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>10 смесей: мягкий (1) + туман (4) + кружки (10)</h1>
+  <p>Кружки живые: нажми на любой — засчитается подход, кружок дорисуется. Добил все подходы — кружок закрывается и щёлкает. Ещё нажатие после полного — сброс.
+  На «Прогрессе» кружок мышцы закрыт, когда за неделю набрано 10 подходов (нижняя граница нормы 10–20). Данные тестовые, веса новичка.</p>
+  <div class="dons"><div><img src="../v2/don/1.jpg" alt="">1 · Gentler Streak</div><div><img src="../v2/don/4.jpg" alt="">4 · Oura</div><div><img src="../v2/don/10.jpg" alt="">10 · Streaks</div></div>
+</div>
+<div id="root"></div>
+<script>
+const D = {
+  date: 'Чт, 16 октября', day: 'A', title: 'Грудь и руки', week: 'Неделя 3 из 5',
+  ex: [
+    ['Жим в тренажёре от груди', '4 × 6–8', 42.5, 'chestpress'],
+    ['Тяга верхнего блока', '4 × 6–8', 45, 'latpull'],
+    ['Жим ногами', '3 × 8–10', 85, 'legpress'],
+    ['Сгибания ног сидя', '3 × 10–12', 35, 'seatcurl'],
+    ['Махи в стороны на блоке', '3 × 12–15', 5, 'cablelat'],
+    ['Сгибания на бицепс', '5 × 10–12', 8, 'dbcurl'],
+    ['Разгибания на трицепс', '4 × 10–12', 14, 'dbtri'],
+    ['Сгибания запястий', '3 × 12–20', 6, 'wristcurl'],
+    ['Скручивания на полу', '3 × 15–20', 0, 'floorcrunch'],
+  ],
+  lvl: 3, str: 46,
+  mus: [['Грудь', 12], ['Спина', 12], ['Ноги спереди', 12], ['Задняя бедра', 7], ['Плечи', 13], ['Бицепс', 14], ['Трицепс', 12], ['Предплечья', 10], ['Пресс', 6]],
+  orm: [112, 113, 115, 114, 117, 119],
+};
+const kg = (v) => (v === 0 ? 'тело' : String(v).replace('.', ','));
+const kgL = (v) => (v === 0 ? 'вес тела' : kg(v) + ' кг');
+const SH = ['Жим от груди', 'Тяга блока', 'Жим ногами', 'Сгибания ног', 'Махи в стороны', 'Бицепс', 'Трицепс', 'Запястья', 'Пресс'];
+const PC = ['#F67E49', '#5BB6E6', '#29CB88', '#FDB00D', '#B48CE0', '#F27BA4', '#4FC3C7', '#F2A65A', '#8E9BEF']; // пастель Gentler
+const TOT = D.ex.map((e) => parseInt(e[1], 10));
+const DONE = [4, 2, 0, 0, 0, 0, 0, 0, 0];
+const img = (id) => `../../tech/${id}-0.${/^(wristcurl|seatcurl|leverpull)$/.test(id) ? 'jpg' : 'png'}`;
+let FIRST = true, LAST = -1, PREVP = 0, UID = 0;
+const pk = (k) => DONE[k] / TOT[k];
+const shut = (k) => DONE[k] >= TOT[k];
+const closedN = () => DONE.filter((d, k) => d >= TOT[k]).length;
+const setsDone = () => DONE.reduce((a, b) => a + b, 0), setsTot = TOT.reduce((a, b) => a + b, 0);
+const musOk = (m) => m[1] >= 10, musN = D.mus.filter(musOk).length;
+const MCOL = ['#F67E49', '#5BB6E6', '#29CB88', '#F27BA4', '#B48CE0', '#FDB00D', '#4FC3C7', '#F2A65A', '#8E9BEF'];
+
+/* сплошной кружок: p 0..1, k — упражнение (тап), анимация только у первого показа и у нажатого */
+function R(p, size, w, col, track, inner = '', k = null) {
+  const r = (size - w) / 2, c = 2 * Math.PI * r, h = size / 2, pp = Math.min(1, p);
+  const from = FIRST ? c : k !== null && k === LAST ? c * (1 - PREVP) : c * (1 - pp);
+  const pop = pp >= 1 && (FIRST || (k !== null && k === LAST));
+  return `<svg class="${pop ? 'pop' : ''}" ${k !== null ? `data-k="${k}"` : ''} width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${h}" cy="${h}" r="${r}" fill="none" stroke="${track}" stroke-width="${w}"/>
+  <circle class="arc" cx="${h}" cy="${h}" r="${r}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - pp)}" style="--f:${from}" opacity="${pp > 0 ? 1 : 0}" transform="rotate(-90 ${h} ${h})"/>${inner}</svg>`;
+}
+/* кружок из долей: vals[i] 0..1 (подходы или упражнения), kOf(i) — что нажимается */
+function SEG(vals, size, w, colOf, track, gap, inner = '', kOf = null, kAnim = null) {
+  const n = vals.length, r = (size - w) / 2, c = 2 * Math.PI * r, h = size / 2, seg = c / n - gap;
+  const all = vals.every((v) => v >= 1), anim = FIRST || (kAnim !== null && kAnim === LAST);
+  const parts = vals.map((v, i) => {
+    const rot = -90 + i * 360 / n + (gap / 2) / c * 360, kk = kOf ? kOf(i) : null;
+    const fresh = FIRST || (kOf && kk === LAST) || (kAnim !== null && kAnim === LAST && i === DONE[kAnim] - 1);
+    const f = FIRST ? seg : fresh ? seg * (1 - (kOf ? PREVP : 0)) : seg * (1 - v);
+    return `<g ${kk !== null ? `data-k="${kk}"` : ''}><circle cx="${h}" cy="${h}" r="${r}" fill="none" stroke="${track}" stroke-width="${w}" stroke-dasharray="${seg} ${c}" transform="rotate(${rot} ${h} ${h})"/>
+    <circle class="arc" cx="${h}" cy="${h}" r="${r}" fill="none" stroke="${colOf(i, v)}" stroke-width="${w}" stroke-dasharray="${seg} ${c}" stroke-dashoffset="${seg * (1 - Math.min(1, v))}" style="--f:${f}" opacity="${v > 0 ? 1 : 0}" transform="rotate(${rot} ${h} ${h})"/></g>`;
+  }).join('');
+  return `<svg class="${all && anim ? 'pop' : ''}" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${parts}${inner}</svg>`;
+}
+const setsVals = (k) => Array.from({ length: TOT[k] }, (_, i) => (i < DONE[k] ? 1 : 0));
+const T = (x, y, s, txt, col, wt = 800, extra = '') => `<text x="${x}" y="${y}" font-size="${s}" font-weight="${wt}" fill="${col}" text-anchor="middle" ${extra}>${txt}</text>`;
+const check = (h, s, col, wt = 3.2) => `<path class="fi" d="M${h - s} ${h + s * .05} l${s * .62} ${s * .6} l${s * 1.1} -${s * 1.15}" fill="none" stroke="${col}" stroke-width="${wt}" stroke-linecap="round" stroke-linejoin="round"/>`;
+/* картинка упражнения в круге */
+function pic(k, h, r, bg = '#fff') {
+  const id = 'c' + (++UID);
+  return `<clipPath id="${id}"><circle cx="${h}" cy="${h}" r="${r}"/></clipPath><circle cx="${h}" cy="${h}" r="${r}" fill="${bg}"/><image href="${img(D.ex[k][3])}" x="${h - r}" y="${h - r}" width="${2 * r}" height="${2 * r}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${id})"/>`;
+}
+const IC = {
+  today: '<path d="M3 10h3v4H3zM18 10h3v4h-3zM6 8h2v8H6zM16 8h2v8h-2zM8 11h8v2H8z" fill="currentColor"/>',
+  hist: '<circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  prog: '<path d="M5 19V11M10 19V6M15 19v-9M20 19V4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>',
+  food: '<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M16 3c-2 2-2 7 0 9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  me: '<circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c1-5 15-5 16 0z" fill="currentColor"/>',
+};
+const tabs = (on) => `<div class="tab">${[['today', 'Сегодня'], ['hist', 'История'], ['prog', 'Прогресс'], ['food', 'Питание'], ['me', 'Я']].map(([k, t]) => `<div class="${k === on ? 'on' : ''}"><svg viewBox="0 0 24 24">${IC[k]}</svg>${t}</div>`).join('')}</div>`;
+const sb = '<div class="sb"><span>9:41</span><i></i></div>';
+const hills = (a, b, top = '') => `<svg class="hills" width="390" height="150" viewBox="0 0 390 150" style="${top}"><path d="M0 90 C60 50 110 60 160 80 S270 40 390 70 V150 H0Z" fill="${a}"/><path d="M0 112 C80 82 150 102 220 97 S330 82 390 102 V150 H0Z" fill="${b}"/></svg>`;
+const zoneX = (n) => Math.min(96, Math.max(2, n / 25 * 100));
+const pct = () => Math.round(setsDone() / setsTot * 100);
+
+/* ===== 1 Пастельная сетка: Gentler + кружки Streaks ===== */
+const cellL = (k, size = 92, w = 9) => {
+  const h = size / 2, ri = h - w - 3;
+  const inner = shut(k) ? `<circle class="fi" cx="${h}" cy="${h}" r="${ri}" fill="${PC[k]}"/>${check(h, ri * .42, '#fff', 4)}` : pic(k, h, ri);
+  return `<div>${R(pk(k), size, w, PC[k], '#F0E9F3', inner, k)}${SH[k]}<small>${kgL(D.ex[k][2])} · ${DONE[k]}/${TOT[k]}</small></div>`;
+};
+const V1 = [
+  () => `<h6>${D.date} · ${D.week}</h6><h2>День ${D.day} — ${D.title}</h2>
+  <div class="sub">Закрыто <b>${closedN()} из 9</b> · подходов ${setsDone()} из ${setsTot}</div>
+  <div class="grid">${D.ex.map((e, k) => cellL(k)).join('')}</div>`,
+  () => `<h6>Прогресс · ${D.week}</h6><h2>Мышцы за неделю</h2>
+  <div class="sub">Добиты до нормы <b>${musN} из 9</b> · норма 10–20 подходов</div>
+  <div class="grid">${D.mus.map((m, i) => { const ok = musOk(m), h = 46; return `<div>${R(m[1] / 10, 92, 9, MCOL[i], '#F0E9F3', ok ? `<circle class="fi" cx="${h}" cy="${h}" r="31" fill="${MCOL[i]}"/>${T(h, h + 8, 22, m[1], '#fff', 900)}` : T(h, h + 8, 22, m[1], '#2b2731', 900))}${m[0]}<small>${ok ? 'норма есть' : 'ещё ' + (10 - m[1])}</small></div>`; }).join('')}</div>`,
+];
+
+/* ===== 2 Ночная сетка: Oura + тонкие кружки ===== */
+const cellD = (k, size = 84) => {
+  const h = size / 2, ok = shut(k);
+  const inner = ok ? `<circle class="fi" cx="${h}" cy="${h}" r="${h - 6}" fill="rgba(201,169,106,.16)"/>${check(h, 11, '#C9A96A', 2)}` : T(h, h + 6, 17, kg(D.ex[k][2]), '#e9e7ef', 200);
+  return `<div style="font-weight:300">${R(pk(k), size, 3, ok ? '#C9A96A' : '#50B5EA', '#34353b', inner, k)}${SH[k]}<small>${DONE[k]} из ${TOT[k]}</small></div>`;
+};
+const V2 = [
+  () => `<div class="lb" style="text-align:center;margin-top:4px">${D.date}</div>
+  <div style="text-align:center;margin:18px 0 26px"><div class="lb">Тренировка ${D.day} · ${D.title}</div><div class="hero">${closedN()}<span>/9</span></div><div class="lb">упражнений закрыто</div></div>
+  <div class="grid">${D.ex.map((e, k) => cellD(k)).join('')}</div>`,
+  () => `<div class="lb" style="text-align:center;margin-top:4px">Прогресс · ${D.week}</div>
+  <div style="text-align:center;margin:18px 0 26px"><div class="lb">мышц добито до нормы</div><div class="hero">${musN}<span>/9</span></div><div class="lb">норма — 10 подходов в неделю</div></div>
+  <div class="grid">${D.mus.map((m) => { const ok = musOk(m); return `<div style="font-weight:300">${R(m[1] / 10, 84, 3, ok ? '#C9A96A' : '#50B5EA', '#34353b', T(42, 48, 19, m[1], ok ? '#C9A96A' : '#e9e7ef', 200))}${m[0]}<small>${ok ? 'есть' : 'ещё ' + (10 - m[1])}</small></div>`; }).join('')}</div>`,
+];
+
+/* ===== 3 Рассвет: туман Oura в пастели Gentler + полоска кружков ===== */
+const V3 = [
+  () => `<div class="lbl" style="text-align:center;margin-top:4px">${D.date}</div>
+  <div style="text-align:center;margin:16px 0 120px"><div class="lbl">День ${D.day} · ${D.title}</div><div class="hero">${pct()}<span>%</span></div><div class="lbl">подходов ${setsDone()} из ${setsTot}</div></div>
+  <div class="strip">${D.ex.map((e, k) => `<div>${R(pk(k), 36, 4, PC[k], 'rgba(160,140,170,.22)', shut(k) ? check(18, 6, PC[k], 2.6) : T(18, 22, 11, k + 1, '#8d8496', 800), k)}</div>`).join('')}</div>
+  ${(() => { const k = DONE.findIndex((d, i) => d < TOT[i]); if (k < 0) return '<div class="card" style="text-align:center;font-weight:900;font-size:20px">Всё закрыто 🎉</div>'; return `<div class="card" style="background:#fff;box-shadow:0 6px 24px rgba(120,90,130,.12);display:flex;gap:14px;align-items:center">
+  ${SEG(setsVals(k), 118, 10, () => PC[k], '#F0E9F3', 7, pic(k, 59, 40), () => k, k)}<div style="flex:1"><div style="font-size:12px;color:#9b93a3;font-weight:800">СЕЙЧАС · нажми на круг</div><div style="font-size:19px;font-weight:900;margin:3px 0">${D.ex[k][0]}</div><div style="font-weight:700;color:#7d7585">${kgL(D.ex[k][2])} · ${D.ex[k][1]}</div><div style="font-weight:900;color:${PC[k]};margin-top:6px">подход ${Math.min(DONE[k] + 1, TOT[k])} из ${TOT[k]}</div></div></div>
+  <div class="card" style="background:#fff;box-shadow:0 6px 24px rgba(120,90,130,.12);padding:8px 16px">${D.ex.map((e, i) => [e, i]).filter(([e, i]) => i > k && !shut(i)).slice(0, 3).map(([e, i]) => `<div data-k="${i}" style="display:flex;justify-content:space-between;padding:7px 0;font-weight:800;border-bottom:1px solid #F3EEF5"><span><b style="color:${PC[i]}">${i + 1}</b> ${e[0]}</span><span style="color:#7d7585">${kgL(e[2])}</span></div>`).join('')}</div>`; })()}`,
+  () => `<div class="lbl" style="text-align:center;margin-top:4px">Прогресс · ${D.week}</div>
+  <div style="text-align:center;margin:16px 0 120px"><div class="lbl">Уровень силы</div><div class="hero">${D.lvl}</div><div class="lbl">${D.str} % до уровня 4 · сила +6 % к старту</div></div>
+  <div class="card" style="background:#fff;box-shadow:0 6px 24px rgba(120,90,130,.12)"><div style="font-weight:900;margin-bottom:10px">Мышцы за неделю · ${musN} из 9 закрыто</div>
+  <div class="grid" style="gap:10px 4px">${D.mus.map((m, i) => `<div style="display:flex;align-items:center;gap:7px;text-align:left;font-size:12.5px">${R(m[1] / 10, 36, 4, MCOL[i], 'rgba(160,140,170,.22)', musOk(m) ? check(18, 6, MCOL[i], 2.6) : T(18, 22, 11, m[1], '#8d8496', 800))}<span style="margin:0">${m[0]}</span></div>`).join('')}</div></div>
+  <div class="card" style="background:#fff;box-shadow:0 6px 24px rgba(120,90,130,.12)"><div style="font-weight:900">Нагрузка недели</div><div class="zone"><b style="left:calc(${zoneX(12)}% - 10px)"></b></div><div class="zl"><span>мало</span><span>в самый раз · 10–20</span><span>много</span></div></div>`,
+];
+
+/* ===== 4 Ночь сверху, день снизу ===== */
+const V4 = [
+  () => `<div class="lb" style="text-align:center;margin-top:4px">${D.date}</div>
+  <div style="text-align:center;margin-top:16px"><div class="lb">Тренировка ${D.day} · ${D.title}</div><div class="hero">${closedN()}<span>/9</span></div><div class="lb">закрыто · ~55 минут</div></div>
+  <div class="sheet"><div class="grid" style="gap:8px 4px">${D.ex.map((e, k) => cellL(k, 84, 8)).join('')}</div></div>`,
+  () => `<div class="lb" style="text-align:center;margin-top:4px">Прогресс · ${D.week}</div>
+  <div style="text-align:center;margin-top:16px"><div class="lb">Уровень силы</div><div class="hero">${D.lvl}</div><div class="lb">${D.str} % до уровня 4</div></div>
+  <div class="sheet"><div style="font-weight:900;font-size:18px;margin-bottom:12px">Мышцы за неделю · ${musN} из 9</div><div class="grid" style="gap:8px 4px">${D.mus.map((m, i) => { const ok = musOk(m), h = 40; return `<div>${R(m[1] / 10, 80, 8, MCOL[i], '#F0E9F3', ok ? `<circle class="fi" cx="${h}" cy="${h}" r="26" fill="${MCOL[i]}"/>${T(h, h + 7, 19, m[1], '#fff', 900)}` : T(h, h + 7, 19, m[1], '#2b2731', 900))}${m[0]}<small>${ok ? 'норма есть' : 'ещё ' + (10 - m[1])}</small></div>`; }).join('')}</div></div>`,
+];
+
+/* ===== 5 Одно кольцо дня (светлое): 9 долей = 9 упражнений ===== */
+const V5 = [
+  () => `<h6>${D.date} · ${D.week}</h6><h2>День ${D.day} — ${D.title}</h2>
+  <div style="display:grid;place-items:center;margin:4px 0 12px">${SEG(D.ex.map((e, k) => pk(k)), 270, 26, (i) => PC[i], '#F0E9F3', 9,
+    T(135, 128, 64, closedN() + '<tspan font-size="30" fill="#a49dab">/9</tspan>', '#2b2731', 900) + T(135, 160, 15, 'упражнений закрыто', '#9b93a3', 700) + T(135, 182, 13, `подходов ${setsDone()} из ${setsTot}`, '#9b93a3', 700), (i) => i)}</div>
+  ${D.ex.map((e, k) => [e, k]).filter(([e, k]) => !shut(k)).slice(0, 3).map(([e, k]) => `<div class="exr" data-k="${k}">${SEG(setsVals(k), 40, 5, () => PC[k], '#E7DFEC', 5, T(20, 25, 13, DONE[k], PC[k], 900), null, k)}<div><b>${e[0]}</b><span>${e[1]}</span></div><em>${kgL(e[2])}</em></div>`).join('')}`,
+  () => `<h6>Прогресс · ${D.week}</h6><h2>Мышцы за неделю</h2>
+  <div style="display:grid;place-items:center;margin:4px 0 12px">${SEG(D.mus.map((m) => m[1] / 10), 270, 26, (i) => MCOL[i], '#F0E9F3', 9,
+    T(135, 128, 64, musN + '<tspan font-size="30" fill="#a49dab">/9</tspan>', '#2b2731', 900) + T(135, 160, 15, 'мышц добито', '#9b93a3', 700) + T(135, 182, 13, 'норма 10–20 подходов', '#9b93a3', 700))}</div>
+  <div class="card">${D.mus.filter((m) => !musOk(m)).map((m) => `<div style="display:flex;justify-content:space-between;font-weight:800;padding:4px 0">${m[0]}<span style="color:#F67E49">${m[1]} из 10 — ещё ${10 - m[1]}</span></div>`).join('')}
+  <div style="display:flex;justify-content:space-between;font-weight:800;padding:4px 0">Уровень силы<span style="color:#29CB88">${D.lvl} · ${D.str} % до 4</span></div></div>`,
+];
+
+/* ===== 6 Одно кольцо дня (ночное) ===== */
+const V6 = [
+  () => `<div class="lb" style="text-align:center;margin-top:4px">${D.date} · Тренировка ${D.day}</div>
+  <div style="display:grid;place-items:center;margin:22px 0 26px">${SEG(D.ex.map((e, k) => pk(k)), 270, 7, (i, v) => (v >= 1 ? '#C9A96A' : '#50B5EA'), '#34353b', 10,
+    T(135, 140, 84, closedN(), '#e9e7ef', 200, 'letter-spacing="-4"') + T(135, 172, 14, 'из 9 закрыто', '#a8a4b2', 400), (i) => i)}</div>
+  <div class="card">${D.ex.map((e, k) => [e, k]).filter(([e, k]) => !shut(k)).slice(0, 4).map(([e, k]) => `<div class="exl" data-k="${k}">${SEG(setsVals(k), 34, 2.5, () => '#50B5EA', '#3a3b41', 4, '', null, k)}${e[0]}<span>${kgL(e[2])}</span></div>`).join('')}</div>`,
+  () => `<div class="lb" style="text-align:center;margin-top:4px">Прогресс · ${D.week}</div>
+  <div style="display:grid;place-items:center;margin:22px 0 26px">${SEG(D.mus.map((m) => m[1] / 10), 270, 7, (i, v) => (v >= 1 ? '#C9A96A' : '#50B5EA'), '#34353b', 10,
+    T(135, 140, 84, musN, '#e9e7ef', 200, 'letter-spacing="-4"') + T(135, 172, 14, 'мышц из 9 добито', '#a8a4b2', 400))}</div>
+  <div class="card">${D.mus.slice(0, 5).map((m) => `<div class="exl">${R(m[1] / 10, 30, 2.5, musOk(m) ? '#C9A96A' : '#50B5EA', '#3a3b41')}${m[0]}<span class="${musOk(m) ? 'gold' : ''}">${m[1]} подх.</span></div>`).join('')}</div>`,
+];
+
+/* ===== 7 Пастельный список: кружок из подходов в каждой строке ===== */
+const V7 = [
+  () => `<h6>${D.date} · ${D.week}</h6><h2>День ${D.day} — ${D.title}</h2>
+  <div class="ball">${R(setsDone() / setsTot, 100, 12, '#fff', 'rgba(255,255,255,.3)', T(50, 59, 26, pct() + '%', '#fff', 900))}<div><div class="n">${closedN()}/9</div><small>упражнений закрыто<br>~55 минут сегодня</small></div></div>
+  ${D.ex.slice(0, 6).map((e, k) => `<div class="exr ${shut(k) ? 'ok' : ''}" data-k="${k}">${SEG(setsVals(k), 44, 6, () => PC[k], '#E3DAE8', 6, shut(k) ? `<circle class="fi" cx="22" cy="22" r="14" fill="${PC[k]}"/>${check(22, 6, '#fff', 2.6)}` : T(22, 27, 13, DONE[k] + '/' + TOT[k], '#7d7585', 900), null, k)}<div><b>${e[0]}</b><span>${e[1]}</span></div><em>${kgL(e[2])}</em></div>`).join('')}`,
+  () => `<h6>Прогресс · ${D.week}</h6><h2>Уровень ${D.lvl}</h2>
+  <div class="ball" style="background:linear-gradient(135deg,#29CB88,#7ad9b0)">${R(musN / 9, 100, 12, '#fff', 'rgba(255,255,255,.3)', T(50, 59, 26, musN + '/9', '#fff', 900))}<div><div class="n" style="font-size:38px">мышц добито</div><small>до нормы 10 подходов<br>за эту неделю</small></div></div>
+  ${D.mus.slice(0, 6).map((m, i) => `<div class="exr ${musOk(m) ? 'ok' : ''}" style="padding:7px 12px">${R(m[1] / 10, 40, 6, MCOL[i], '#E3DAE8', musOk(m) ? check(20, 6, MCOL[i], 2.6) : T(20, 25, 12, m[1], '#7d7585', 900))}<div style="flex:1"><b>${m[0]}</b><div class="zone" style="margin:6px 0 2px;height:7px"><b style="width:15px;height:15px;top:-4px;border-width:3px;left:calc(${zoneX(m[1])}% - 7px);background:${m[1] < 10 ? '#5bb6e6' : '#29CB88'}"></b></div></div><em>${m[1]}</em></div>`).join('')}`,
+];
+
+/* ===== 8 Ночной список: туман + «Сейчас» + кружки подходов ===== */
+const V8 = [
+  () => { const k = DONE.findIndex((d, i) => d < TOT[i]); return `<div class="lb" style="text-align:center;margin-top:4px">${D.date}</div>
+  <div style="text-align:center;margin:16px 0 22px"><div class="lb">Тренировка ${D.day} · ${D.title}</div><div class="hero">${pct()}<span>%</span></div><div class="lb">подходов ${setsDone()} из ${setsTot}</div></div>
+  ${k < 0 ? '' : `<div class="card" style="display:flex;align-items:center;gap:14px" data-k="${k}"><div style="flex:1"><div class="lb">Сейчас · нажми</div><div style="font-size:19px;font-weight:300;margin-top:3px">${D.ex[k][0]}</div><div class="lb" style="margin-top:3px">подход ${DONE[k] + 1} из ${TOT[k]} · ${kgL(D.ex[k][2])}</div></div>${SEG(setsVals(k), 64, 4, () => '#50B5EA', '#3a3b41', 7, T(32, 38, 16, DONE[k] + '/' + TOT[k], '#e9e7ef', 300), null, k)}</div>`}
+  <div class="card">${D.ex.slice(0, 7).map((e, k) => `<div class="exl" data-k="${k}">${SEG(setsVals(k), 30, 2.5, () => (shut(k) ? '#C9A96A' : '#50B5EA'), '#3a3b41', 4, shut(k) ? check(15, 4.5, '#C9A96A', 1.6) : '', null, k)}${e[0]}<span class="${shut(k) ? 'gold' : ''}">${kgL(e[2])}</span></div>`).join('')}</div>`; },
+  () => `<div class="lb" style="text-align:center;margin-top:4px">Прогресс · ${D.week}</div>
+  <div style="display:grid;place-items:center;margin-top:14px;position:relative"><svg width="280" height="150"><path d="M20 140 A120 120 0 0 1 260 140" fill="none" stroke="#34353b" stroke-width="4" stroke-linecap="round"/><path class="arc" d="M20 140 A120 120 0 0 1 260 140" fill="none" stroke="#50B5EA" stroke-width="4" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="${377 * (1 - D.str / 100)}" style="--f:377"/></svg>
+  <div style="position:absolute;top:44px;text-align:center"><div class="hero" style="font-size:80px">${D.lvl}</div><div class="lb">уровень · ${D.str} % до 4</div></div></div>
+  <div style="height:22px"></div>
+  <div class="card">${D.mus.map((m) => `<div class="exl" style="padding:6px 0">${R(m[1] / 10, 28, 2.5, musOk(m) ? '#C9A96A' : '#50B5EA', '#3a3b41', musOk(m) ? check(14, 4, '#C9A96A', 1.5) : '')}${m[0]}<span class="${musOk(m) ? 'gold' : ''}">${m[1]} из 10</span></div>`).join('')}</div>`,
+];
+
+/* ===== 9 Тропинка: пейзаж Gentler, кружки-остановки вдоль дороги ===== */
+const PTS = [[300, 570], [190, 548], [86, 500], [150, 430], [272, 400], [312, 318], [196, 290], [82, 250], [170, 186]];
+const land = (sunny) => `<svg class="land" width="390" height="844" viewBox="0 0 390 844">
+  <defs><linearGradient id="sky9" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF4E6"/><stop offset=".55" stop-color="#FDE3D6"/><stop offset="1" stop-color="#F9D3C4"/></linearGradient></defs>
+  <rect width="390" height="844" fill="url(#sky9)"/><circle cx="330" cy="205" r="${sunny ? 34 : 26}" fill="#FDB00D" opacity=".9"/><circle cx="330" cy="205" r="${sunny ? 52 : 40}" fill="#FDB00D" opacity=".18"/>
+  <ellipse cx="70" cy="128" rx="38" ry="12" fill="#fff" opacity=".8"/><ellipse cx="102" cy="120" rx="24" ry="10" fill="#fff" opacity=".8"/>
+  <path d="M0 330 C70 260 150 290 210 310 S330 250 390 280 V844 H0Z" fill="#CFE9D8"/>
+  <path d="M0 450 C90 390 170 430 250 410 S350 380 390 400 V844 H0Z" fill="#B4DFC6"/>
+  <path d="M0 600 C100 540 200 590 290 560 S370 540 390 550 V844 H0Z" fill="#9BD3B5"/>
+  <path d="M${PTS.map((p) => p.join(' ')).join(' L')}" fill="none" stroke="#FFF8EE" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  <path d="M${PTS.map((p) => p.join(' ')).join(' L')}" fill="none" stroke="#F2C9A8" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round"/></svg>`;
+const V9 = [
+  () => `<div style="position:relative;z-index:2"><h6 style="color:#9b7f86">${D.date} · ${D.week}</h6><h2 style="margin-bottom:2px">День ${D.day} — ${D.title}</h2><div class="sub" style="color:#9b7f86">Дорога дня: закрыто <b>${closedN()} из 9</b></div></div>
+  ${D.ex.map((e, k) => { const [x, y] = PTS[k], s = 60, h = 30; return `<div class="st" style="left:${x}px;top:${y - 50 - 34}px">${R(pk(k), s, 6, PC[k], 'rgba(255,255,255,.85)', shut(k) ? `<circle class="fi" cx="${h}" cy="${h}" r="${h - 9}" fill="${PC[k]}"/>${check(h, 8, '#fff', 3)}` : pic(k, h, h - 9), k)}${SH[k]}</div>`; }).join('')}
+  <div class="card" style="position:absolute;left:18px;right:18px;bottom:12px;background:rgba(255,255,255,.88);display:flex;justify-content:space-between;font-weight:800"><span>Подходов</span><span style="color:#F67E49">${setsDone()} из ${setsTot}</span></div>`,
+  () => `<div style="position:relative;z-index:2"><h6 style="color:#9b7f86">Прогресс · ${D.week}</h6><h2 style="margin-bottom:2px">Мышцы за неделю</h2><div class="sub" style="color:#9b7f86">На вершине — <b>${musN} из 9</b> добиты до нормы</div></div>
+  ${D.mus.map((m, i) => { const [x, y] = PTS[8 - i], s = 60, h = 30, ok = musOk(m); return `<div class="st" style="left:${x}px;top:${y - 50 - 34}px">${R(m[1] / 10, s, 6, MCOL[i], 'rgba(255,255,255,.85)', ok ? `<circle class="fi" cx="${h}" cy="${h}" r="${h - 9}" fill="${MCOL[i]}"/>${T(h, h + 6, 16, m[1], '#fff', 900)}` : `<circle cx="${h}" cy="${h}" r="${h - 9}" fill="#fff"/>${T(h, h + 6, 16, m[1], '#4b4352', 900)}`)}${m[0]}</div>`; }).join('')}
+  <div class="card" style="position:absolute;left:18px;right:18px;bottom:12px;background:rgba(255,255,255,.88);display:flex;justify-content:space-between;font-weight:800"><span>Уровень силы ${D.lvl}</span><span style="color:#29CB88">${D.str} % до 4</span></div>`,
+];
+
+/* ===== 10 Сумерки: градиент от пастели к ночи, белые кружки Streaks ===== */
+const cellW = (k) => {
+  const size = 90, h = 45, ri = 33, ok = shut(k);
+  const inner = ok ? `<circle class="fi" cx="${h}" cy="${h}" r="${ri}" fill="#fff"/>${check(h, 13, PC[k], 4)}` : pic(k, h, ri, 'rgba(255,255,255,.92)');
+  return `<div>${R(pk(k), size, 6, '#fff', 'rgba(255,255,255,.28)', inner, k)}${SH[k]}<small style="opacity:.85">${kgL(D.ex[k][2])}</small></div>`;
+};
+const V10 = [
+  () => `<h2>День ${D.day}</h2><div class="s">${D.title} · закрыто ${closedN()} из 9</div><div class="grid" style="gap:14px 4px">${D.ex.map((e, k) => cellW(k)).join('')}</div>`,
+  () => `<h2>Уровень ${D.lvl}</h2><div class="s">${D.str} % до уровня 4 · мышц добито ${musN} из 9</div>
+  <div class="grid" style="gap:14px 4px">${D.mus.map((m) => { const ok = musOk(m); return `<div>${R(m[1] / 10, 90, 6, '#fff', 'rgba(255,255,255,.28)', ok ? `<circle class="fi" cx="45" cy="45" r="33" fill="#fff"/>${T(45, 53, 22, m[1], '#9C86C4', 900)}` : T(45, 53, 22, m[1], '#fff', 900))}${m[0]}<small style="opacity:.85">${ok ? 'норма есть' : 'ещё ' + (10 - m[1])}</small></div>`; }).join('')}</div>`,
+];
+
+const VARS = [
+  [V1, 'Пастельные кружки', '1 + 10', 'lt', ''],
+  [V2, 'Ночные кружки', '4 + 10', 'dk', 'fog'],
+  [V3, 'Рассвет', '4 (туман) в цветах 1 + 10', 'lt', 'dawn'],
+  [V4, 'Ночь сверху, день снизу', '4 сверху + 1 снизу + 10', 'dk', 'fog'],
+  [V5, 'Одно кольцо дня', '1 + 10 (9 долей = 9 упражнений)', 'lt', ''],
+  [V6, 'Ночное кольцо дня', '4 + 10, закрытое — золотом', 'dk', 'fog'],
+  [V7, 'Список с кружками подходов', '1 + 10 (кружок из подходов)', 'lt', ''],
+  [V8, 'Ночной список с «Сейчас»', '4 + 10', 'dk', 'fog'],
+  [V9, 'Дорога дня', 'пейзаж 1 + кружки 10', 'lt', 'land'],
+  [V10, 'Сумерки', 'пастель 1 → ночь 4, кружки 10', '', ''],
+];
+const q = new URLSearchParams(location.search), solo = +q.get('v'), scr = +q.get('s') || 0;
+if (solo) document.documentElement.classList.add('solo');
+function draw() {
+  UID = 0;
+  document.getElementById('root').innerHTML = VARS.map(([V, name, mix, base, bg], i) => {
+    const n = i + 1; if (solo && solo !== n) return '';
+    const phones = V.map((f, s) => {
+      if (solo && scr && scr !== s + 1) return '';
+      const back = bg === 'fog' ? '<div class="fog"></div>' + hills('#1f3d4c', '#192a33') : bg === 'dawn' ? '<div class="dawn"></div>' + hills('#F6CDB8', '#EFB9A2') : bg === 'land' ? land(s === 1) : '';
+      return `<div class="phone ${base} v${n}" data-v="${n}" data-s="${s + 1}">${back}${sb}<div class="scr">${f()}</div>${tabs(s ? 'prog' : 'today')}</div>`;
+    }).join('');
+    return `<section class="var" id="v${n}"><div class="cap"><b>${n}. ${name}</b><span>${mix}</span><a href="?v=${n}&s=1">на весь экран →</a></div><div class="row">${phones}</div></section>`;
+  }).join('');
+  FIRST = false;
+}
+document.addEventListener('click', (ev) => {
+  const t = ev.target.closest('[data-k]'); if (!t) return;
+  const k = +t.dataset.k; PREVP = pk(k); LAST = k;
+  DONE[k] = DONE[k] >= TOT[k] ? 0 : DONE[k] + 1;
+  draw(); LAST = -1;
+});
+draw();
+</script>
+</body>
+</html>

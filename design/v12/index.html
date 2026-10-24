@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071216">
+<title>Питание — варианты с анимацией</title>
+<style>
+/* v12 (22.10): «Питание» по Lifesum (дуга 270°) + Bevel (шкала «съел − потратил») с движением и стеклом.
+   Цифры — копия fit-data/fit.json за 21.10. Гамма fit-one-palette. Каждая карточка играет, когда доехала до экрана; ↻ — ещё раз. */
+:root{--bg:#071216;--card:#0F1418;--card2:#132427;--line:#1F3334;--ac:#14B8A6;--ac2:#7DDDD3;--mut:#99A3A2;--ink:#fff;--dim:#3B4544}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.3 -apple-system,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+header{padding:calc(env(safe-area-inset-top) + 18px) 16px 6px;max-width:1300px;margin:0 auto}
+header h1{margin:0;font-size:24px}header p{margin:6px 0 0;color:var(--mut);font-size:14px;max-width:640px}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:22px 18px;padding:14px 16px 60px;max-width:1300px;margin:0 auto}
+@media(max-width:420px){.wall{grid-template-columns:1fr}}
+.v{min-width:0}
+.cap{display:flex;align-items:flex-start;gap:10px;margin:0 2px 8px}
+.num{flex:none;width:34px;height:34px;border-radius:17px;background:var(--ac);color:#04201C;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center}
+.cap b{display:block;font-size:16px}.cap span{display:block;color:var(--mut);font-size:13px;margin-top:2px}
+.re{margin-left:auto;flex:none;background:none;border:1px solid var(--line);color:var(--mut);border-radius:18px;height:34px;padding:0 12px;font:inherit;font-size:14px}
+.stage{position:relative;border-radius:26px;overflow:hidden;background:var(--bg)}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:16px}
+.h{font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.m{color:var(--mut)}.s{font-size:13px}
+.row{display:flex;align-items:center}
+.big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.side b{display:block;font-size:22px;font-weight:700}.side span{font-size:13px;color:var(--mut)}
+svg{display:block;overflow:visible}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.tile{position:relative;background:var(--card2);border-radius:16px;padding:10px 8px;min-height:86px;border:0;color:inherit;font:inherit;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:space-between;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.tile b{font-size:15px}.tile .s{margin-top:3px}
+.tile.press{transform:scale(.93,1.03)}
+.bar{height:6px;width:100%;border-radius:3px;background:var(--line);overflow:hidden;margin-top:7px}.bar i{display:block;height:100%;width:0;background:var(--ac2);border-radius:3px}
+.chk{width:22px;height:22px;margin-top:6px;flex:none}
+.chk circle{fill:none;stroke:var(--line);stroke-width:2}
+.chk.on circle{fill:var(--ac);stroke:var(--ac);transition:fill .3s,stroke .3s}
+.chk path{fill:none;stroke:#04201C;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20;stroke-dashoffset:20}
+.chk.on path{stroke-dashoffset:0;transition:stroke-dashoffset .35s .1s ease-out}
+/* стекло: на iPhone настоящего преломления через SVG-фильтр нет, поэтому размытие + блики по краю + свой фон-сияние */
+.aur{position:absolute;inset:-20%;pointer-events:none}
+.aur i{position:absolute;border-radius:50%;filter:blur(40px);opacity:.55}
+.aur i:nth-child(1){width:55%;height:55%;left:5%;top:10%;background:#14B8A6;animation:drift1 14s ease-in-out infinite alternate}
+.aur i:nth-child(2){width:45%;height:45%;right:5%;bottom:5%;background:#0B4441;opacity:.9;animation:drift2 18s ease-in-out infinite alternate}
+.aur i:nth-child(3){width:30%;height:30%;right:25%;top:5%;background:#7DDDD3;opacity:.25;animation:drift1 11s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{transform:translate(30%,20%)}}@keyframes drift2{to{transform:translate(-35%,-25%)}}
+.glass{position:relative;margin:14px;border-radius:28px;padding:16px;background:linear-gradient(150deg,rgba(255,255,255,.13),rgba(255,255,255,.035) 45%,rgba(255,255,255,.07));
+  -webkit-backdrop-filter:blur(26px) saturate(170%);backdrop-filter:blur(26px) saturate(170%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(255,255,255,.08),inset 1px 0 0 rgba(255,255,255,.12),inset -1px 0 0 rgba(255,255,255,.05),0 14px 40px rgba(0,0,0,.45);overflow:hidden}
+.glass::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 48%,transparent 60%);transform:translateX(-120%)}
+.glass.sheen::after{animation:sheen 1.6s .3s cubic-bezier(.4,0,.2,1)}
+@keyframes sheen{to{transform:translateX(120%)}}
+.glass .h{text-align:center}.glass .tile{background:rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.spec{position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(circle at var(--sx,30%) var(--sy,0%),rgba(255,255,255,.28),transparent 45%);mix-blend-mode:screen}
+.note{font-size:12px;color:var(--mut);margin:8px 4px 0}
+.btn{background:var(--card2);color:var(--ac2);border:1px solid var(--line);border-radius:14px;padding:8px 12px;font:inherit;font-size:13px}
+.bub{position:absolute;pointer-events:none;transform:translate(-50%,-120%);background:rgba(20,40,42,.75);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius:14px;padding:6px 10px;font-size:13px;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.3);opacity:0;transition:opacity .2s}
+@media (prefers-reduced-motion:reduce){.aur i{animation:none}.glass.sheen::after{animation:none}}
+</style>
+</head>
+<body>
+<header><h1>Питание: дуга, шкала, движение</h1>
+<p>Цифры настоящие, за 21.10: съел 943 ккал из 3044, белок 28 из 148 г. Карточка запускается, когда доедет до экрана; ↻ — запустить ещё раз. Цифру в центре дуги можно нажать: «осталось» ↔ «съел». Плитки «Креатин» и «Сон» тоже нажимаются.</p></header>
+<div class="wall" id="wall"></div>
+<script>
+const E = 943, G = 3044, LO = 2977, HI = 3112, P = 28, PG = 148, BASE = 2706;
+const MEALS = [['1-й приём', 913, 27.9], ['2-й приём', 30, 0.4]];
+const AC = '#14B8A6', AC2 = '#7DDDD3', LINE = '#1F3334', MUT = '#99A3A2', BG = '#071216';
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = (n) => Math.round(n).toLocaleString('ru-RU');
+
+// движение: пружина с маленьким перелётом, как кольца в Apple Fitness
+const spring = (t) => (t >= 1 ? 1 : 1 - Math.exp(-6.5 * t) * Math.cos(8.5 * t));
+const outCubic = (t) => 1 - Math.pow(1 - t, 3);
+function tween(dur, ease, cb) {
+  return new Promise((ok) => {
+    if (RM) { cb(1); return ok(); }
+    const t0 = performance.now();
+    const f = (now) => { const t = Math.min(1, (now - t0) / dur); cb(ease(t)); t < 1 ? requestAnimationFrame(f) : ok(); };
+    requestAnimationFrame(f);
+  });
+}
+const wait = (ms) => new Promise((ok) => setTimeout(ok, RM ? 0 : ms));
+function count(el, to, dur = 1100, from = 0) { return tween(dur, outCubic, (k) => { el.textContent = fmt(from + (to - from) * k); }); }
+
+// дуга 270° с разрывом внизу (Lifesum), pathLength=100 — длина в процентах
+function arcPath(cx, cy, r, a0 = 135, a1 = 405) {
+  const p = (a) => [cx + r * Math.cos(a * Math.PI / 180), cy + r * Math.sin(a * Math.PI / 180)];
+  const [x0, y0] = p(a0), [x1, y1] = p(a1);
+  return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+}
+const AP = arcPath(130, 130, 104);
+function arcSvg({ w = 15, grad = false, segs = false, ticks = false, cap = false, plan = 0 } = {}) {
+  const stroke = grad ? 'url(#g' + uid + ')' : AC;
+  let s = `<svg viewBox="0 0 260 236" width="100%" class="arc">
+  <defs><linearGradient id="g${uid}" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0B4441"/><stop offset=".55" stop-color="${AC}"/><stop offset="1" stop-color="${AC2}"/></linearGradient>
+  <filter id="gl${uid}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
+  <path d="${AP}" pathLength="100" fill="none" stroke="${LINE}" stroke-width="${w}" stroke-linecap="round"/>`;
+  if (ticks) for (let i = 0; i <= 30; i++) { const a = (135 + i * 9) * Math.PI / 180, r1 = 122, r2 = i % 5 ? 126 : 130; s += `<line x1="${130 + r1 * Math.cos(a)}" y1="${130 + r1 * Math.sin(a)}" x2="${130 + r2 * Math.cos(a)}" y2="${130 + r2 * Math.sin(a)}" stroke="${i % 5 ? LINE : '#2F4547'}" stroke-width="2" stroke-linecap="round"/>`; }
+  if (plan) s += `<path class="pl" d="${AP}" pathLength="100" fill="none" stroke="${AC}" stroke-opacity=".28" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="0 100"/>`;
+  if (segs) s += MEALS.map((_, i) => `<path class="sg" d="${AP}" pathLength="100" fill="none" stroke="${i ? AC2 : AC}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="0 100"/>`).join('');
+  else s += `${cap ? `<path class="glow" d="${AP}" pathLength="100" fill="none" stroke="${AC}" stroke-width="${w + 6}" stroke-linecap="round" stroke-dasharray="0 100" filter="url(#gl${uid})" opacity=".7"/>` : ''}
+  <path class="fg" d="${AP}" pathLength="100" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="0 100"/>`;
+  if (cap) s += `<circle class="cp" r="${w / 2 - 2.5}" fill="#fff" opacity="0"/>`;
+  return s + '</svg>';
+}
+let uid = 0;
+function arcCenter() {
+  return `<div class="ctr" style="position:absolute;left:0;right:0;top:55.1%;transform:translateY(-50%);text-align:center;cursor:pointer;user-select:none">
+  <div class="m s lab">осталось</div><div class="big val">0</div><div class="m s">из ${fmt(G)} ккал</div></div>`;
+}
+function arcBlock(opt = {}) {
+  return `<div style="position:relative;max-width:290px;margin:0 auto 30px">${arcSvg(opt)}${arcCenter()}${sides()}</div>`;
+}
+const sides = () => `<div class="side" style="position:absolute;left:21.7%;top:89%;transform:translateX(-50%);text-align:center"><b class="eat">0</b><span>съел</span></div>
+  <div class="side" style="position:absolute;left:78.3%;top:89%;transform:translateX(-50%);text-align:center"><b class="brn">0</b><span>расход</span></div>`;
+function tiles() {
+  return `<div class="tiles">
+  <div class="tile"><b>Белок</b><div class="s m"><span class="pv">0</span> / ${PG} г</div><div class="bar"><i class="pb"></i></div></div>
+  <button class="tile tg" data-on="0"><b>Креатин</b><div class="s m">5 г</div>${chk()}</button>
+  <button class="tile tg" data-on="1"><b>Сон</b><div class="s m">≥ 7 ч</div>${chk()}</button></div>`;
+}
+const chk = () => '<svg class="chk" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5"/><path d="M7 12.5l3.2 3.2L17 9"/></svg>';
+const dash = (el, pct) => { if (el) el.setAttribute('stroke-dasharray', `${Math.max(0, pct)} 100`); };
+
+// общий запуск: дуга + числа + плитки
+async function runArc(root, { ease = spring, dur = 1400, cap = false } = {}) {
+  const fg = root.querySelector('.fg'), glow = root.querySelector('.glow'), cp = root.querySelector('.cp'), pct = (E / G) * 100;
+  const path = fg && fg.getTotalLength ? fg : null, L = path ? path.getTotalLength() : 0;
+  count(root.querySelector('.val'), G - E, dur, G); count(root.querySelector('.eat'), E, dur); count(root.querySelector('.brn'), BASE, dur);
+  runTiles(root);
+  if (cp) cp.setAttribute('opacity', 1);
+  await tween(dur, ease, (k) => {
+    const p = pct * k; dash(fg, p); dash(glow, p);
+    if (cp && path) { const pt = path.getPointAtLength(Math.max(0.01, (p / 100) * L)); cp.setAttribute('cx', pt.x); cp.setAttribute('cy', pt.y); }
+  });
+}
+function runTiles(root) {
+  const pv = root.querySelector('.pv'), pb = root.querySelector('.pb');
+  if (pv) count(pv, P, 1100);
+  if (pb) tween(1100, spring, (k) => { pb.style.width = (P / PG) * 100 * k + '%'; });
+  root.querySelectorAll('.tg').forEach((b, i) => { const c = b.querySelector('.chk'); c.classList.remove('on'); if (b.dataset.on === '1') setTimeout(() => c.classList.add('on'), RM ? 0 : 700 + i * 150); });
+}
+function resetArc(root) { root.querySelectorAll('.fg,.glow,.sg,.pl').forEach((p) => dash(p, 0)); }
+
+// нажатия: плитка «желе», центр дуги осталось↔съел
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('.tg');
+  if (t) { t.dataset.on = t.dataset.on === '1' ? '0' : '1'; t.querySelector('.chk').classList.toggle('on', t.dataset.on === '1'); t.classList.add('press'); setTimeout(() => t.classList.remove('press'), 160); return; }
+  const c = e.target.closest('.ctr');
+  if (c) {
+    const root = c.closest('.v'), fg = root.querySelector('.fg'), glow = root.querySelector('.glow'), lab = c.querySelector('.lab'), val = c.querySelector('.val');
+    const left = lab.textContent === 'осталось', from = left ? G - E : E, to = left ? E : G - E;
+    lab.textContent = left ? 'съел' : 'осталось'; count(val, to, 600, from);
+    if (fg) { const a = left ? (E / G) * 100 : 100 - (E / G) * 100, b = 100 - a; tween(700, spring, (k) => { dash(fg, a + (b - a) * k); dash(glow, a + (b - a) * k); }); }
+  }
+});
+
+// шкала «съел − потратил» (Bevel). Слева край = ничего не съел (−расход), бирюзовая зона = набор (норма − расход)
+const SLO = -BASE, SHI = 900, SX = (v) => 18 + ((v - SLO) / (SHI - SLO)) * 264;
+function scaleSvg(id, lens = false) {
+  const z0 = SX(LO - BASE), z1 = SX(HI - BASE);
+  let g = `<g id="sc${id}"><defs><linearGradient id="sg${id}"><stop offset="0" stop-color="#2A3436"/><stop offset=".72" stop-color="#3B4544"/><stop offset="1" stop-color="${AC}"/></linearGradient></defs>
+  <rect x="18" y="34" width="264" height="12" rx="6" fill="url(#sg${id})"/>
+  <rect x="${z0 - 3}" y="31" width="${z1 - z0 + 6}" height="18" rx="5" fill="${AC2}"/>
+  <line x1="${SX(0)}" x2="${SX(0)}" y1="28" y2="52" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>`;
+  [-2500, -2000, -1500, -1000, -500, 0, 500].forEach((v) => { g += `<text x="${SX(v)}" y="68" fill="${MUT}" font-size="10" text-anchor="middle">${v > 0 ? '+' + v : v}</text>`; });
+  g += `<text x="${(z0 + z1) / 2}" y="22" fill="${AC2}" font-size="11" text-anchor="middle" font-weight="700">набор</text></g>`;
+  let s = `<svg viewBox="0 0 300 76" width="100%">${g}`;
+  if (lens) s += `<defs><clipPath id="lc${id}"><circle class="lcc" cx="0" cy="40" r="19"/></clipPath><radialGradient id="lr${id}" cx=".35" cy=".25" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".35" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity=".18"/></radialGradient></defs>
+    <g class="lens"><circle class="lsh" cx="0" cy="44" r="19" fill="#000" opacity=".35" style="filter:blur(3px)"/><circle class="lbg" cx="0" cy="40" r="19" fill="#203234"/>
+    <g clip-path="url(#lc${id})"><use class="lmag" href="#sc${id}"/></g>
+    <line class="lnd" x1="0" x2="0" y1="27" y2="53" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle class="lrim" cx="0" cy="40" r="19" fill="url(#lr${id})" stroke="#fff" stroke-opacity=".7" stroke-width="1.4"/></g>`;
+  else s += `<circle class="mk" cx="${SX(SLO)}" cy="40" r="9" fill="#fff" stroke="${BG}" stroke-width="3"/>`;
+  return s + '</svg>';
+}
+async function runScale(root, lens) {
+  const net = E - BASE, val = root.querySelector('.net'), to = SX(net);
+  if (val) count(val, net, 1300, SLO);
+  await tween(1500, spring, (k) => {
+    const x = SX(SLO) + (to - SX(SLO)) * k;
+    if (!lens) { root.querySelector('.mk').setAttribute('cx', x); return; }
+    root.querySelectorAll('.lcc,.lbg,.lrim,.lsh').forEach((c) => c.setAttribute('cx', x)); const nd = root.querySelector('.lnd'); nd.setAttribute('x1', x); nd.setAttribute('x2', x);
+    root.querySelector('.lmag').setAttribute('transform', `translate(${x} 40) scale(1.7) translate(${-x} -40)`); // линза: та же шкала, увеличенная под стеклом
+  });
+}
+
+const V = [];
+V.push({ t: 'Lifesum: дуга почти по кругу', n: 'дуга набегает с пружинкой, цифры отсчитываются, белок наливается, галочки встают по очереди',
+  html: () => `<div class="card"><div class="h">Питание · сегодня</div>${arcBlock()}${tiles()}</div>`, run: (r) => runArc(r) });
+V.push({ t: 'То же на стекле (Liquid Glass)', n: 'матовое стекло поверх живого бирюзового сияния; по стеклу пробегает блик',
+  html: () => `<div class="stage"><div class="aur"><i></i><i></i><i></i></div><div class="glass"><div class="h">Питание · сегодня</div>${arcBlock()}${tiles()}</div></div>`,
+  run: (r) => { const g = r.querySelector('.glass'); g.classList.remove('sheen'); void g.offsetWidth; g.classList.add('sheen'); return runArc(r); } });
+V.push({ t: 'Дуга-«комета»: градиент, свечение, шкала', n: 'светящийся кончик едет по дуге, за ним хвост от тёмной к светлой бирюзе; риски как на спидометре',
+  html: () => `<div class="card"><div class="h">Питание · сегодня</div>${arcBlock({ grad: true, cap: true, ticks: true, w: 13 })}${tiles()}</div>`, run: (r) => runArc(r, { cap: true, dur: 1700 }) });
+V.push({ t: 'Дуга + жидкость внутри', n: 'внутри дуги поднимается вода с волной — сколько съел; дуга и вода приходят вместе',
+  html: () => `<div class="card"><div class="h">Питание · сегодня</div><div style="position:relative;max-width:290px;margin:0 auto 30px">${liquid()}${arcSvg()}${arcCenter()}${sides()}</div>${tiles()}</div>`,
+  run: (r) => { const w = r.querySelector('.wv'); tween(1800, spring, (k) => w.setAttribute('transform', `translate(0 ${200 - 160 * (E / G) * k})`)); return runArc(r); } });
+V.push({ t: 'Дуга по приёмам еды', n: 'каждый приём — свой кусок дуги, куски выезжают по очереди; нажми на кусок — что это было',
+  html: () => `<div class="card"><div class="h">Питание · сегодня</div>${arcBlock({ segs: true })}<div class="bub"></div>${tiles()}</div>`,
+  run: async (r) => {
+    const sg = r.querySelectorAll('.sg'); count(r.querySelector('.val'), G - E, 1400, G); count(r.querySelector('.eat'), E, 1400); count(r.querySelector('.brn'), BASE, 1400); runTiles(r);
+    let at = 0;
+    for (let i = 0; i < MEALS.length; i++) {
+      const len = (MEALS[i][1] / G) * 100, gap = i ? 0.9 : 0, st = at + gap;
+      sg[i].setAttribute('stroke-dashoffset', -st);
+      await tween(i ? 500 : 1100, spring, (k) => dash(sg[i], len * k));
+      at = st + len;
+    }
+  } });
+V.push({ t: 'Дуга + план на вечер', n: 'бледным продолжением — что ещё запланировано съесть; кончик дуги дышит, пока до нормы далеко',
+  html: () => `<div class="card"><div class="h">Питание · сегодня</div>${arcBlock({ plan: 1 })}${tiles()}<style>.breathe{animation:br 2.2s ease-in-out infinite}@keyframes br{50%{stroke-width:19px}}</style></div>`,
+  run: async (r) => { const pl = r.querySelector('.pl'), fg = r.querySelector('.fg'); fg.classList.remove('breathe'); dash(pl, 0); await runArc(r); await tween(900, outCubic, (k) => dash(pl, (E / G) * 100 + 40 * k)); fg.classList.add('breathe'); } });
+V.push({ t: 'Bevel: «съел − потратил» (что это)', n: 'Съел за день минус потратил. Минус — худеешь, плюс — набираешь. Тебе к вечеру надо в бирюзовую зону набора: +271…+406. Бегунок едет от «ничего не съел» к тому, где ты сейчас',
+  html: () => `<div class="card"><div class="row" style="justify-content:space-between;align-items:baseline"><div><b class="net" style="font-size:30px">0</b> <span class="m s">ккал за день</span></div><span class="m s">съел ${fmt(E)} · расход ${fmt(BASE)}</span></div>
+    <div class="m s" style="margin:2px 0 6px">съел − потратил</div>${scaleSvg('a')}<div class="s" style="color:${AC2};margin-top:4px">до зоны набора ещё ${fmt(LO - E)} ккал</div></div>`, run: (r) => runScale(r, false) });
+V.push({ t: 'Шкала со стеклянной линзой', n: 'бегунок — стеклянная капля, под ней шкала увеличена, как через линзу (настоящее преломление, работает на iPhone)',
+  html: () => `<div class="stage"><div class="aur"><i></i><i></i><i></i></div><div class="glass"><div class="row" style="justify-content:space-between;align-items:baseline"><div><b class="net" style="font-size:30px">0</b> <span class="m s">ккал · съел − потратил</span></div></div>
+    ${scaleSvg('b', true)}<div class="s" style="color:${AC2};margin-top:4px">до зоны набора ещё ${fmt(LO - E)} ккал</div></div></div>`, run: (r) => runScale(r, true) });
+V.push({ t: 'Дуга сверху, шкала снизу (2 + 8 в одной карточке)', n: 'сначала дуга, следом линза едет по шкале; плитки внизу',
+  html: () => `<div class="stage"><div class="aur"><i></i><i></i><i></i></div><div class="glass"><div class="h">Питание · сегодня</div>${arcBlock()}
+    <div style="text-align:center;margin-top:4px"><b class="net" style="font-size:26px">0</b><div class="m s">ккал · съел − потратил</div></div>${scaleSvg('c', true)}${tiles()}</div></div>`,
+  run: async (r) => { runArc(r); await wait(500); return runScale(r, true); } });
+V.push({ t: 'Белок точками (Bevel)', n: 'каждая точка — 5 г белка, загораются по одной волной; 30 точек = норма 148 г',
+  html: () => `<div class="card"><div class="h">Белок · точка = 5 г</div><div class="dots" style="display:grid;grid-template-columns:repeat(10,1fr);gap:9px;max-width:330px">${Array.from({ length: 30 }, () => '<i style="aspect-ratio:1;border-radius:50%;background:#1F3334;transition:background .25s,transform .4s cubic-bezier(.3,1.8,.5,1)"></i>').join('')}</div>
+    <div class="row" style="justify-content:space-between;margin-top:12px"><div><b class="pv" style="font-size:26px">0</b> <span class="m">из ${PG} г</span></div><span class="s" style="color:${AC2}">добери ${PG - P} г</span></div></div>`,
+  run: async (r) => {
+    const d = r.querySelectorAll('.dots i'), on = Math.round(P / 5); d.forEach((x) => { x.style.background = LINE; x.style.transform = ''; });
+    count(r.querySelector('.pv'), P, on * 120 + 300);
+    for (let i = 0; i < on; i++) { d[i].style.background = AC2; d[i].style.transform = 'scale(1.35)'; setTimeout(() => (d[i].style.transform = ''), RM ? 0 : 160); await wait(110); }
+    d[on].style.background = '#2C4C4B'; // следующая — тусклая: «вот сюда добирать»
+  } });
+V.push({ t: 'Блик от наклона телефона', n: 'световое пятно на стекле бежит за наклоном iPhone (или за пальцем). На айфоне один раз спросит разрешение',
+  html: () => `<div class="stage"><div class="aur"><i></i><i></i><i></i></div><div class="glass tilt"><div class="spec"></div><div class="h">Питание · сегодня</div>${arcBlock()}${tiles()}
+    <button class="btn tiltbtn" style="margin-top:10px">Включить наклон</button></div></div>`,
+  run: (r) => runArc(r) });
+V.push({ t: 'Палец по дуге — стеклянная лупа', n: 'проведи пальцем по дуге: лупа едет по ней и показывает, что съел к этой точке',
+  html: () => `<div class="card scrub"><div class="h">Питание · сегодня · веди пальцем</div>${arcBlock({ cap: true })}<div class="bub"></div>${tiles()}</div>`,
+  run: (r) => runArc(r, { cap: true }) });
+
+function liquid() {
+  // вода внутри дуги: круг-маска, волна едет вбок бесконечно, уровень задаёт run
+  const wave = 'M-260 0 q32.5 -10 65 0 t65 0 t65 0 t65 0 t65 0 t65 0 t65 0 t65 0 t65 0 t65 0 V300 H-260 Z';
+  return `<svg viewBox="0 0 260 236" width="100%" style="position:absolute;left:0;top:0"><defs><clipPath id="wc${++uid}"><circle cx="130" cy="130" r="86"/></clipPath></defs>
+  <g clip-path="url(#wc${uid})"><g class="wv" transform="translate(0 220)"><path d="${wave}" fill="${AC}" fill-opacity=".22"><animateTransform attributeName="transform" type="translate" from="0 0" to="130 0" dur="3s" repeatCount="indefinite"/></path>
+  <path d="${wave}" fill="${AC}" fill-opacity=".18" transform="translate(-30 4)"><animateTransform attributeName="transform" type="translate" from="65 4" to="-65 4" dur="4.4s" repeatCount="indefinite"/></path></g></g></svg>`;
+}
+
+// сборка
+const wall = document.getElementById('wall');
+V.forEach((v, i) => {
+  uid++;
+  const el = document.createElement('div'); el.className = 'v'; el.id = 'v' + (i + 1);
+  el.innerHTML = `<div class="cap"><div class="num">${i + 1}</div><div><b>${v.t}</b><span>${v.n}</span></div><button class="re" aria-label="Ещё раз">↻</button></div>${v.html()}`;
+  wall.appendChild(el);
+  const go = () => { resetArc(el); v.run(el); };
+  el.querySelector('.re').onclick = go; el._go = go;
+});
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && !e.target._done) { e.target._done = 1; e.target._go(); } }), { threshold: 0.45 });
+document.querySelectorAll('.v').forEach((x) => io.observe(x));
+
+// №11: блик за наклоном / пальцем
+document.querySelectorAll('.tilt').forEach((g) => {
+  const set = (x, y) => { g.style.setProperty('--sx', x + '%'); g.style.setProperty('--sy', y + '%'); };
+  g.addEventListener('pointermove', (e) => { const b = g.getBoundingClientRect(); set(((e.clientX - b.left) / b.width) * 100, ((e.clientY - b.top) / b.height) * 100); });
+  g.querySelector('.tiltbtn').onclick = async (e) => {
+    e.stopPropagation();
+    try { if (window.DeviceOrientationEvent && DeviceOrientationEvent.requestPermission && (await DeviceOrientationEvent.requestPermission()) !== 'granted') return; } catch (_) { return; }
+    addEventListener('deviceorientation', (o) => { set(50 + Math.max(-45, Math.min(45, o.gamma || 0)) * 1.4, 10 + Math.max(-30, Math.min(60, (o.beta || 45) - 45)) * 1.2); });
+    e.target.textContent = 'Наклон включён — покачай телефон';
+  };
+});
+
+// №12: лупа по дуге
+document.querySelectorAll('.scrub').forEach((card) => {
+  const svg = card.querySelector('svg.arc'), fg = card.querySelector('.fg'), cp = card.querySelector('.cp'), bub = card.querySelector('.bub');
+  const move = (e) => {
+    const b = svg.getBoundingClientRect(), x = ((e.clientX - b.left) / b.width) * 260, y = ((e.clientY - b.top) / b.width) * 260;
+    let a = (Math.atan2(y - 130, x - 130) * 180) / Math.PI; if (a < 90) a += 360;
+    const f = Math.max(0, Math.min(1, (a - 135) / 270)), kc = f * G, got = Math.min(kc, E);
+    const L = fg.getTotalLength(), pt = fg.getPointAtLength(Math.max(0.01, (Math.min(f, E / G)) * L));
+    cp.setAttribute('cx', pt.x); cp.setAttribute('cy', pt.y); cp.setAttribute('r', 12); cp.setAttribute('fill', 'rgba(255,255,255,.35)'); cp.setAttribute('stroke', '#fff');
+    const cb = card.getBoundingClientRect();
+    bub.style.left = b.left - cb.left + (pt.x / 260) * b.width + 'px'; bub.style.top = b.top - cb.top + (pt.y / 260) * b.width + 'px'; bub.style.opacity = 1;
+    let acc = 0, who = MEALS[0]; for (const m of MEALS) { acc += m[1]; who = m; if (got <= acc) break; }
+    bub.innerHTML = kc > E ? `<b>${fmt(E)} ккал</b> — дальше пусто, ещё ${fmt(G - E)}` : `<b>${fmt(got)} ккал</b> · ${who[0]}`;
+  };
+  svg.style.touchAction = 'none';
+  svg.addEventListener('pointerdown', (e) => { svg.setPointerCapture(e.pointerId); move(e); });
+  svg.addEventListener('pointermove', (e) => { if (e.buttons || e.pointerType === 'touch') move(e); });
+  svg.addEventListener('pointerup', () => { bub.style.opacity = 0; cp.setAttribute('r', 4.5); cp.setAttribute('fill', '#fff'); cp.removeAttribute('stroke'); });
+});
+
+// №5: нажатие по куску дуги
+document.querySelectorAll('#v5 .sg').forEach((p, i) => p.addEventListener('click', (e) => {
+  const card = p.closest('.card'), bub = card.querySelector('.bub'), cb = card.getBoundingClientRect();
+  bub.style.left = e.clientX - cb.left + 'px'; bub.style.top = e.clientY - cb.top + 'px'; bub.style.opacity = 1;
+  bub.innerHTML = `<b>${MEALS[i][0]}</b> · ${fmt(MEALS[i][1])} ккал · ${String(MEALS[i][2]).replace('.', ',')} г белка`; setTimeout(() => (bub.style.opacity = 0), 2200);
+}));
+</script>
+</body>
+</html>

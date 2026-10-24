@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>fit — как на телефоне</title>
+<style>body{margin:0;background:#1b1b1f;color:#ccc;font:15px -apple-system,system-ui,sans-serif}
+.wrap{display:flex;gap:32px;justify-content:center;align-items:flex-start;padding:16px;flex-wrap:wrap}.ph{transform-origin:top center}
+.ph{border:12px solid #000;border-radius:56px;overflow:hidden;box-shadow:0 0 0 2px #444,0 20px 60px #000;background:#000;flex:none}
+iframe{width:393px;height:852px;border:0;display:block}
+.side{max-width:260px;line-height:1.5}.side h1{font-size:20px;color:#fff;margin:0 0 12px}
+button{display:block;width:100%;margin:0 0 10px;padding:12px;border-radius:12px;border:0;background:#3FA9FF;color:#fff;font:600 15px system-ui;cursor:pointer}
+button.g{background:#ffffff14}img{max-width:100%;display:block;margin:24px auto}small{color:#888}</style></head><body>
+<div class="wrap"><div class="ph"><iframe id="f"></iframe></div>
+<div class="side"><h1>fit — живое приложение</h1>
+<p>Экран 393×852, как iPhone 15/16. Всё работает: можно жать, начинать тренировку, листать Прогресс.</p>
+<button id="demo">Заполнить пробными записями<br><small style="color:#dff">9 тренировок за 3 недели</small></button>
+<button class="g" id="clr">Очистить (с нуля)</button>
+<button class="g" onclick="f.src='./?v=68&'+Date.now()">Обновить</button>
+<p><small>Записи здесь свои, на этом компьютере — с телефоном не связаны.</small></p></div></div>
+<script>
+// v68: рамка по высоте окна (телефон целиком, без прокрутки) и всегда свежая версия: старый кэш приложения на компьютере сносится перед загрузкой
+const fit = () => { const k = Math.min(1, (innerHeight - 32) / 876), ph = document.querySelector('.ph'); ph.style.transform = 'scale(' + k + ')'; ph.style.marginBottom = (876 * (k - 1)) + 'px'; };
+addEventListener('resize', fit); fit();
+(async () => { try { for (const r of await navigator.serviceWorker.getRegistrations()) await r.unregister(); for (const k of await caches.keys()) await caches.delete(k); } catch (e) {}
+  f.src = './?v=68&' + Date.now(); })();
+const SEED = "() => { const s = JSON.parse(localStorage.getItem('fit.v1')), D = 864e5, now = Date.now();\n  const KG = { chestpress: 30, incmach: 25, latpull: 35, legpress: 80, cablelat: 5, dbcurl: 8, pushdown: 15, legext: 30, legcurl: 25, shpress: 20, calf: 40, crunch: 20, dbtri: 8, seatrow: 35, hack: 40, hammer: 8, facepull: 12.5 };\n  const ago = [20, 18, 16, 13, 11, 9, 6, 4, 2]; s.sessions = []; s.ciOff = 1;\n  ago.forEach((d, n) => { const day = 'ABC'[n % 3], w = Math.floor(n / 3);\n    s.sessions.push({ date: new Date(now - d * D).toISOString(), day, p: Fit.PID, dur: 55, exercises: s.program[day].map((e, i) => { const k = i % 3, kg = (KG[e.id] || 20) + (k === 0 ? w * 2.5 : 0);\n      return Fit.record(e.name, kg, e.ranges.map((r) => ({ kg, reps: r[0] + (k === 1 ? w : 0), done: true }))); }) }); });\n  localStorage.setItem('fit.v1', JSON.stringify(s)); return s.sessions.length; }";
+const W = () => f.contentWindow, wait = (ms) => new Promise((r) => setTimeout(r, ms));
+demo.onclick = async () => {
+  const w = W();
+  if (!w.localStorage.getItem('fit.v1')) {
+    const ins = w.document.querySelectorAll('input'); ['82.5', '183', '33'].forEach((v, i) => { if (ins[i]) { ins[i].value = v; ins[i].dispatchEvent(new w.Event('input', { bubbles: true })); } });
+    w.document.querySelector('#o-go') && w.document.querySelector('#o-go').click(); await wait(400);
+  }
+  W().eval('(' + SEED + ')()'); f.src = './?v=68&' + Date.now();
+};
+clr.onclick = () => { W().localStorage.clear(); f.src = './?v=68&' + Date.now(); };
+</script></body></html>
