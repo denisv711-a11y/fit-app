@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Зал — v11 вкладки</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* r47: Денис 20.10 «новый вид только у Прогресса». Сегодня/История/Питание/Я в стиле v9/v10: фон #090C13 с синим светом, стеклянные карточки,
+   кольца и плитки как в Обзоре, тело «как Fitbod» (SCH3 из app.js). Все блоки вкладок на месте, меняется только вид. Данные — с прода v63 (research/r47-tabs/before/tabs.txt). */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#202127;font:15px/1.3 "Inter",-apple-system,system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.top{max-width:1660px;margin:0 auto;padding:26px 24px 0;color:#c9ccd6}.top h1{font-size:28px;color:#fff;margin-bottom:8px}.top p{font-size:15px;line-height:1.5;max-width:1200px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:26px 20px;max-width:1800px;margin:18px auto 40px;padding:0 24px}
+.pair>h2{font-size:22px;margin:0 0 4px 12px}.pair>h2 small{display:block;font-size:13.5px;color:#9AA3B5;font-weight:400;margin-top:4px;line-height:1.45;max-width:780px}
+.ph{display:flex;gap:22px;align-items:flex-start}.ph>div{display:flex;flex-direction:column;align-items:center}.ph>div>b{font-size:14px;color:#9AA3B5;margin:8px 0 2px;letter-spacing:.5px}
+.phone{width:390px;min-height:844px;position:relative;overflow:hidden;border-radius:44px;box-shadow:0 0 0 10px #000,0 0 0 11px #3a3b42,0 24px 60px rgba(0,0,0,.5);margin:11px;background:#090C13;color:#ECEEF4;font-variant-numeric:tabular-nums}
+.phone.old img{display:block;width:390px;height:844px}
+.bg{position:absolute;inset:0 0 auto;height:620px;z-index:0;background:radial-gradient(80% 60% at 50% 0%,#0F3466 0,transparent 72%)}
+.sb{position:relative;z-index:2;height:50px;padding:17px 32px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between}
+.sb i{width:25px;height:12px;border-radius:4px;border:1.5px solid currentColor;margin-top:4px;position:relative}.sb i::after{content:"";position:absolute;inset:1.5px;right:6px;background:currentColor;border-radius:1px}
+.scr{position:relative;z-index:1;padding:4px 16px 104px}
+.tab{position:absolute;left:0;right:0;bottom:0;height:84px;display:flex;justify-content:space-around;padding-top:9px;font-size:10px;font-weight:500;z-index:5;background:rgba(9,12,19,.9);backdrop-filter:blur(14px);border-top:1px solid #ffffff10;color:#6f6c78}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:3px;width:62px}.tab svg{width:24px;height:24px}.tab .on{color:#3FA9FF}
+.dt{font-size:13px;color:#9AA3B5;font-weight:500}.h{font-size:30px;font-weight:800;letter-spacing:-.6px;margin:0 0 12px}
+.lb{font-size:12.5px;color:#9AA3B5}.cap{font-size:11.5px;letter-spacing:1.1px;color:#7CC4FF;font-weight:700;text-transform:uppercase;margin:18px 4px 8px}
+.glass{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:14px;margin-bottom:10px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}.tiles .glass{margin:0;padding:12px 13px;border-radius:20px}
+.big{font-size:26px;font-weight:700;letter-spacing:-.6px}.big small{font-size:13px;color:#9AA3B5;font-weight:500;letter-spacing:0;margin-left:3px}
+.fx{display:flex;align-items:center;gap:10px}.ml{margin-left:auto}.c{text-align:center}
+.pill{font-size:11.5px;font-weight:700;color:#7CC4FF;background:#3FA9FF1f;border-radius:999px;padding:3px 9px;white-space:nowrap;display:inline-block}
+.pill.red{color:#FF9AAE;background:#C23A5E26}.pill.amb{color:#FFC86B;background:#FFB02E22}.pill.grn{color:#6EE7A8;background:#3DDC8422}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;background:#3FA9FF;color:#04121f;border:0;border-radius:15px;padding:13px 0;width:100%;font:700 15px Inter,sans-serif}
+.btn.go{background:#3DDC84;color:#062615;font-size:17px;padding:15px 0;box-shadow:0 8px 24px #3DDC8433}.btn.gh{background:#ffffff12;color:#fff}
+.inp{background:#0D1320;border:1px solid #ffffff14;border-radius:14px;padding:12px 14px;color:#6f7688;font-size:14px}
+.seg3{display:flex;background:#ffffff0d;border-radius:12px;padding:3px;margin-bottom:10px}.seg3 span{flex:1;text-align:center;padding:8px 0;border-radius:9px;font-size:13px;font-weight:600;color:#a99aa3}.seg3 .on{background:#fff;color:#111}
+.row{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid #ffffff0d;font-size:14px}.row:last-child{border:0}.row .v{margin-left:auto;font-weight:600}
+.more{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;color:#7CC4FF;font-weight:600;font-size:14px}
+.note{font-size:12.5px;color:#9AA3B5;line-height:1.45}
+.bodies{display:flex;justify-content:center;gap:6px;position:relative}
+.rglow{position:absolute;left:50%;top:50%;border-radius:50%;background:radial-gradient(closest-side,#A8284833,transparent);pointer-events:none}
+.body g[data-g] path{stroke:#0E0E14;stroke-width:2.5}
+.hot{filter:drop-shadow(0 0 6px #C23A5E) drop-shadow(0 0 14px #C23A5E)}
+.soon{animation:soon 1.4s ease-in-out infinite}@keyframes soon{0%,100%{opacity:.4}50%{opacity:1;filter:drop-shadow(0 0 8px #C23A5E)}}
+.days{display:flex;gap:6px}.days div{flex:1;text-align:center;padding:7px 0;border-radius:14px;background:#ffffff08;font-size:11px;color:#9AA3B5}.days b{display:block;font-size:16px;color:#ECEEF4;margin-top:2px}
+.days .on{background:#3FA9FF;color:#04121f}.days .on b{color:#04121f}.days .fu b{color:#6f7688}
+.ex{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #ffffff0d}.ex:last-child{border:0}
+.ex .n{width:30px;height:30px;border-radius:10px;background:#16203A;color:#7CC4FF;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.ex .t{font-size:14.5px;font-weight:600}.reps{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.reps span{font-size:11px;padding:2px 7px;border-radius:7px;background:#ffffff0d;color:#a8adbd}.reps .ck{background:#C23A5E26;color:#FF9AAE}
+.bar{position:relative;height:8px;border-radius:5px;background:#16203A;flex:1}.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:5px}.bar .z{position:absolute;top:-3px;bottom:-3px;border-left:1px dashed #ffffff40;border-right:1px dashed #ffffff40;background:#ffffff06}
+.bar u{position:absolute;top:-4px;bottom:-4px;width:2px;background:#fff;border-radius:1px}
+.mrow{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13.5px}.mrow .nm{width:104px}.mrow .vv{width:84px;white-space:nowrap;text-align:right;font-weight:600;font-size:13px}
+.wk{padding:12px 14px}.wk .st{display:flex;gap:14px;margin:6px 0 8px}.wk .st div{font-size:11px;color:#9AA3B5}.wk .st b{display:block;font-size:15px;color:#fff}
+.wk .l{font-size:12.5px;color:#a8adbd;padding:3px 0;display:flex}.wk .l span{margin-left:auto;color:#ECEEF4;font-weight:500}
+.meal{display:flex;align-items:center;gap:12px}.meal .ic{width:40px;height:40px;border-radius:12px;background:#16203A;display:flex;align-items:center;justify-content:center;font-size:20px}
+.x{width:30px;height:30px;border-radius:10px;background:#ffffff0d;color:#9AA3B5;display:flex;align-items:center;justify-content:center;margin-left:auto}
+.chk{width:24px;height:24px;border-radius:50%;border:2px solid #3a4152;flex:0 0 auto}.chk.on{background:#3DDC84;border-color:#3DDC84}
+.tg{flex:0 0 auto;width:44px;height:26px;border-radius:13px;background:#3a4152;position:relative;margin-left:auto}.tg::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:2px;left:2px}.tg.on{background:#3DDC84}.tg.on::after{left:20px}
+.cal14{display:flex;gap:3px;margin-top:8px}.cal14 i{flex:1;height:6px;border-radius:3px;background:#1B2436}
+.warn{background:#FFB02E14;border:1px solid #FFB02E40;color:#FFD99A;border-radius:18px;padding:12px 14px;font-size:13.5px;margin-bottom:10px;display:flex;gap:10px}
+.spark path{fill:none;stroke:#3FA9FF;stroke-width:2;stroke-linecap:round;filter:drop-shadow(0 0 4px #3FA9FF88)}
+</style>
+</head>
+<body>
+<div class="top"><h1>v11 — Сегодня, История, Питание, Я в новом виде · выбери по номерам</h1>
+<p>Слева — как сейчас на телефоне (снято с v63, только первый экран), справа — как будет, вся вкладка сверху вниз.
+Ничего не убрал: все блоки и тексты на месте, поменял только вид — стеклянные карточки и кольца как в «Прогрессе», тело «как Fitbod», синий свет сверху.
+Ответ по номерам: «1 да, 2 да, 3 переделать — …».</p></div>
+<div class="grid" id="grid"></div>
+<script src="../../body.js"></script>
+<script>
+/* ---------- общее ---------- */
+const SCH3 = { lo: '#C87898', mid: '#B84868', hi: '#A82848', full: ['#BC3A5C', '#A82848', '#8A1A38'], off: ['#585868', '#383848'], base: '#2A2A36' };
+const mixC = (a, b, t) => { const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)), A = p(a), B = p(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+const lin = (id, cols) => `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">${cols.map((c, i) => `<stop offset="${i / (cols.length - 1)}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+document.body.insertAdjacentHTML('afterbegin', `<svg width="0" height="0" style="position:absolute"><defs>${Array.from({ length: 9 }, (_, k) => { const t = (k + 1) / 10, c = t < .5 ? mixC(SCH3.lo, SCH3.mid, t * 2) : mixC(SCH3.mid, SCH3.hi, (t - .5) * 2); return lin('h' + k, [mixC(c, '#ffffff', .08), mixC(c, '#000000', .14)]); }).join('')}${lin('hfull', SCH3.full)}${lin('hoff', SCH3.off)}<linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7CC4FF"/><stop offset="1" stop-color="#1D6FC4"/></linearGradient><linearGradient id="rr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF9AAE"/><stop offset="1" stop-color="#A82848"/></linearGradient></defs></svg>`);
+const heatG = (t) => (!(t > 0) ? 'url(#hoff)' : t >= 1 ? 'url(#hfull)' : `url(#h${Math.min(8, Math.floor(t * 9))})`);
+const RU = { chest: 'Грудь', back: 'Спина', quads: 'Квадрицепс', shoulders: 'Плечи', triceps: 'Трицепс', glutes: 'Ягодицы', biceps: 'Бицепс', hams: 'Задняя поверхность', lowback: 'Поясница', reardelt: 'Задние плечи', abs: 'Пресс', calves: 'Икры', forearms: 'Предплечья' };
+function bodySvg(side, t, h, cls) {
+  const B = BODY_PATHS[side], [, , w, hh] = B.vb.split(' ').map(Number), ps = (ds) => ds.map((d) => `<path d="${d}"/>`).join('');
+  const g = Object.entries(B.m).map(([k, ds]) => `<g data-g="${k}" fill="${heatG(t(k))}" class="${cls ? cls(k) : ''}"><title>${RU[k] || k}</title>${ps(ds)}</g>`).join('');
+  return `<svg class="body" width="${Math.round(h * w / hh)}" height="${h}" viewBox="${B.vb}"><g fill="${SCH3.base}">${ps(B.base)}</g>${g}</svg>`;
+}
+const halo = (w, h) => `<div class="rglow" style="width:${w}px;height:${h}px;margin:${-h / 2}px 0 0 ${-w / 2}px"></div>`;
+// кольцо: p 0..1, size, толщина, градиент
+const ring = (p, s, w, inner = '', g = 'rg') => { const r = (s - w) / 2, L = 2 * Math.PI * r;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="flex:0 0 auto"><circle cx="${s / 2}" cy="${s / 2}" r="${r}" fill="none" stroke="#16203A" stroke-width="${w}"/>
+  <circle cx="${s / 2}" cy="${s / 2}" r="${r}" fill="none" stroke="url(#${g})" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${L * Math.min(1, p)} ${L}" transform="rotate(-90 ${s / 2} ${s / 2})" style="filter:drop-shadow(0 0 5px ${g === 'rr' ? '#C23A5E' : '#3FA9FF'}88)"/>${inner}</svg>`; };
+const spark = (a, w = 90, h = 26) => { const lo = Math.min(...a), hi = Math.max(...a), k = hi - lo || 1;
+  return `<svg class="spark" width="${w}" height="${h}"><path d="${a.map((v, i) => `${i ? 'L' : 'M'}${(i / (a.length - 1) * (w - 4) + 2).toFixed(1)},${(h - 3 - (v - lo) / k * (h - 6)).toFixed(1)}`).join('')}"/></svg>`; };
+const I = { // иконки таб-бара
+  'Сегодня': '<path d="M3 12h2M19 12h2M6 8v8M18 8v8M9 10v4M15 10v4M9 12h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>',
+  'История': '<circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>',
+  'Прогресс': '<path d="M4 20h16M7 17v-5M12 17V7M17 17v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>',
+  'Питание': '<path d="M7 3v8M5 3v4a2 2 0 004 0V3M7 11v10M16 3c-2 1-3 4-3 7h3v11" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>',
+  'Я': '<circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6" stroke="currentColor" stroke-width="2" fill="none"/>' };
+const tabbar = (on) => `<div class="tab">${Object.keys(I).map((k) => `<div class="${k === on ? 'on' : ''}"><svg viewBox="0 0 24 24">${I[k]}</svg>${k}</div>`).join('')}</div>`;
+const phone = (tab, html) => `<div class="phone"><div class="bg"></div><div class="sb"><span>9:41</span><i></i></div><div class="scr">${html}</div>${tabbar(tab)}</div>`;
+const more = (t) => `<div class="glass more">${t}<span>›</span></div>`;
+
+/* ---------- 1. Сегодня ---------- */
+const TODAY = [['biceps', 21, 28], ['triceps', 15.5, 21.5], ['shoulders', 13.5, 16.5], ['chest', 10, 14], ['back', 10, 14], ['quads', 10, 13], ['forearms', 10, 13], ['hams', 7, 10], ['abs', 6, 9], ['glutes', 3.5, 5]];
+const TA = Object.fromEntries(TODAY.map(([g, , b]) => [g, b])), TB = Object.fromEntries(TODAY.map(([g, a]) => [g, a]));
+const fmt = (v) => String(v).replace('.', ',');
+const EXA = [['Жим в тренажёре от груди', '8–10 · 10–12 · 12–15 · 12–15 · проверка силы'], ['Тяга верхнего блока', '8–10 · 10–12 · 12–15 · 12–15 · проверка силы'], ['Жим ногами', '8–10 · 10–12 · 12–15 · проверка силы'],
+  ['Сгибания ног сидя в тренажёре', '8–10 · 10–12 · 12–15'], ['Махи в стороны на блоке', '8–10 · 10–12 · 12–15'], ['Сгибания на бицепс с гантелями', '8–10 · 10–12 · 12–15 · 12–15 · 12–15'],
+  ['Разгибания на трицепс с гантелью', '8–10 · 10–12 · 12–15 · 12–15'], ['Сгибания запястий с гантелями сидя', '10–20 · 10–20 · 10–20'], ['Скручивания на полу', '10–20 · 10–20 · 10–20']];
+const st = (b, a) => (b >= 10 ? '<span class="pill red">в норме</span>' : a >= 10 ? '<span class="pill grn">дойдёт ✓</span>' : `<span class="pill">ещё ${fmt(10 - a)}</span>`);
+const today = `<div class="dt">Вторник, 20 октября</div><div class="h">Сегодня</div>
+<div class="days" style="margin-bottom:10px">${['Пн 19', 'Вт 20', 'Ср 21', 'Чт 22', 'Пт 23', 'Сб 24', 'Вс 25'].map((d, i) => `<div class="${i === 1 ? 'on' : i > 1 ? 'fu' : ''}">${d.split(' ')[0]}<b>${d.split(' ')[1]}</b></div>`).join('')}</div>
+<div class="tiles"><div class="glass fx">${ring(0, 46, 6, '<text x="23" y="28" font-size="14" font-weight="700" text-anchor="middle" fill="#fff">0/3</text>')}<div><div class="lb">тренировок<br>на неделе</div></div></div>
+<div class="glass"><div class="lb">Цикл</div><div style="font-size:15px;font-weight:700;margin-top:2px">—</div><div class="lb" style="font-size:11px">начнётся с первой тренировки</div></div></div>
+<div class="glass" style="padding:16px;border-color:#3FA9FF40;background:linear-gradient(160deg,#12305A66,#ffffff08)">
+ <div class="fx"><div style="width:52px;height:52px;border-radius:16px;background:#3FA9FF;color:#04121f;font:800 28px Inter;display:flex;align-items:center;justify-content:center">A</div>
+ <div><div class="lb" style="letter-spacing:.8px;font-size:11px">СЛЕДУЮЩАЯ ТРЕНИРОВКА · <span style="color:#7CC4FF">сменить</span></div><div style="font-size:21px;font-weight:700">Тренировка A</div><div class="lb">9 упражнений · 32 подхода</div></div></div>
+ <div class="btn go" style="margin-top:14px">Начать</div></div>
+<div class="glass" style="border-left:3px solid #FF9AAE"><div class="fx" style="margin-bottom:4px"><span class="pill red">ЦЕЛЬ</span><b style="font-size:14px">Сегодня проверяем силу</b></div>
+ <div class="note" style="color:#c9ccd6">В упражнениях с пометкой «проверка силы» последний подход делай, сколько сможешь: пока получается ровно, без рывков. По этому числу приложение поставит тебе цель на 12 недель.</div></div>
+<div class="tiles" style="grid-template-columns:1.25fr 1fr">
+ <div class="glass fx" style="gap:8px">${ring(1030 / 3063, 84, 9, '<text x="42" y="44" font-size="19" font-weight="700" text-anchor="middle" fill="#fff">2 033</text><text x="42" y="58" font-size="9.5" text-anchor="middle" fill="#9AA3B5">осталось</text>')}
+  <div style="font-size:12px"><div class="lb">Калории ≈</div><div class="lb" style="margin-top:6px">Цель</div><b>3 063</b><div class="lb" style="margin-top:4px">Съедено</div><b>1 030</b></div></div>
+ <div style="display:grid;gap:9px"><div class="glass fx" style="margin:0;padding:10px 12px"><div><div class="lb">Белок</div><div class="big" style="font-size:21px">57<small>г</small></div><div class="lb" style="font-size:10.5px">осталось · 92 из 149</div></div><div class="ml">${ring(92 / 149, 36, 5)}</div></div>
+ <div class="glass" style="margin:0;padding:10px 12px"><div class="lb">Вес</div><div class="fx"><div class="big" style="font-size:21px">83,3<small>кг</small></div><div class="ml">${spark([82.4, 82.6, 82.5, 82.8, 83, 83.3], 48, 22)}</div></div><div class="lb" style="font-size:10.5px">+0,5 кг за неделю</div></div></div></div>
+<div class="cap">Сегодня загорятся</div>
+<div class="glass"><div class="lb c" style="margin-bottom:6px">мигают мышцы, которые после тренировки A дойдут до нормы 10 подходов за 7 дней</div>
+ <div class="bodies">${halo(320, 260)}${['front', 'back'].map((s) => bodySvg(s, (g) => (TA[g] || 0) / 10, 220, (g) => ((TB[g] || 0) >= 10 ? 'hot' : (TA[g] || 0) >= 10 ? 'soon' : ''))).join('')}</div>
+ <div style="margin-top:8px">${TODAY.map(([g, b, a]) => `<div class="mrow"><span class="nm">${g === 'hams' ? 'Задняя пов.' : RU[g]}</span><div class="bar"><i style="width:${Math.min(100, b / 20 * 100)}%;background:${b >= 10 ? '#A82848' : '#C87898'}"></i><i style="left:${Math.min(100, b / 20 * 100)}%;width:${Math.max(0, Math.min(100, a / 20 * 100) - Math.min(100, b / 20 * 100))}%;background:repeating-linear-gradient(45deg,#FF9AAE,#FF9AAE 3px,#FF9AAE55 3px,#FF9AAE55 6px)"></i><u style="left:50%"></u></div><span class="vv">${fmt(b)} → ${fmt(a)}</span></div>`).join('')}
+ <div class="fx" style="flex-wrap:wrap;gap:6px;margin-top:6px">${TODAY.map(([g, b, a]) => (b < 10 ? `<span class="lb">${g === 'hams' ? 'Задняя пов.' : RU[g]}</span>${st(b, a)}` : '')).join('')}<span class="lb ml">остальные 7 — уже в норме</span></div></div></div>
+<div class="cap">Тренировка A · 9 упражнений</div>
+<div class="glass" style="padding:4px 14px">${EXA.map(([t, r], i) => `<div class="ex"><div class="n">${i + 1}</div><div style="flex:1"><div class="t">${t}</div><div class="reps">${r.split(' · ').map((x) => `<span class="${x === 'проверка силы' ? 'ck' : ''}">${x}</span>`).join('')}</div></div><span class="lb" style="white-space:nowrap">${i === 8 ? 'свой вес' : 'подбери'}</span></div>`).join('')}</div>
+<div class="glass" style="padding:12px 14px"><div class="fx"><span style="font-size:18px">⚖️</span><b style="font-size:14px">Где вес «подбери»</b></div><div class="note" style="margin-top:6px">На первой тренировке найди его лесенкой — шаги будут в подсказке «Первый раз» над упражнением. Рабочий — вес, с которым верх диапазона даётся и ещё 1–2 повтора в запасе. Второй и третий подход — на 10 % легче, приложение подставит и запомнит.</div></div>
+<div class="glass" style="padding:12px 14px"><div class="fx"><span style="font-size:18px">🔁</span><b style="font-size:14px">Программа</b></div><div class="note" style="margin-top:6px">Всё тело, три дня по кругу A → B → C; руки и предплечья — с большим объёмом. Цикл — 5 недель: четыре рабочих и разгрузка (подходов вдвое меньше). Как растёт вес: цель подхода, например, 8–10 раз. Сделал 11 и больше — в следующий раз приложение само поставит на шаг тяжелее (обычно +2,5 кг). Сделал 8–10 — вес остаётся. Так в программе Грега Наколса.</div></div>`;
+
+/* ---------- 2. История ---------- */
+const HS = [['chest', 'Грудь', 10, 12], ['back', 'Спина', 10, 12], ['quads', 'Квадрицепс', 10, 11], ['hams', 'Бицепс бедра', 7, 10], ['shoulders', 'Дельты', 16.5, 15], ['biceps', 'Бицепс', 21, 18], ['triceps', 'Трицепс', 15.5, 14], ['forearms', 'Предплечья', 10, 12]];
+const HM = Object.fromEntries(HS.map(([g, , v]) => [g, v]));
+const hcol = (v) => (v > 20 ? '#FFB02E' : v >= 10 ? '#A82848' : '#C87898');
+const PROG = { A: [['Жим в тренажёре от груди', 49, [30, 32.5, 35]], ['Тяга верхнего блока', 51.3, [35, 35, 35]], ['Жим ногами', 119, [80, 80, 80]], ['Сгибания ног сидя в тренажёре', 35, [20, 22.5, 25]], ['Махи в стороны на блоке', 7.3, [5, 5, 5.2]],
+  ['Сгибания на бицепс с гантелями', 11.2, [8, 8, 8]], ['Разгибания на трицепс с гантелью', 18.2, [8, 10.5, 13]], ['Сгибания запястий с гантелями сидя', 28, [20, 20, 20]], ['Скручивания на полу', 26.7, [20, 20, 20]]] };
+const WK = [['Тренировка C', '18 окт.', '8262', [['Жим на плечи в тренажёре', '25 × 8·10·12'], ['Сведения рук на блоках', '20 × 10·12·14'], ['Тяга сверху в рычажном тренажёре', '20 × 8·10·12'], ['Жим ногами', '85 × 8·10·12·12'], ['Махи в стороны на блоке', '5 × 10·12·14'], ['Молотки', '8 × 8·10·12·12'], ['Разгибания на трицепс с гантелью', '13 × 8·10·12·12'], ['Сгибания рук обратным хватом', '20 × 12·12·12·12'], ['Подъёмы ног в висе', '20 × 10·10·10']]],
+  ['Тренировка B', '16 окт.', '8550', [['Наклонный жим в тренажёре', '30 × 8·10·12'], ['Тяга с упором грудью в тренажёре', '20 × 10·12·14'], ['Разгибания ног в тренажёре', '30 × 8·10·12'], ['Сгибания ног в тренажёре', '30 × 8·10·12·12'], ['Махи в стороны на блоке', '5 × 10·12·14'], ['Сгибания на бицепс на блоке', '20 × 8·10·12·12·12'], ['Разгибания на блоке', '20 × 8·10·12·12'], ['Разгибания запястий с гантелями сидя', '20 × 12·12·12'], ['Икры в тренажёре', '40 × 8·10·12'], ['Обратные разведения в тренажёре', '25 × 8·10·12']]],
+  ['Тренировка A', '14 окт.', '8848', [['Жим в тренажёре от груди', '35 × 8·10·12·12'], ['Тяга верхнего блока', '35 × 10·12·14·14'], ['Жим ногами', '80 × 8·10·12'], ['Сгибания ног сидя в тренажёре', '25 × 8·10·12'], ['Махи в стороны на блоке', '5 × 10·12·14'], ['Сгибания на бицепс с гантелями', '8 × 8·10·12·12·12'], ['Разгибания на трицепс с гантелью', '13 × 8·10·12·12'], ['Сгибания запястий с гантелями сидя', '20 × 12·12·12'], ['Скручивания на полу', '20 × 10·10·10']]]];
+const history = `<div class="h" style="margin-top:6px">История</div>
+<div class="glass"><div class="fx"><b style="font-size:16px">Подходы на мышцу</b><span class="lb ml">7 дней · норма 10–20</span></div>
+ <div class="bodies" style="margin:8px 0 4px">${halo(300, 220)}${['front', 'back'].map((s) => bodySvg(s, (g) => (HM[g] || 0) / 10, 170, (g) => ((HM[g] || 0) >= 10 ? 'hot' : ''))).join('')}</div>
+ ${HS.map(([g, n, v, plan]) => `<div class="mrow"><span class="nm">${n}</span><div class="bar"><span class="z" style="left:${10 / 24 * 100}%;width:${10 / 24 * 100}%"></span><i style="width:${Math.min(100, v / 24 * 100)}%;background:${hcol(v)};box-shadow:0 0 8px ${hcol(v)}88"></i><u style="left:${plan / 24 * 100}%"></u></div><span class="vv" style="width:34px;color:${v > 20 ? '#FFC86B' : v >= 10 ? '#fff' : '#9AA3B5'}">${fmt(v)}</span></div>`).join('')}
+ <div class="fx lb" style="gap:12px;margin:8px 0 6px;font-size:11.5px"><span><i style="display:inline-block;width:18px;height:8px;border:1px dashed #ffffff60;vertical-align:0;margin-right:4px"></i>норма 10–20</span><span><i style="display:inline-block;width:2px;height:12px;background:#fff;vertical-align:-2px;margin-right:4px"></i>стоит в программе</span></div>
+ <div class="note"><span class="pill amb">больше 20: бицепс</span> — лишнее не растит, а копит усталость. Чёрточка на полосе — сколько подходов на эту мышцу стоит в программе за неделю (дни A, B и C вместе).</div></div>
+<div class="cap">Прогресс по упражнениям</div>
+<div class="seg3"><span class="on">День A</span><span>День B</span><span>День C</span></div>
+<div class="glass" style="padding:4px 14px">${PROG.A.map(([t, v, a]) => `<div class="row"><span style="flex:1;font-size:13.5px">${t}</span>${spark(a, 54, 22)}<span class="v" style="width:62px;text-align:right">${fmt(v)} кг</span></div>`).join('')}</div>
+<div class="cap">Тренировки</div>
+${WK.map(([t, d, kg, ex], i) => `<div class="glass wk"><div class="fx"><b style="font-size:16px">${t}</b><span class="lb ml">${d}</span></div>
+ <div class="st"><div>Время<b>55 мин</b></div><div>Объём<b>${kg} кг</b></div><div>Упражнений<b>${ex.length}</b></div></div>
+ ${(i ? ex.slice(0, 3) : ex).map(([n, w]) => `<div class="l">${n}<span>${w}</span></div>`).join('')}${i ? `<div class="l" style="color:#7CC4FF">ещё ${ex.length - 3} упражнений ›</div>` : ''}</div>`).join('')}
+${more('Ещё 6 тренировок · с 30 сент.')}`;
+
+/* ---------- 3. Питание ---------- */
+const food = `<div class="h" style="margin-top:6px">Питание</div>
+<div class="glass fx" style="justify-content:space-around;padding:16px 10px">
+ <div class="c">${ring(1030 / 3063, 116, 11, '<text x="58" y="58" font-size="22" font-weight="700" text-anchor="middle" fill="#fff">1030</text><text x="58" y="75" font-size="11" text-anchor="middle" fill="#9AA3B5">из 3063</text>')}<div class="lb" style="margin-top:6px">Калории ≈</div></div>
+ <div class="c">${ring(92 / 149, 116, 11, '<text x="58" y="58" font-size="22" font-weight="700" text-anchor="middle" fill="#fff">92</text><text x="58" y="75" font-size="11" text-anchor="middle" fill="#9AA3B5">из 149 г</text>', 'rr')}<div class="lb" style="margin-top:6px">Белок</div></div></div>
+<div class="glass fx" style="align-items:flex-start;padding:12px 14px"><span style="font-size:20px">✋</span><div class="note"><b style="color:#ECEEF4">Белок на глаз:</b> 2 ладони мяса, рыбы или творога за раз, 3–4 раза в день. Калории даже при подсчёте ошибаются на 20–35 % — главное белок и вес раз в неделю.</div></div>
+<div class="fx" style="margin-bottom:10px"><div class="inp" style="flex:1">🔍  Продукт или штрихкод</div><div class="inp" style="padding:12px 13px;color:#ECEEF4">▥</div></div>
+<div class="glass"><div class="seg3"><span class="on">Что съел</span><span>Вопрос</span><span>Дома есть…</span></div>
+ <div class="inp" style="height:76px">две котлеты, тарелка гречки, скуп протеина</div>
+ <div class="fx" style="margin-top:12px;gap:10px"><div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FF9AAE,#C23A5E);box-shadow:0 0 0 6px #C23A5E26,0 6px 22px #C23A5E66;display:flex;align-items:center;justify-content:center;flex:0 0 auto">
+  <svg width="26" height="26" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0012 0M12 17v4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="note" style="flex:1"><b style="color:#ECEEF4">Сказать</b> → что съел и сколько → «Стоп», дальше посчитаю сам. Граммы потом можно поправить.</div></div>
+ <div class="btn" style="margin-top:12px">Отправить</div></div>
+<div class="cap">Записано сегодня</div>
+${[['🍳', 'омлет из 3 яиц, хлеб', 420, 24], ['🍗', 'гречка с курицей', 610, 68]].map(([ic, t, k, b]) => `<div class="glass meal"><div class="ic">${ic}</div><div><div style="font-weight:600">${t}</div><div style="margin-top:4px"><span class="pill">${k} ккал</span> <span class="pill red">${b} г белка</span></div></div><div class="x">✕</div></div>`).join('')}
+<div class="note" style="margin:8px 4px">Поиск продукта работает без ключа. Для фото и вопросов нужен ключ ИИ (OpenRouter или Groq) — вкладка «Я», «Настройки».</div>`;
+
+/* ---------- 4. Я ---------- */
+const me = `<div class="h" style="margin-top:6px">Я</div>
+<div class="cap" style="margin-top:4px">Вес</div>
+<div class="glass"><div class="fx"><div><div class="lb">Среднее за 7 дней</div><div class="big" style="font-size:38px">83,3<small>кг</small></div></div><div class="ml" style="text-align:right"><span class="pill grn">+0,5 % за неделю</span><div style="margin-top:6px">${spark([82.1, 82.3, 82.2, 82.6, 82.8, 82.9, 83.2, 83.3], 120, 34)}</div></div></div>
+ <div class="fx" style="margin-top:12px"><div class="inp" style="flex:1">кг, утром</div><div class="btn" style="width:auto;padding:12px 18px">Записать</div></div>
+ <div class="note" style="margin-top:8px">Раз в неделю, утром, до еды. Цель — плюс 0,25–0,5 % в неделю: 208–416 г (Iraki 2019).</div></div>
+<div class="tiles"><div class="glass"><div class="lb">Тренд веса</div><div class="big" style="font-size:21px">83,2<small>кг</small></div></div>
+ <div class="glass"><div class="lb">Расход</div><div style="font-size:15px;font-weight:700;margin-top:3px">калибровка 0/14 дн.</div><div class="cal14">${'<i></i>'.repeat(14)}</div></div></div>
+<div class="note" style="margin:-2px 4px 10px">Расход измеряется по еде и весу: нужно 14 дней с записанной едой и вес минимум 2 раза за 2 недели. До этого цель — по формуле.</div>
+<div class="warn"><span>⚠️</span><span>Набор быстрее +0,5 %/нед — режь 200 ккал.</span></div>
+<div class="cap">Замеры тела</div>
+<div class="glass"><div class="fx" style="align-items:flex-start"><span style="font-size:20px">📏</span><div class="note">Грудь, талия, бицепс, бедро — лентой, раз в две-три недели; фото — раз в месяц. Лента и фото показывают то, чего не видно на весах.</div></div><div class="btn gh" style="margin-top:10px">Записать замеры и фото</div></div>
+<div class="cap">Цели на день</div>
+<div class="tiles"><div class="glass"><div class="lb">🔥 Калории</div><div class="big" style="font-size:19px">2995–3131</div><div class="lb" style="font-size:10.5px">82,5 кг × 33 = 2723 ккал, +10–15 %</div></div>
+ <div class="glass"><div class="lb">🥩 Белок</div><div class="big" style="font-size:19px">149<small>г</small></div><div class="lb" style="font-size:10.5px">1,8 г/кг</div></div>
+ <div class="glass"><div class="lb">💊 Креатин</div><div class="big" style="font-size:19px">5<small>г</small></div></div><div class="glass"><div class="lb">😴 Сон</div><div class="big" style="font-size:19px">≥ 7<small>ч</small></div></div></div>
+<div class="note" style="margin:-2px 4px 10px">Белок: норма 1,6–2,2 г/кг = 132–182 г (Morton 2018). На глаз — 2 ладони за раз, 3–4 раза в день. Протеин считай тоже: «скуп протеина» в «Что съел».</div>
+<div class="cap">Привычки сегодня</div>
+<div class="glass" style="padding:2px 14px">${[['Белок в норме', 0], ['Креатин 5 г', 1], ['Сон ≥ 7 ч', 1]].map(([t, on]) => `<div class="row"><span class="chk ${on ? 'on' : ''}"></span>${t}</div>`).join('')}</div>
+<div class="cap">Профиль</div>
+<div class="glass" style="padding:2px 14px">${['Вес, кг|82,5', 'Рост, см|—', 'Возраст|—', 'Вернулся в зал после перерыва — с какого дня|—'].map((r) => { const [a, b] = r.split('|'); return `<div class="row"><span style="font-size:13.5px">${a}</span><span class="v" style="color:#7CC4FF">${b}</span></div>`; }).join('')}</div>
+<div class="note" style="margin:-2px 4px 10px">Не было перерыва — оставь пустым. Если был: две недели с этого дня приложение просит брать вес полегче и не ставит проверку силы.</div>
+<div class="cap">Настройки</div>
+<div class="glass" style="padding:2px 14px">
+ <div class="row"><span>🔑</span><div><div>Ключ ИИ</div><div class="lb">OpenRouter sk-or-… или Groq gsk_… · хранится только на телефоне</div></div><span class="v lb">нет</span></div>
+ <div class="row"><span>📤</span><div><div>Экспорт · Импорт</div><div class="lb">Экспорт → AirDrop на Мак: разбор тренировок и чата с тренером</div></div><span class="v">›</span></div>
+ <div class="row"><span>☁️</span><div><div>Автокопия в GitHub</div><div class="lb">Выключена. Данные живут только в этом телефоне. С ключом копия сама уходит в закрытый репозиторий fit-data: после каждой тренировки и раз в сутки</div></div><span class="tg"></span></div>
+ <div class="row"><span>💬</span><div><div>Чек-ин перед тренировкой</div><div class="lb">Вопрос «как ты сегодня» на кнопке «Начать»: готовность, сон, что болит. В плохой день вес без прибавки или −10 %</div></div><span class="tg on"></span></div></div>`;
+
+const P = [
+  ['1', 'Сегодня', 'today', today, 'Главное наверх: тренировка A и большая зелёная «Начать» — сразу под днями недели (как Hevy/Fitbod). Еда — кольцами, «Сегодня загорятся» — телом Fitbod: мигает то, что дойдёт до нормы. Упражнения — номерами и метками «проверка силы».'],
+  ['2', 'История', 'history', history, 'Подходы — тело + полосы в цветах тела: пунктир — норма 10–20, белая чёрточка — сколько в программе, перебор — жёлтым. Прогресс разложен по дням A/B/C (сейчас упражнения повторяются в одном списке). Тренировки — карточками с временем и объёмом.'],
+  ['3', 'Питание', 'food', food, 'Калории и белок — два больших кольца. «Сказать» — крупная красная кнопка-микрофон, её видно сразу. Записанная еда — карточками с ккал и белком.'],
+  ['4', 'Я', 'me', me, 'Вес — крупной цифрой с графиком и прибавкой за неделю, калибровка расхода — полоской 14 дней. Цели на день — плитками, привычки — галочками, настройки — списком как в iPhone.'],
+];
+document.getElementById('grid').innerHTML = P.map(([n, t, f, html, sub]) => `<div class="pair"><h2>${n}. ${t}<small>${sub}</small></h2>
+ <div class="ph"><div><b>БЫЛО</b><div class="phone old"><img src="before/${f}.png"></div></div><div><b>СТАЛО</b>${phone(t, html)}</div></div></div>`).join('');
+</script>
+</body>
+</html>
