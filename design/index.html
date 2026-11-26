@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Зал — 10 вариантов «Сегодня»</title>
+<style>
+/* Макеты app-007: один экран «Сегодня» в 10 визуальных языках. Данные одни и те же (const D). ?v=N — один вариант на весь экран. */
+*{box-sizing:border-box}
+body{margin:0;background:#2b2d35;font:15px/1.3 -apple-system,"SF Pro Text","Helvetica Neue",system-ui,sans-serif}
+.wall{display:flex;flex-wrap:wrap;gap:30px 26px;padding:26px;justify-content:center}
+figure{margin:0}figcaption{padding:0 4px 10px;width:390px}
+figcaption a{color:#fff;text-decoration:none;font-weight:700;font-size:17px}figcaption span{display:block;color:#a9adba;font-size:13px;margin-top:2px}
+.phone{width:390px;height:844px;position:relative;overflow:hidden;border-radius:40px;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.sb{position:absolute;top:0;left:0;right:0;height:50px;padding:17px 34px 0;font-weight:600;font-size:16px;z-index:3;display:flex;justify-content:space-between}
+.sb i{width:25px;height:12px;border-radius:4px;border:1.5px solid currentColor;opacity:.9;margin-top:4px;position:relative}.sb i::after{content:"";position:absolute;inset:1.5px;right:6px;background:currentColor;border-radius:1.5px}
+.scr{position:absolute;top:50px;bottom:83px;left:0;right:0;overflow:hidden}
+.nav{position:absolute;bottom:0;left:0;right:0;height:83px;padding:9px 6px 30px;display:flex;z-index:3}
+.nav b{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:500}
+svg.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button{font:inherit;border:0;color:inherit;display:flex;align-items:center;justify-content:center;gap:8px;margin:0}
+h1,h2,h3,h4,p{margin:0}.rw{display:flex;align-items:center;justify-content:space-between;gap:10px}
+body.solo{background:#000}body.solo .wall{padding:0;gap:0}body.solo figcaption{display:none}body.solo .phone{width:100vw;height:100dvh;border-radius:0}body.solo .sb>*{visibility:hidden}
+@media (max-width:480px){.wall{padding:14px 0;gap:22px}figcaption{padding:0 16px 8px}.phone{border-radius:0}}
+
+/* 1 Hevy — чёрный, плоские серые карточки программ, синяя кнопка внутри каждой */
+.v1{background:#000;color:#fff}.v1 .hd{height:44px;display:grid;place-items:center;font-weight:600;font-size:17px}
+.v1 .p{padding:6px 16px}.v1 h3{font-size:16px;font-weight:600;color:#fff;margin:16px 0 10px}
+.v1 .g{background:#1c1c1e;border-radius:10px;height:46px;width:100%;justify-content:flex-start;padding:0 14px;font-weight:500;font-size:16px}
+.v1 .g svg{width:20px;height:20px}.v1 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v1 .fold{color:#8e8e93;font-size:15px;margin:18px 0 10px}
+.v1 .c{background:#1c1c1e;border-radius:12px;padding:14px;margin-bottom:12px}.v1 .c b{font-size:17px;font-weight:600}
+.v1 .c em{font-style:normal;font-size:12px;font-weight:600;color:#1e90ff;background:rgba(30,144,255,.16);padding:3px 8px;border-radius:6px;margin-right:auto}
+.v1 .c s{text-decoration:none;color:#8e8e93;letter-spacing:1px;font-weight:700}
+.v1 .c p{color:#8e8e93;font-size:15px;line-height:1.35;margin:6px 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.v1 .bl{background:#1e90ff;color:#fff;height:40px;width:100%;border-radius:9px;font-weight:600;font-size:16px}
+.v1 .nav{background:#0d0d0e;border-top:1px solid #222;color:#8e8e93}.v1 .nav .on{color:#1e90ff}
+
+/* 2 Strong — белый, крупный заголовок, сетка шаблонов 2 колонки, тонкие рамки */
+.v2{background:#fff;color:#000}.v2 .p{padding:14px 16px}
+.v2 h1{font-size:32px;font-weight:800;letter-spacing:-.02em;margin:10px 0 20px}
+.v2 h4{font-size:12px;font-weight:700;color:#8e8e93;letter-spacing:.04em;margin:0 0 10px}
+.v2 .bl{background:#2e9bf0;color:#fff;height:44px;width:100%;border-radius:8px;font-weight:600;font-size:16px;margin-bottom:26px}
+.v2 h2{font-size:22px;font-weight:800;margin-right:auto}.v2 .pill{background:#e6f2fd;color:#2e9bf0;font-weight:600;font-size:14px;border-radius:7px;padding:6px 11px}
+.v2 .rw{margin-bottom:16px}.v2 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.v2 .c{border:1px solid #e3e3e8;border-radius:10px;padding:12px;min-height:178px;display:flex;flex-direction:column}
+.v2 .c.on{border:2px solid #2e9bf0;padding:11px}.v2 .c b{font-size:16px;font-weight:700;display:flex;justify-content:space-between}
+.v2 .c b span{color:#2e9bf0;background:#e6f2fd;border-radius:6px;padding:0 6px;letter-spacing:1px}
+.v2 .c p{color:#8e8e93;font-size:14px;line-height:1.38;margin:6px 0 auto;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.v2 .c small{color:#8e8e93;font-size:13px;display:flex;align-items:center;gap:5px;margin-top:8px}.v2 .c small svg{width:14px;height:14px}
+.v2 .wk{border:1px solid #e3e3e8;border-radius:10px;padding:12px 14px;font-size:15px}.v2 .wk b{font-weight:700}.v2 .wk span{color:#8e8e93}
+.v2 .nav{background:#f9f9f9;border-top:1px solid #dcdce0;color:#9a9aa0}.v2 .nav .on{color:#2e9bf0}
+
+/* 3 Fitbod — угольный, список упражнений с плитками-миниатюрами, красная плавающая кнопка */
+.v3{background:#151517;color:#fff}.v3 .p{padding:10px 16px}
+.v3 .day{color:#9b9ba1;font-size:14px;font-weight:500}.v3 h1{font-size:30px;font-weight:800;letter-spacing:-.02em;margin:2px 0 12px}
+.v3 .chips{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}.v3 .chips span{background:#242428;border-radius:20px;padding:7px 12px;font-size:13px;font-weight:600}
+.v3 .chips.m span{background:none;border:1px solid #333338;color:#c9c9ce;font-weight:500;padding:5px 10px}.v3 .chips.m span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#f0544f;margin-right:6px;vertical-align:1px}
+.v3 .e{display:flex;align-items:center;gap:12px;padding:7px 0;position:relative}
+.v3 .e .t{width:54px;height:54px;border-radius:11px;background:linear-gradient(145deg,#2c2c31,#1e1e22);display:grid;place-items:center;color:#f0544f;font-weight:800;font-size:19px;flex:none}
+.v3 .e.ss::before{content:"";position:absolute;left:26px;top:-7px;height:14px;width:2px;background:#f0544f}
+.v3 .e b{font-size:16px;font-weight:600;display:block}.v3 .e small{color:#9b9ba1;font-size:13.5px}.v3 .e s{margin-left:auto;text-decoration:none;color:#6b6b72;font-weight:800;letter-spacing:1px}
+.v3 .go{position:absolute;left:16px;right:16px;bottom:14px;height:56px;border-radius:28px;background:#f0544f;color:#fff;font-weight:700;font-size:17px;box-shadow:0 10px 30px rgba(240,84,79,.4)}
+.v3 .fade{position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(transparent,#151517 62%)}
+.v3 .nav{background:#151517;border-top:1px solid #26262a;color:#77777e}.v3 .nav .on{color:#f0544f}
+
+/* 4 JEFIT — тёмно-синий, полоса недели сверху, карточка плана с баннером */
+.v4{background:#10141b;color:#fff}.v4 .p{padding:8px 16px}
+.v4 .hi{font-size:22px;font-weight:700;margin-bottom:14px}.v4 .hi span{display:block;font-size:13px;color:#8791a3;font-weight:500}
+.v4 .wk{display:flex;justify-content:space-between;background:#1a2029;border-radius:16px;padding:12px 10px;margin-bottom:14px}
+.v4 .wk div{width:42px;text-align:center;font-size:11px;color:#8791a3;font-weight:600}
+.v4 .wk i{font-style:normal;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;margin:6px auto 0;font-size:15px;color:#fff;font-weight:600}
+.v4 .wk .d i{background:#1f9bf0}.v4 .wk .t i{border:2px solid #1f9bf0;color:#1f9bf0}.v4 .wk .t{color:#1f9bf0}
+.v4 .plan{border-radius:18px;overflow:hidden;background:#1a2029;margin-bottom:14px}
+.v4 .ban{height:150px;padding:16px;background:linear-gradient(120deg,#1f9bf0,#1456c8 70%,#0e2f86);display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.v4 .ban::after{content:"A";position:absolute;right:14px;top:-22px;font-size:170px;font-weight:900;color:rgba(255,255,255,.14);line-height:1}
+.v4 .ban small{font-size:11px;font-weight:700;letter-spacing:.08em;opacity:.85}.v4 .ban b{font-size:26px;font-weight:800}
+.v4 .pb{padding:12px 16px;display:flex;align-items:center;gap:12px}.v4 .pb span{color:#8791a3;font-size:14px;margin-right:auto}
+.v4 .pb button{background:#1f9bf0;height:40px;padding:0 26px;border-radius:20px;font-weight:700}
+.v4 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}.v4 .tiles>div{background:#1a2029;border-radius:16px;padding:13px 14px}
+.v4 .tiles b{font-size:24px;font-weight:800;display:block}.v4 .tiles span{font-size:12.5px;color:#8791a3}
+.v4 .bar{height:6px;border-radius:3px;background:#273040;margin-top:8px;overflow:hidden}.v4 .bar i{display:block;height:100%;background:#1f9bf0}
+.v4 .l{background:#1a2029;border-radius:16px;padding:4px 14px}.v4 .l div{display:flex;gap:10px;padding:10px 0;border-top:1px solid #252c38;font-size:15px}.v4 .l div:first-child{border:0}
+.v4 .l em{font-style:normal;color:#1f9bf0;font-weight:700;width:14px}.v4 .l span{margin-left:auto;color:#8791a3}
+.v4 .nav{background:#10141b;border-top:1px solid #1f2632;color:#6f7889}.v4 .nav .on{color:#1f9bf0}
+
+/* 5 Nike Training Club — белый, чёрный, гигантский узкий капс, блок-герой без скруглений */
+.v5{background:#fff;color:#111}.v5 .p{padding:6px 20px}
+.v5 .day{font-size:14px;color:#757575;font-weight:500}
+.v5 h1{font-family:"DIN Condensed","Helvetica Neue",sans-serif;font-weight:700;font-size:62px;line-height:.9;letter-spacing:-.01em;text-transform:uppercase;margin:8px 0 14px}
+.v5 .hero{height:316px;background:#111;color:#fff;position:relative;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;margin:0 -20px}
+.v5 .hero::before{content:"A";position:absolute;right:-18px;top:-74px;font:700 440px/1 "DIN Condensed","Helvetica Neue",sans-serif;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.3)}
+.v5 .hero small{font-size:12px;font-weight:600;letter-spacing:.02em;position:relative}.v5 .hero b{font-size:28px;font-weight:600;letter-spacing:-.01em;margin:4px 0;position:relative}
+.v5 .hero span{font-size:14px;color:#c8c8c8;position:relative}
+.v5 .hero button{position:relative;background:#fff;color:#111;height:48px;border-radius:24px;font-weight:600;font-size:16px;margin-top:16px;width:150px}
+.v5 h2{font-size:20px;font-weight:600;margin:20px 0 12px;display:flex;justify-content:space-between;align-items:baseline}.v5 h2 span{font-size:14px;color:#757575;font-weight:500}
+.v5 .car{display:flex;gap:10px;margin-right:-20px}.v5 .car div{flex:none;width:132px;height:132px;background:#f5f5f5;padding:12px;display:flex;flex-direction:column;justify-content:space-between}
+.v5 .car em{font:700 34px/1 "DIN Condensed","Helvetica Neue",sans-serif;font-style:normal}.v5 .car b{font-size:14px;font-weight:600;line-height:1.2}.v5 .car span{font-size:12.5px;color:#757575;display:block;font-weight:400;margin-top:2px}
+.v5 .nav{background:#fff;border-top:1px solid #e5e5e5;color:#8d8d8d}.v5 .nav .on{color:#111}
+
+/* 6 Peloton — чёрный, красный, капс-метки, серия недель, крупная карточка занятия */
+.v6{background:#000;color:#fff}.v6 .p{padding:8px 16px}
+.v6 .lab{font-size:11px;font-weight:700;letter-spacing:.12em;color:#9a9da6;text-transform:uppercase}
+.v6 h1{font-size:28px;font-weight:800;letter-spacing:-.01em;margin:4px 0 16px}
+.v6 .st{background:#17181c;border-radius:12px;padding:14px;margin-bottom:14px}
+.v6 .st .rw b{font-size:17px;font-weight:700;display:flex;align-items:center;gap:6px}.v6 .st .rw b svg{color:#ff3347;width:20px;height:20px}.v6 .st .rw span{color:#9a9da6;font-size:13px}
+.v6 .dots{display:flex;justify-content:space-between;margin-top:12px}.v6 .dots i{font-style:normal;width:38px;height:38px;border-radius:50%;background:#26272d;display:grid;place-items:center;font-size:12px;font-weight:700;color:#9a9da6}
+.v6 .dots .d{background:#ff3347;color:#fff}.v6 .dots .t{background:none;border:2px solid #ff3347;color:#fff}
+.v6 .cls{height:300px;border-radius:12px;padding:16px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;
+  background:radial-gradient(120% 90% at 85% 0%,#a3122a 0%,#3d0a14 45%,#101014 80%);margin-bottom:14px}
+.v6 .cls::before{content:"A";position:absolute;right:10px;top:-34px;font-size:230px;font-weight:900;color:rgba(255,255,255,.1);line-height:1}
+.v6 .tags{display:flex;gap:6px;margin-bottom:8px}.v6 .tags span{font-size:10.5px;font-weight:800;letter-spacing:.1em;background:rgba(255,255,255,.16);padding:4px 8px;border-radius:4px}
+.v6 .cls b{font-size:28px;font-weight:800;letter-spacing:-.01em}.v6 .cls p{color:#c9cbd2;font-size:14px;margin:4px 0 14px}
+.v6 .cls button{background:#ff3347;height:50px;border-radius:25px;font-weight:800;font-size:15px;letter-spacing:.1em}
+.v6 .nx{display:flex;gap:10px;margin-top:10px}.v6 .nx div{flex:1;background:#17181c;border-radius:12px;padding:12px}.v6 .nx b{display:block;font-size:16px;font-weight:700;margin-top:4px}.v6 .nx span{font-size:13px;color:#9a9da6}
+.v6 .nav{background:#000;border-top:1px solid #1d1e22;color:#72757e}.v6 .nav .on{color:#fff}
+
+/* 7 Strava — светлая лента, оранжевый, тройки «подпись над цифрой», карточка-пост */
+.v7{background:#f0f0f2;color:#000}.v7 .hd{height:44px;background:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;border-bottom:1px solid #e6e6ea}
+.v7 .b{background:#fff;padding:14px 16px;margin-bottom:8px}.v7 .b h3{font-size:17px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between}.v7 .b h3 span{color:#fc5200;font-size:14px;font-weight:600}
+.v7 .trio{display:flex;gap:26px}.v7 .trio small{display:block;font-size:12px;color:#6d6d78}.v7 .trio b{font-size:20px;font-weight:500;letter-spacing:-.01em}
+.v7 .bars{display:flex;align-items:flex-end;gap:0;height:54px;margin-top:14px;border-bottom:1px solid #dfdfe8}.v7 .bars div{flex:1;text-align:center;position:relative;height:100%}
+.v7 .bars i{position:absolute;left:50%;bottom:0;width:12px;margin-left:-6px;border-radius:3px 3px 0 0;background:#fc5200}.v7 .bars .t i{background:none;border:1.5px dashed #fc5200;border-bottom:0}
+.v7 .dw{display:flex;margin-top:4px}.v7 .dw span{flex:1;text-align:center;font-size:11px;color:#6d6d78}
+.v7 .who{display:flex;gap:10px;align-items:center;margin-bottom:10px}.v7 .who i{width:40px;height:40px;border-radius:50%;background:#fc5200;color:#fff;font-style:normal;font-weight:700;display:grid;place-items:center}
+.v7 .who b{font-size:14px;font-weight:600;display:block}.v7 .who span{font-size:12px;color:#6d6d78}
+.v7 .ttl{font-size:21px;font-weight:700;margin-bottom:12px}
+.v7 .lifts{margin:14px 0;border:1px solid #e6e6ea;border-radius:6px}.v7 .lifts div{display:flex;justify-content:space-between;padding:8px 12px;font-size:14px;border-top:1px solid #e6e6ea}.v7 .lifts div:first-child{border:0}.v7 .lifts span{color:#6d6d78}
+.v7 .go{background:#fc5200;color:#fff;height:46px;width:100%;border-radius:6px;font-weight:700;font-size:16px}
+.v7 .pr{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:10px}.v7 .pr i{font-style:normal;background:#ffe9dc;color:#c63d00;border-radius:4px;padding:2px 7px;font-weight:700;font-size:12px}
+.v7 .nav{background:#fff;border-top:1px solid #e0e0e6;color:#6d6d78}.v7 .nav .on{color:#fc5200}
+
+/* 8 MyFitnessPal — светлый дашборд, синий, большое кольцо «Осталось», белые карточки */
+.v8{background:#f2f4f8;color:#101828}.v8 .p{padding:4px 16px}
+.v8 .hd{display:flex;justify-content:space-between;align-items:center;height:48px}.v8 .hd b{font-size:24px;font-weight:800;color:#0066ee}.v8 .hd span{font-size:14px;color:#667085;font-weight:500}
+.v8 .c{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(16,24,40,.07)}
+.v8 .c h3{font-size:18px;font-weight:700}.v8 .c h3+small{font-size:12.5px;color:#667085}
+.v8 .kc{display:flex;align-items:center;gap:22px;margin-top:10px}.v8 .rg{position:relative;width:128px;height:128px;flex:none}.v8 .rg div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.v8 .rg b{font-size:28px;font-weight:800;line-height:1}.v8 .rg span{font-size:12px;color:#667085}
+.v8 .ls div{display:flex;gap:10px;align-items:center;margin:9px 0}.v8 .ls svg{width:20px;height:20px;color:#667085}.v8 .ls small{display:block;font-size:12px;color:#667085}.v8 .ls b{font-size:16px;font-weight:700}
+.v8 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.v8 .two .c{padding:14px}.v8 .two h3{font-size:15px}
+.v8 .num{font-size:24px;font-weight:800;margin-top:6px}.v8 .num small{font-size:13px;color:#667085;font-weight:500}
+.v8 .bar{height:8px;border-radius:4px;background:#e4e7ec;margin:8px 0 6px;overflow:hidden}.v8 .bar i{display:block;height:100%;background:#0066ee;border-radius:4px}
+.v8 .sub{font-size:12.5px;color:#667085}.v8 .up{color:#12a150;font-weight:700;font-size:13px}
+.v8 .gym{display:flex;align-items:center;gap:12px}.v8 .gym i{width:46px;height:46px;border-radius:12px;background:#e5efff;color:#0066ee;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:22px}
+.v8 .gym div{margin-right:auto}.v8 .gym b{font-size:16px;font-weight:700;display:block}.v8 .gym span{font-size:13px;color:#667085}
+.v8 .gym button{background:#0066ee;color:#fff;height:42px;padding:0 22px;border-radius:21px;font-weight:700}
+.v8 .nav{background:#fff;border-top:1px solid #e4e7ec;color:#667085}.v8 .nav .on{color:#0066ee}
+
+/* 9 Apple Fitness — чёрный, три кольца, цветные округлые цифры, серые карточки */
+.v9{background:#000;color:#fff}.v9 .p{padding:2px 16px}.v9 .r{font-family:ui-rounded,"SF Pro Rounded",-apple-system,sans-serif}
+.v9 .dt{font-size:13px;font-weight:700;color:#8e8e93;text-transform:uppercase}.v9 h1{font-size:34px;font-weight:700;letter-spacing:-.01em;margin:0 0 14px}
+.v9 .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(#5e5ce6,#bf5af2);display:grid;place-items:center;font-weight:700}
+.v9 .c{background:#1c1c1e;border-radius:18px;padding:14px 16px;margin-bottom:10px}.v9 .c h3{font-size:16px;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between}.v9 .c h3 svg{width:16px;height:16px;color:#5a5a5e}
+.v9 .rings{display:flex;align-items:center;gap:18px}.v9 .st small{display:block;font-size:14px;font-weight:500}.v9 .st b{font-size:25px;font-weight:700;line-height:1.05;display:block;margin-bottom:7px}.v9 .st b span{font-size:15px}
+.v9 .pk{color:#fa114f}.v9 .gr{color:#a6ff00}.v9 .cy{color:#00d8fe}
+.v9 .w{display:flex;align-items:center;gap:12px}.v9 .w i{width:44px;height:44px;border-radius:50%;background:#2b3a12;color:#a6ff00;display:grid;place-items:center}
+.v9 .w div{margin-right:auto}.v9 .w b{font-size:19px;font-weight:700;color:#a6ff00;display:block}.v9 .w span{font-size:13px;color:#8e8e93}
+.v9 .w button{background:#a6ff00;color:#000;height:40px;padding:0 20px;border-radius:20px;font-weight:700}
+.v9 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.v9 .two .c{margin:0}.v9 .two b{font-size:26px;font-weight:700;display:block}.v9 .two b span{font-size:15px}.v9 .two small{font-size:13px;color:#8e8e93}
+.v9 .nav{background:rgba(22,22,24,.94);border-top:1px solid #2a2a2c;color:#8e8e93}.v9 .nav .on{color:#a6ff00}
+
+/* 10 WHOOP — сине-чёрный градиент, тонкие шкалы-кольца, узкий капс, плотные данные */
+.v10{background:linear-gradient(180deg,#283339 0%,#101518 46%);color:#fff}.v10 .p{padding:4px 16px}
+.v10 .d{font-family:"DIN Condensed","DIN Alternate","Helvetica Neue",sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.v10 .hd{display:flex;justify-content:center;align-items:center;gap:18px;height:44px;font-size:20px;font-weight:700}.v10 .hd svg{width:18px;height:18px;color:#8a979f}
+.v10 .gs{display:flex;justify-content:space-between;margin:10px 2px 18px}.v10 .g{width:104px;text-align:center}.v10 .gw{position:relative;width:104px;height:104px}
+.v10 .gw div{position:absolute;inset:0;display:grid;place-content:center}.v10 .gw b{font:700 32px/1 "DIN Alternate","Helvetica Neue",sans-serif}.v10 .gw b span{font-size:15px}
+.v10 .g small{display:block;margin-top:8px;font-size:15px;font-weight:700;color:#c3ccd1}.v10 .g em{font-style:normal;font-size:12px;color:#8a979f;display:block;font-family:-apple-system,sans-serif;letter-spacing:0;text-transform:none}
+.v10 .c{background:#1a2227;border-radius:10px;margin-bottom:10px}.v10 .c h3{font-size:15px;font-weight:700;color:#8a979f;padding:12px 14px 4px}
+.v10 .c .x{display:flex;align-items:center;gap:10px;padding:11px 14px;border-top:1px solid #263138;font-size:15px}.v10 .c .x:nth-child(2){border:0}
+.v10 .c .x i{width:8px;height:8px;border-radius:50%;flex:none}.v10 .c .x b{font-weight:600;margin-right:auto}.v10 .c .x span{color:#c3ccd1;font:600 15px "DIN Alternate","Helvetica Neue",sans-serif}.v10 .c .x svg{width:16px;height:16px;color:#5b6870}
+.v10 .t{padding:4px 14px 10px}.v10 .t div{display:flex;justify-content:space-between;font-size:16px;padding:5px 0;color:#c3ccd1}.v10 .t span{color:#fff}
+.v10 .go{width:100%;height:50px;border-radius:8px;background:#fff;color:#101518;font-size:18px;font-weight:700}
+.v10 .nav{background:#101518;border-top:1px solid #1f282d;color:#5b6870}.v10 .nav .on{color:#fff}
+</style>
+</head>
+<body>
+<div class="wall" id="wall"></div>
+<script>
+// Одни данные на все 10 макетов: суббота, третья тренировка недели (вт A, чт B, сб A).
+const D = { day: 'A', dow: 'Суббота', date: '10 октября', n: 7, sets: 16, min: 55, week: 2, goal: 3, streak: 4, kcal: 1840, kcalGoal: 3050, prot: 96, protGoal: 150, weight: 82.5, ton: '8,0',
+  ex: [['Присед', 3, '6–8', 80], ['Жим лёжа', 3, '6–8', 62.5], ['Тяга горизонтальная', 3, '8–12', 55], ['Сгибание ног сидя', 2, '10–15', 40], ['Трицепс над головой', 2, '10–15', 22.5], ['Икры стоя', 2, '10–15', 60], ['Махи в стороны', 2, '12–20', 8]],
+  exB: ['Румынская тяга', 'Жим стоя', 'Верхний блок', 'Жим ногами', 'Сгибания на бицепс', 'Махи в стороны', 'Скручивания на блоке'] };
+const kg = (n) => String(n).replace('.', ','), sp = (n) => String(n).replace(/\B(?=(\d{3})+$)/g, ' ');
+const P = { gym: '<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/>', hist: '<path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4M12 7v5l3 2"/>', food: '<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 0-3 2-3 5s1 4 3 4v9"/>',
+  me: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>', chev: '<path d="M9 6l6 6-6 6"/>', back: '<path d="M15 6l-6 6 6 6"/>', plus: '<path d="M12 5v14M5 12h14"/>', clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  list: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 9h6M9 13h6"/>', search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>', flame: '<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>', flag: '<path d="M5 21V4h12l-2 4 2 4H5"/>' };
+const I = (n) => `<svg class="i" viewBox="0 0 24 24">${P[n]}</svg>`;
+const nav = () => `<nav class="nav">${[['gym', 'Сегодня'], ['hist', 'История'], ['food', 'Питание'], ['me', 'Я']].map(([i, t], k) => `<b class="${k ? '' : 'on'}">${I(i)}${t}</b>`).join('')}</nav>`;
+const ring = (s, r, w, p, c, t) => { const C = 2 * Math.PI * r, m = s / 2; return `<circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="${t}" stroke-width="${w}"/><circle cx="${m}" cy="${m}" r="${r}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${C * p} ${C}" transform="rotate(-90 ${m} ${m})"/>`; };
+const names = D.ex.map((e) => e[0]), wk = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'], done = [1, 3], today = 5;
+const pW = D.week / D.goal, pP = D.prot / D.protGoal, pK = D.kcal / D.kcalGoal;
+
+const V = [
+['Hevy', 'чёрный · программы карточками · синяя кнопка в каждой', () => `<div class="hd">Тренировка</div><div class="p">
+  <h3>Быстрый старт</h3><button class="g">${I('plus')}Начать пустую тренировку</button>
+  <div class="rw"><h3>Программы</h3></div><div class="two"><button class="g">${I('list')}Новая</button><button class="g">${I('search')}Обзор</button></div>
+  <div class="fold">▾ Мои программы (2)</div>
+  <div class="c"><div class="rw"><b>Тренировка A</b><em>сегодня</em><s>•••</s></div><p>${names.join(', ')}</p><button class="bl">Начать программу</button></div>
+  <div class="c"><div class="rw"><b>Тренировка B</b><s>•••</s></div><p>${D.exB.join(', ')}</p><button class="bl">Начать программу</button></div></div>`],
+['Strong', 'белый · крупный заголовок · шаблоны сеткой 2×', () => `<div class="p"><h1>Начать тренировку</h1><h4>БЫСТРЫЙ СТАРТ</h4><button class="bl">Начать пустую тренировку</button>
+  <div class="rw"><h2>Шаблоны</h2><span class="pill">+ Шаблон</span><span class="pill">•••</span></div><h4>МОИ ШАБЛОНЫ (2)</h4>
+  <div class="grid"><div class="c on"><b>Тренировка A <span>•••</span></b><p>${D.ex.map((e) => e[1] + ' × ' + e[0]).join(', ')}</p><small>${I('clock')}сегодня по плану</small></div>
+  <div class="c"><b>Тренировка B <span>•••</span></b><p>${D.exB.map((e, i) => (i < 3 ? 3 : 2) + ' × ' + e).join(', ')}</p><small>${I('clock')}2 дня назад</small></div></div>
+  <h4>ЭТА НЕДЕЛЯ</h4><div class="wk rw"><b>${D.week} из ${D.goal} тренировок</b><span>вт · чт · сб</span></div></div>`],
+['Fitbod', 'угольный · список упражнений с плитками · красная кнопка внизу', () => `<div class="p"><div class="day">${D.dow}, ${D.date}</div><h1>Тренировка A</h1>
+  <div class="chips"><span>${D.min} мин</span><span>${D.n} упражнений</span><span>${D.sets} подходов</span></div>
+  <div class="chips m"><span>Ноги</span><span>Грудь</span><span>Спина</span><span>Плечи</span></div>
+  ${D.ex.map((e, i) => `<div class="e ${[2, 4, 6].includes(i) ? 'ss' : ''}"><div class="t">${i + 1}</div><div><b>${e[0]}</b><small>${e[1]} подх. · ${e[2]} повт. · ${kg(e[3])} кг</small></div><s>•••</s></div>`).join('')}</div>
+  <div class="fade"></div><button class="go">Начать тренировку</button>`],
+['JEFIT', 'тёмно-синий · полоса недели · карточка плана с баннером', () => `<div class="p"><div class="hi"><span>${D.dow}, ${D.date}</span>Привет, Денис</div>
+  <div class="wk">${wk.map((d, i) => `<div class="${done.includes(i) ? 'd' : i === today ? 't' : ''}">${d}<i>${done.includes(i) ? '✓' : 5 + i}</i></div>`).join('')}</div>
+  <div class="plan"><div class="ban"><small>ПЛАН · ДЕНЬ 3 ИЗ 3</small><b>Тренировка A</b></div><div class="pb"><span>${D.n} упражнений · ${D.min} мин</span><button>Начать</button></div></div>
+  <div class="tiles"><div><b>${D.week}/${D.goal}</b><span>на этой неделе</span><div class="bar"><i style="width:${pW * 100}%"></i></div></div><div><b>${D.streak} нед.</b><span>серия без пропусков</span><div class="bar"><i style="width:100%"></i></div></div></div>
+  <div class="l">${D.ex.slice(0, 4).map((e, i) => `<div><em>${i + 1}</em>${e[0]}<span>${e[1]}×${e[2]} · ${kg(e[3])} кг</span></div>`).join('')}</div></div>`],
+['Nike Training Club', 'белый · гигантский узкий капс · чёрный блок-герой', () => `<div class="p"><div class="day">${D.dow}, ${D.date}</div><h1>Сегодня<br>зал</h1>
+  <div class="hero"><small>Сила · Всё тело</small><b>Тренировка A</b><span>${D.min} мин · ${D.n} упражнений · ${D.week + 1}-я на неделе</span><button>Начать</button></div>
+  <h2>Состав <span>Все ${D.n}</span></h2><div class="car">${D.ex.slice(0, 3).map((e, i) => `<div><em>0${i + 1}</em><b>${e[0]}<span>${e[1]}×${e[2]} · ${kg(e[3])} кг</span></b></div>`).join('')}</div></div>`],
+['Peloton', 'чёрный · красный · серия недель · большая карточка занятия', () => `<div class="p"><div class="lab">${D.dow} · ${D.date}</div><h1>Готов к залу, Денис?</h1>
+  <div class="st"><div class="rw"><b>${I('flame')}Серия ${D.streak} недели</b><span>${D.week} из ${D.goal} на этой</span></div><div class="dots">${wk.map((d, i) => `<i class="${done.includes(i) ? 'd' : i === today ? 't' : ''}">${d}</i>`).join('')}</div></div>
+  <div class="cls"><div class="tags"><span>СИЛА</span><span>${D.min} МИН</span><span>${D.n} УПР.</span></div><b>Тренировка A</b><p>Присед · Жим лёжа · Тяга · ещё 4</p><button>НАЧАТЬ</button></div>
+  <div class="lab">Дальше по программе</div><div class="nx"><div><span>Вт, 13 окт</span><b>Тренировка B</b></div><div><span>Чт, 15 окт</span><b>Тренировка A</b></div></div></div>`],
+['Strava', 'светлая лента · оранжевый · тройки «подпись над цифрой»', () => `<div class="hd">Главная</div>
+  <div class="b"><h3>Ваша неделя <span>Подробнее</span></h3><div class="trio"><div><small>Тренировки</small><b>${D.week} из ${D.goal}</b></div><div><small>Время</small><b>1 ч 47 мин</b></div><div><small>Тоннаж</small><b>14,2 т</b></div></div>
+  <div class="bars">${wk.map((d, i) => `<div class="${i === today ? 't' : ''}"><i style="height:${i === 1 ? 76 : i === 3 ? 62 : i === today ? 70 : 0}%"></i></div>`).join('')}</div><div class="dw">${wk.map((d) => `<span>${d}</span>`).join('')}</div></div>
+  <div class="b"><div class="who"><i>Д</i><div><b>Денис</b><span>Сегодня · по плану · зал</span></div></div><div class="ttl">Тренировка A</div>
+  <div class="trio"><div><small>Упражнений</small><b>${D.n}</b></div><div><small>Время</small><b>~${D.min} мин</b></div><div><small>Тоннаж</small><b>~${D.ton} т</b></div></div>
+  <div class="lifts">${D.ex.slice(0, 3).map((e) => `<div>${e[0]}<span>${e[1]}×${e[2]} · ${kg(e[3])} кг</span></div>`).join('')}</div><button class="go">Начать тренировку</button></div>
+  <div class="b"><div class="who"><i>Д</i><div><b>Денис</b><span>Чт, 8 октября · 52 мин</span></div></div><div class="ttl">Тренировка B</div><div class="pr"><i>РЕКОРД</i>Румынская тяга 90 кг × 8</div></div>`],
+['MyFitnessPal', 'светлый дашборд · синий · кольцо «Осталось» · еда на первом месте', () => `<div class="p"><div class="hd"><b>Сегодня</b><span>${D.dow}, ${D.date}</span></div>
+  <div class="c"><h3>Калории</h3><small>Осталось = Цель − Еда</small><div class="kc"><div class="rg"><svg width="128" height="128">${ring(128, 56, 11, pK, '#0066ee', '#e4e7ec')}</svg><div><b>${sp(D.kcalGoal - D.kcal)}</b><span>осталось</span></div></div>
+  <div class="ls"><div>${I('flag')}<span><small>Цель</small><b>${sp(D.kcalGoal)}</b></span></div><div>${I('food')}<span><small>Еда</small><b>${sp(D.kcal)}</b></span></div><div>${I('gym')}<span><small>Зал на неделе</small><b>${D.week} из ${D.goal}</b></span></div></div></div></div>
+  <div class="two"><div class="c"><h3>Белок</h3><div class="num">${D.prot} <small>/ ${D.protGoal} г</small></div><div class="bar"><i style="width:${pP * 100}%"></i></div><div class="sub">ещё ${D.protGoal - D.prot} г</div></div>
+  <div class="c"><h3>Вес</h3><div class="num">${kg(D.weight)} <small>кг</small></div><svg width="140" height="22" style="margin:4px 0 2px"><path d="M0 18 L23 16 L46 17 L70 12 L93 13 L116 8 L140 5" fill="none" stroke="#0066ee" stroke-width="2.5" stroke-linecap="round"/></svg><div class="up">+0,3 кг за неделю</div></div></div>
+  <div class="c gym"><i>A</i><div><b>Тренировка A</b><span>${D.n} упражнений · ${D.min} мин</span></div><button>Начать</button></div>
+  <div class="c gym" style="padding:12px 16px"><div><b>Креатин 5 г</b><span>сегодня не отмечен</span></div><button style="background:#e5efff;color:#0066ee">Отметить</button></div></div>`],
+['Apple Fitness', 'чёрный · три кольца · цветные округлые цифры', () => `<div class="p"><div class="rw"><div><div class="dt">${D.dow}, 10 окт.</div><h1>Сводка</h1></div><div class="av">Д</div></div>
+  <div class="c"><h3>Кольца дня ${I('chev')}</h3><div class="rings"><svg width="150" height="150">${ring(150, 64, 17, pW, '#fa114f', '#3a0d1a')}${ring(150, 45, 17, pP, '#a6ff00', '#273a05')}${ring(150, 26, 17, pK, '#00d8fe', '#06343d')}</svg>
+  <div class="st r"><small>Зал</small><b class="pk">${D.week}/${D.goal}<span> ТРЕН.</span></b><small>Белок</small><b class="gr">${D.prot}/${D.protGoal}<span> Г</span></b><small>Калории</small><b class="cy">${sp(D.kcal)}<span> ККАЛ</span></b></div></div></div>
+  <div class="c"><h3>Тренировка сегодня ${I('chev')}</h3><div class="w"><i>${I('gym')}</i><div><b class="r">Тренировка A</b><span>${D.n} упражнений · ~${D.min} мин</span></div><button>Начать</button></div></div>
+  <div class="two"><div class="c"><h3>Вес</h3><b class="r" style="color:#bf5af2">${kg(D.weight)}<span> КГ</span></b><small>+0,3 кг за неделю</small></div><div class="c"><h3>Тоннаж</h3><b class="r" style="color:#ff9f0a">14,2<span> Т</span></b><small>за неделю, 2 трен.</small></div></div>
+  <div class="c" style="margin-top:10px"><h3 style="margin:0">Креатин 5 г <span style="color:#8e8e93;font-weight:400">не отмечен</span></h3></div></div>`],
+['WHOOP', 'сине-чёрный градиент · тонкие шкалы-кольца · узкий капс', () => `<div class="p"><div class="hd d">${I('back')}Сегодня${I('chev')}</div>
+  <div class="gs">${[['Неделя', pW, '#16ec06', D.week + ' из ' + D.goal], ['Белок', pP, '#0093e7', D.prot + ' / ' + D.protGoal + ' г'], ['Калории', pK, '#ffde00', sp(D.kcal) + ' ккал']].map(([n, p, c, s]) => `<div class="g"><div class="gw"><svg width="104" height="104">${ring(104, 47, 6, p, c, '#2b363d')}</svg><div><b>${Math.round(p * 100)}<span>%</span></b></div></div><small class="d">${n}</small><em>${s}</em></div>`).join('')}</div>
+  <div class="c"><h3 class="d">План на сегодня</h3><div class="x"><i style="background:#16ec06"></i><b>Силовая · тренировка A</b><span>${D.min} мин</span>${I('chev')}</div><div class="x"><i style="background:#0093e7"></i><b>Добрать белок</b><span>${D.protGoal - D.prot} г</span>${I('chev')}</div><div class="x"><i style="background:#ffde00"></i><b>Креатин</b><span>5 г</span>${I('chev')}</div></div>
+  <div class="c"><h3 class="d">Тренировка A · ${D.n} упражнений</h3><div class="t d">${D.ex.slice(0, 5).map((e) => `<div>${e[0]}<span>${e[1]}×${e[2]} · ${kg(e[3])} кг</span></div>`).join('')}</div></div>
+  <button class="go d">Начать тренировку</button></div>`],
+];
+const q = +new URLSearchParams(location.search).get('v');
+if (q) document.body.classList.add('solo');
+document.getElementById('wall').innerHTML = V.map(([name, note, html], i) => (q && q !== i + 1) ? '' :
+  `<figure><figcaption><a href="?v=${i + 1}">${i + 1} · ${name}</a><span>${note}</span></figcaption><div class="phone v${i + 1}" data-n="${i + 1}" data-name="${name}"><div class="sb"><span>9:41</span><i></i></div><div class="scr">${html()}</div>${nav()}</div></figure>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Зал — v10 тело</title>
+<style>
+/* r46: Денис 20.10 «оформление тела не заходит, цвета бледные». 4 варианта на одних тестовых данных, выбор номером.
+   1–2: рисунок js-rich-body-highlighter (MIT, коммит 107dafe) + маски rich.js; 3–4: наши пути body.js. */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#202127;font:15px/1.3 -apple-system,system-ui,"Inter",sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.top{max-width:1700px;margin:0 auto;padding:26px 24px 4px;color:#c9ccd6}.top h1{font-size:26px;color:#fff;margin-bottom:6px}.top p{font-size:14px;line-height:1.5}
+.row{display:flex;gap:18px;justify-content:center;padding:16px}
+.col{width:400px;display:flex;flex-direction:column;gap:12px}
+.col>b{font-size:20px;color:#fff;min-height:66px}.col>b small{display:block;font-size:13px;color:#9AA3B5;font-weight:400;margin-top:3px}
+.scr{border-radius:28px;padding:16px 16px 18px;box-shadow:0 0 0 1px #ffffff14}
+.h{font-size:22px;font-weight:700;letter-spacing:-.3px;margin-bottom:10px}.lb{font-size:12.5px;color:#9AA3B5}
+.bodies{display:flex;justify-content:center;gap:2px;position:relative}
+.leg{display:flex;gap:12px;justify-content:center;margin-top:10px;font-size:12px;color:#9AA3B5}.leg i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.rows{margin-top:10px}.rows div{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0;border-bottom:1px solid #ffffff0d}.rows span{color:#9AA3B5}
+</style>
+</head>
+<body>
+<div class="top"><h1>Тело — 4 варианта, выбери номер</h1>
+<p>Одни и те же данные: грудь 12, спина 14, квадрицепс 11 (норма — 10 подходов, горят ярче всего); плечи 8, трицепс 9, ягодицы 7, бицепс 6 (почти); бицепс бедра 4, поясница 5, задние плечи 3, пресс 2 (мало); икры и предплечья 0 (не трогал).
+Сверху — «Обзор» (спереди + сзади), снизу — экран «Тело» крупно.</p></div>
+<div class="row" id="row"></div>
+<script src="../../body.js"></script>
+<script src="rich.js"></script>
+<script>
+const LO = 10, MS = { chest: 12, back: 14, quads: 11, shoulders: 8, triceps: 9, glutes: 7, biceps: 6, hams: 4, lowback: 5, reardelt: 3, abs: 2, calves: 0, forearms: 0 };
+const RU = { chest: 'Грудь', back: 'Спина', quads: 'Квадрицепс', shoulders: 'Плечи', triceps: 'Трицепс', glutes: 'Ягодицы', biceps: 'Бицепс', hams: 'Бицепс бедра', lowback: 'Поясница', reardelt: 'Задние плечи', abs: 'Пресс', calves: 'Икры', forearms: 'Предплечья' };
+const T = (g) => Math.min(1, (MS[g] || 0) / LO);
+let uid = 0;
+
+// 1–2: скульптура rich + цвет режимом overlay (лучший в blend-test: ярко и рельеф виден), полные — со свечением
+function richSvg(side, h, col, glow, blend) {
+  const R = window.RICH, [, , w, hh] = R.vb.split(' ').map(Number), id = 'g' + uid++;
+  const ps = (arr) => arr.map(([d, t]) => `<path d="${d}"${t ? ` transform="${t}"` : ''}/>`).join('');
+  const on = Object.entries(R[side]).filter(([g]) => T(g) > 0);
+  const glowL = on.filter(([g]) => T(g) >= 1).map(([g, a]) => `<g fill="${glow}" filter="url(#${id})">${ps(a)}${ps(a)}</g>`).join('');
+  const colL = on.map(([g, a]) => `<g fill="${col}" style="mix-blend-mode:${blend}" opacity="${T(g) >= 1 ? 1 : (.3 + .55 * T(g)).toFixed(2)}"><title>${RU[g]}</title>${ps(a)}</g>`).join('');
+  return `<svg width="${Math.round(h * w / hh)}" height="${h}" viewBox="${R.vb}" style="isolation:isolate;overflow:visible"><defs><filter id="${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+    ${glowL}<image href="male-${side}-dark.webp" width="${w}" height="${hh}"/>${colL}</svg>`;
+}
+
+// 3–4: наши пути body.js
+function ourSvg(side, h, st) {
+  const B = BODY_PATHS[side], [, , w, hh] = B.vb.split(' ').map(Number), id = 'o' + uid++;
+  const ps = (ds) => ds.map((d) => `<path d="${d}"/>`).join('');
+  const groups = Object.entries(B.m).map(([g, ds]) => `<g ${st.mus(g, id)}><title>${RU[g]}</title>${ps(ds)}</g>`).join('');
+  return `<svg width="${Math.round(h * w / hh)}" height="${h}" viewBox="${B.vb}" style="overflow:visible"><defs>${st.defs(id)}</defs>
+    ${st.under ? st.under(B, id, ps) : ''}<g ${st.base}>${ps(B.base)}</g>${groups}</svg>`;
+}
+const MW = { // 3) MuscleWiki
+  defs: (id) => `<linearGradient id="${id}m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#888888"/><stop offset="1" stop-color="#686868"/></linearGradient>`,
+  base: 'fill="#3E3E3E" stroke="#ffffff" stroke-opacity=".5" stroke-width=".8" vector-effect="non-scaling-stroke"',
+  mus: (g, id) => { const t = T(g); return `fill="${t >= 1 ? '#F85878' : t > 0 ? mix('#787878', '#F85878', .25 + .5 * t) : `url(#${id}m)`}" stroke="#ffffff" stroke-width=".9" stroke-opacity=".9" vector-effect="non-scaling-stroke"`; },
+};
+const FB = { // 4) Fitbod
+  defs: (id) => `<linearGradient id="${id}m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#585868"/><stop offset="1" stop-color="#383848"/></linearGradient><filter id="${id}f" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>`,
+  base: 'fill="#2A2A36"',
+  under: (B, id, ps) => Object.entries(B.m).filter(([g]) => T(g) >= .6).map(([g, ds]) => `<g fill="${fbCol(T(g))}" opacity="${T(g) >= 1 ? .8 : .45}" filter="url(#${id}f)">${ps(ds)}</g>`).join(''),
+  mus: (g, id) => { const t = T(g); return `fill="${t > 0 ? fbCol(t) : `url(#${id}m)`}" stroke="#0E0E14" stroke-width="2"`; },
+};
+const fbCol = (t) => (t >= 1 ? '#A82848' : t >= .5 ? '#B84868' : '#C87898');
+function mix(a, b, k) { const p = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16)); const A = p(a), B = p(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * k).toString(16).padStart(2, '0')).join(''); }
+
+const V = [
+  { n: '1', name: 'Скульптура + красный огонь', sub: 'объёмное серое тело, мышцы красным «насквозь», доделанные светятся', bg: '#0A0C12', draw: (s, h) => richSvg(s, h, '#FF2D55', '#FF2D55', 'overlay'), leg: [['#FF2D55', 'норма'], ['#FF2D5577', 'мало'], ['#8a8d94', 'не трогал']] },
+  { n: '2', name: 'Скульптура + синий неон', sub: 'то же тело, цвет как кольца в приложении', bg: '#090C13', draw: (s, h) => richSvg(s, h, '#3FA9FF', '#3FA9FF', 'hard-light'), leg: [['#3FA9FF', 'норма'], ['#3FA9FF77', 'мало'], ['#8a8d94', 'не трогал']] },
+  { n: '3', name: 'Как MuscleWiki', sub: 'плоско и чётко: серые мышцы, белый контур, сделанные — розовые', bg: '#0F0F0F', draw: (s, h) => ourSvg(s, h, MW), leg: [['#F85878', 'норма'], [mix('#787878', '#F85878', .45), 'мало'], ['#787878', 'не трогал']] },
+  { n: '4', name: 'Как Fitbod', sub: 'тёмное тело, нагрузка от светло-розового к густо-красному, мягкое свечение', bg: '#121218', draw: (s, h) => ourSvg(s, h, FB), leg: [['#A82848', 'норма'], ['#B84868', 'почти'], ['#C87898', 'мало'], ['#484858', 'не трогал']] },
+];
+const top5 = Object.keys(MS).sort((a, b) => MS[b] - MS[a]).slice(0, 4);
+document.getElementById('row').innerHTML = V.map((v) => `<div class="col"><b>${v.n}. ${v.name}<small>${v.sub}</small></b>
+  <div class="scr" style="background:${v.bg}"><div class="h">Обзор</div><div class="lb" style="margin:-6px 0 8px">эта неделя · 3 из 13 мышц в норме</div>
+    <div class="bodies">${v.draw('front', 260)}${v.draw('back', 260)}</div>
+    <div class="leg">${v.leg.map(([c, t]) => `<span><i style="background:${c}"></i>${t}</span>`).join('')}</div></div>
+  <div class="scr" style="background:${v.bg}"><div class="h">Тело</div>
+    <div class="bodies">${v.draw('front', 360)}</div>
+    <div class="rows">${top5.map((g) => `<div>${RU[g]}<span>${MS[g]} из ${LO}</span></div>`).join('')}</div></div></div>`).join('');
+</script>
+</body>
+</html>
